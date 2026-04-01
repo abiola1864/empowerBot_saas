@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EmpowerBot — WhatsApp Training Platform for Communities</title>
+<title>EmpowerBot, WhatsApp Training Platform for Communities</title>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;500;600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -89,10 +89,10 @@ nav {
 .hero-trust { margin-top: 40px; display: flex; align-items: center; gap: 16px; }
 .hero-trust-text { font-size: 13px; color: var(--ink-muted); }
 .trust-orgs { display: flex; gap: 12px; }
-.trust-org { font-size: 12px; font-weight: 500; color: var(--ink-soft); background: white; border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; }
+.trust-org { font-size: 12px; font-weight: 500; color: var(--ink-soft); background: white; border: 1px solid var(--border); padding: 4px 12px; border-radius: 20px; } .trust-orgs { display:flex; align-items:center; gap:12px; }
 
 /* PHONE MOCKUP */
-.phone-wrap { position: relative; display: flex; justify-content: center; }
+.phone-wrap { position: relative; display: flex; justify-content: center; animation: floatY 7s ease-in-out infinite; }
 .phone-device {
   width: 280px;
   background: white;
@@ -385,6 +385,12 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
 
 /* TESTIMONIALS */
 .testimonials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+
+/* CSS Stars */
+.t-stars { display:flex; gap:3px; margin-bottom:14px; }
+.t-star { width:13px; height:13px; background:#F59E0B; clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
+/* Testimonial card rename */
+
 .testimonial-card { background: white; border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 28px; }
 .stars { color: #F59E0B; font-size: 14px; margin-bottom: 16px; }
 .testimonial-text { font-size: 14px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 20px; font-style: italic; }
@@ -412,7 +418,7 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
 <body>
 
 <nav>
-  <div class="logo" onclick="showPage('home')">Empower<em>Bot</em></div>
+  <div onclick="showPage('home')" style="cursor:pointer;"><div class="logo">Empower<em>Bot</em></div><div style="font-size:10px;color:#6B7280;letter-spacing:.04em;font-family:DM Sans,sans-serif;margin-top:-3px;">Powered by ELP Foundation</div></div>
   <div class="nav-links">
     <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
     <a onclick="showPage('features')" id="nav-features">Features</a>
@@ -437,17 +443,17 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
           Free for nonprofits &amp; social organizations
         </div>
         <h1>Train communities through <span>WhatsApp</span></h1>
-        <p class="hero-sub">EmpowerBot delivers quizzes, AI-powered feedback, and learning analytics directly on WhatsApp — reaching merchants, entrepreneurs, and community members where they already are.</p>
+        <p class="hero-sub">EmpowerBot delivers quizzes, AI-powered feedback, and learning analytics directly on WhatsApp, reaching merchants, entrepreneurs, and community members where they already are.</p>
         <div class="hero-actions">
           <button class="btn btn-primary btn-lg" onclick="showPage('demo')">See live demo →</button>
           <button class="btn btn-outline-green btn-lg" onclick="showPage('pricing')">Start for free</button>
         </div>
         <div class="hero-trust">
-          <span class="hero-trust-text">Trusted by</span>
+          <span class="hero-trust-text">Partners</span>
           <div class="trust-orgs">
-            <span class="trust-org">NGOs</span>
-            <span class="trust-org">Government</span>
-            <span class="trust-org">Social Enterprises</span>
+            <img src="/public/lsetf.png" alt="Lagos State Employment Trust Fund" style="height:32px;object-fit:contain;vertical-align:middle;">
+            <span style="width:1px;height:24px;background:#E5E7EB;display:inline-block;vertical-align:middle;margin:0 4px;"></span>
+            <img src="/public/elp.png" alt="ELP Foundation" style="height:40px;object-fit:contain;vertical-align:middle;">
           </div>
         </div>
       </div>
@@ -494,13 +500,13 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
         </div>
         <div class="floating-card top-right">
           <div class="fc-label">Completion rate</div>
-          <div class="fc-value">87%</div>
-          <div class="fc-sub">↑ 12% this week</div>
+          <div class="fc-value">89%</div>
+          <div class="fc-sub">2025 LSETF cohort</div>
         </div>
         <div class="floating-card bottom-left">
-          <div class="fc-label">Active learners</div>
-          <div class="fc-value">1,240</div>
-          <div class="fc-sub">across 3 programmes</div>
+          <div class="fc-label">Entrepreneurs trained</div>
+          <div class="fc-value">120+</div>
+          <div class="fc-sub">3 Lagos LGAs</div>
         </div>
       </div>
     </div>
@@ -509,16 +515,16 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
   <div class="stats-strip">
     <div class="stats-grid">
       <div class="stat-item">
-        <div class="stat-num">2B+</div>
-        <div class="stat-label">WhatsApp users worldwide</div>
+        <div class="stat-num">120+</div>
+        <div class="stat-label">Entrepreneurs trained in 2025 LSETF bootcamp</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">94%</div>
-        <div class="stat-label">WhatsApp message open rate</div>
+        <div class="stat-num">89%</div>
+        <div class="stat-label">Quiz completion rate in pilot programme</div>
       </div>
       <div class="stat-item">
-        <div class="stat-num">3×</div>
-        <div class="stat-label">Better retention vs email</div>
+        <div class="stat-num">99%</div>
+        <div class="stat-label">Top participant score in the 2025 cohort</div>
       </div>
       <div class="stat-item">
         <div class="stat-num">0</div>
@@ -534,32 +540,32 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
       <p class="section-sub">Built specifically for organizations training communities, merchants, and entrepreneurs in emerging markets.</p>
       <div class="features-grid">
         <div class="feat-card">
-          <div class="feat-icon" style="background:#E0F5EC">💬</div>
+          <div class="feat-icon" style="background:#E0F5EC"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A9E6F" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div>
           <h3>WhatsApp-native delivery</h3>
           <p>No app download, no login, no data plan worries. Works on any smartphone or even basic feature phones via WhatsApp.</p>
         </div>
         <div class="feat-card">
-          <div class="feat-icon" style="background:#EFF6FF">🤖</div>
+          <div class="feat-icon" style="background:#EFF6FF"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div>
           <h3>AI-powered explanations</h3>
           <p>When a learner answers incorrectly, our AI gives a personalized explanation tailored to their specific business context and location.</p>
         </div>
         <div class="feat-card">
-          <div class="feat-icon" style="background:#FEF3C7">📊</div>
+          <div class="feat-icon" style="background:#FEF3C7"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F59E0B" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div>
           <h3>Live analytics dashboard</h3>
           <p>Track quiz scores, completion rates, incorrect answer patterns, and individual progress across all your participants in real time.</p>
         </div>
         <div class="feat-card">
-          <div class="feat-icon" style="background:#FFF7ED">📝</div>
+          <div class="feat-icon" style="background:#FFF7ED"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#F97316" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div>
           <h3>Quiz builder</h3>
           <p>Create quizzes through the admin panel or upload JSON. Enable, disable, and schedule quizzes for your cohort with one click.</p>
         </div>
         <div class="feat-card">
-          <div class="feat-icon" style="background:#F5F3FF">🏆</div>
+          <div class="feat-icon" style="background:#F5F3FF"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M4 22h16"/><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"/><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div>
           <h3>Leaderboard &amp; scores</h3>
           <p>Motivate learners with a live winners board, score tracking across quizzes, and performance comparisons by location and cohort.</p>
         </div>
         <div class="feat-card">
-          <div class="feat-icon" style="background:#E0F5EC">📁</div>
+          <div class="feat-icon" style="background:#E0F5EC"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#1A9E6F" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg></div>
           <h3>Record keeping</h3>
           <p>Participants can upload business records, receipts, and documents via WhatsApp. Stored securely and accessible via unique link.</p>
         </div>
@@ -571,12 +577,12 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
     <div class="max-w section-center">
       <div class="section-tag">How it works</div>
       <h2>From setup to first quiz in 30 minutes</h2>
-      <p class="section-sub">No technical expertise required. We handle the WhatsApp connection — you just add your content.</p>
+      <p class="section-sub">No technical expertise required. We handle the WhatsApp connection, you just add your content.</p>
       <div class="hiw-grid">
         <div class="hiw-step">
           <div class="hiw-num">1</div>
           <h3>Sign up free</h3>
-          <p>Create your organization account. Nonprofits get full access at no cost — just verify your status.</p>
+          <p>Create your organization account. Nonprofits get full access at no cost, just verify your status.</p>
         </div>
         <div class="hiw-step">
           <div class="hiw-num">2</div>
@@ -604,7 +610,7 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
       <p class="section-sub">From government-backed programmes to grassroots NGOs, EmpowerBot is transforming how communities learn.</p>
       <div class="testimonials">
         <div class="testimonial-card">
-          <div class="stars">★★★★★</div>
+          <div class="t-stars"><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div></div>
           <p class="testimonial-text">"EmpowerBot transformed our MSME bootcamp. Participants are more engaged because they already use WhatsApp every day. Our completion rate jumped from 40% to 89%."</p>
           <div class="testimonial-author">
             <div class="ta-avatar" style="background:#1D9E75">FO</div>
@@ -615,7 +621,7 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
           </div>
         </div>
         <div class="testimonial-card">
-          <div class="stars">★★★★★</div>
+          <div class="t-stars"><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div></div>
           <p class="testimonial-text">"As a government agency, we needed something that could work across diverse literacy levels. EmpowerBot's WhatsApp-first approach was perfect for our consumer education programme."</p>
           <div class="testimonial-author">
             <div class="ta-avatar" style="background:#3B82F6">AO</div>
@@ -626,7 +632,7 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
           </div>
         </div>
         <div class="testimonial-card">
-          <div class="stars">★★★★★</div>
+          <div class="t-stars"><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div><div class="t-star"></div></div>
           <p class="testimonial-text">"The AI explanations are incredible. When a trader gets a question wrong, the bot explains it using real Naira examples and local market context. It actually teaches, not just tests."</p>
           <div class="testimonial-author">
             <div class="ta-avatar" style="background:#F97316">KA</div>
@@ -642,7 +648,7 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
 
   <section class="cta-section">
     <h2>Ready to train your community?</h2>
-    <p>Start free today. No WhatsApp Business account needed — use ours. No setup fees. No hidden costs for nonprofits.</p>
+    <p>Start free today. No WhatsApp Business account needed, use ours. No setup fees. No hidden costs for nonprofits.</p>
     <div class="cta-btns">
       <button class="btn btn-white btn-lg" onclick="showPage('pricing')">See all plans</button>
       <button class="btn btn-lg" style="background:rgba(255,255,255,0.15);color:white;border:1.5px solid rgba(255,255,255,0.4)" onclick="showPage('demo')">Watch demo</button>
@@ -653,8 +659,12 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
     <div class="footer-grid max-w">
       <div class="footer-brand">
         <span class="logo">Empower<em>Bot</em></span>
-        <p>A WhatsApp-native training platform designed for communities, merchants, and entrepreneurs across the developing world.</p>
-        <div class="nonprofit-banner">🌍 Free forever for nonprofits &amp; social organizations</div>
+        <p>AI-powered WhatsApp training for communities. Powered by ELP Foundation. Partnered with LSETF.</p>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
+          <img src="/public/lsetf.png" alt="LSETF" style="height:20px;object-fit:contain;opacity:.5;filter:brightness(0) invert(1);">
+          <img src="/public/elp.png" alt="ELP Foundation" style="height:26px;object-fit:contain;opacity:.5;filter:brightness(0) invert(1);">
+        </div>
+        <div class="nonprofit-banner">Free forever for nonprofits</div>
       </div>
       <div class="footer-col">
         <h4>Product</h4>
@@ -695,7 +705,7 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
     <div class="max-w">
       <div class="section-tag">Full feature set</div>
       <h2 style="font-size:46px;margin-bottom:16px;">Everything in one platform</h2>
-      <p style="font-size:17px;color:var(--ink-soft);max-width:560px;margin:0 auto 0;">No add-ons, no hidden limits. Every plan includes the complete EmpowerBot feature set — priced only by scale.</p>
+      <p style="font-size:17px;color:var(--ink-soft);max-width:560px;margin:0 auto 0;">No add-ons, no hidden limits. Every plan includes the complete EmpowerBot feature set, priced only by scale.</p>
     </div>
   </section>
 
@@ -704,12 +714,12 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
       <div style="display:grid;grid-template-columns:1fr 2fr;gap:48px;">
         <div>
           <h3 style="font-size:22px;margin-bottom:12px;">WhatsApp Delivery</h3>
-          <p style="font-size:14px;color:var(--ink-soft);line-height:1.8;">The entire EmpowerBot experience runs directly inside WhatsApp. Participants never need to download an app, create an account, or remember a password. They simply message the number and everything works. <br><br>We host the WhatsApp Business number — you don't need to register your own. This means zero technical setup for organizations.</p>
+          <p style="font-size:14px;color:var(--ink-soft);line-height:1.8;">The entire EmpowerBot experience runs directly inside WhatsApp. Participants never need to download an app, create an account, or remember a password. They simply message the number and everything works. <br><br>We host the WhatsApp Business number, you don't need to register your own. This means zero technical setup for organizations.</p>
         </div>
         <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
           <div class="feat-card"><div class="feat-icon" style="background:#E0F5EC">✉️</div><h3>No app needed</h3><p>Works on any WhatsApp-enabled phone. No downloads, no logins for participants.</p></div>
           <div class="feat-card"><div class="feat-icon" style="background:#E0F5EC">📱</div><h3>Hosted number</h3><p>Use our WhatsApp Business number. No Meta Business registration required on your end.</p></div>
-          <div class="feat-card"><div class="feat-icon" style="background:#E0F5EC">🌍</div><h3>Works offline-ish</h3><p>WhatsApp messages queue when offline and deliver when connected — perfect for low-bandwidth areas.</p></div>
+          <div class="feat-card"><div class="feat-icon" style="background:#E0F5EC">🌍</div><h3>Works offline-ish</h3><p>WhatsApp messages queue when offline and deliver when connected, perfect for low-bandwidth areas.</p></div>
           <div class="feat-card"><div class="feat-icon" style="background:#E0F5EC">🔔</div><h3>Push notifications</h3><p>WhatsApp's native notifications mean participants never miss a new quiz or message.</p></div>
         </div>
       </div>
@@ -725,7 +735,7 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
         </div>
         <div>
           <h3 style="font-size:22px;margin-bottom:12px;">AI Learning Engine</h3>
-          <p style="font-size:14px;color:var(--ink-soft);line-height:1.8;">EmpowerBot's AI doesn't just mark answers right or wrong — it teaches. When a participant gets something wrong, the AI explains why in simple language, using examples from their specific industry and location.<br><br>Powered by Google Gemini, with safety filters configured for education and community use.</p>
+          <p style="font-size:14px;color:var(--ink-soft);line-height:1.8;">EmpowerBot's AI doesn't just mark answers right or wrong, it teaches. When a participant gets something wrong, the AI explains why in simple language, using examples from their specific industry and location.<br><br>Powered by Google Gemini, with safety filters configured for education and community use.</p>
         </div>
       </div>
 
@@ -808,7 +818,7 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
       </div>
       <div class="demo-text">
         <h3>The participant experience</h3>
-        <p>Participants simply message your EmpowerBot number on WhatsApp. No app, no signup form — just a conversation they're already familiar with.</p>
+        <p>Participants simply message your EmpowerBot number on WhatsApp. No app, no signup form, just a conversation they're already familiar with.</p>
         <ul class="demo-features">
           <li><span class="icon">✓</span> Self-registration in under 2 minutes</li>
           <li><span class="icon">✓</span> Personalized onboarding capturing business context</li>
@@ -826,12 +836,12 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
         <div class="demo-screenshot">
           <div class="screenshot-bar">
             <div class="screenshot-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
-            <div class="screenshot-url">EmpowerBot — Quiz 3</div>
+            <div class="screenshot-url">EmpowerBot, Quiz 3</div>
           </div>
           <div class="screenshot-body" style="background:#ECE5DD;padding:16px;min-height:380px;">
             <div style="display:flex;flex-direction:column;gap:10px;">
               <div style="background:white;border-radius:0 12px 12px 12px;padding:10px 14px;font-size:12px;max-width:90%;box-shadow:0 1px 2px rgba(0,0,0,0.08);line-height:1.6;">
-                <strong>Quiz 3 — Financial Records</strong><br>
+                <strong>Quiz 3, Financial Records</strong><br>
                 Completed: quiz1, quiz2<br>Available: quiz3, quiz4…
               </div>
               <div style="background:white;border-radius:0 12px 12px 12px;padding:10px 14px;font-size:12px;max-width:95%;box-shadow:0 1px 2px rgba(0,0,0,0.08);line-height:1.6;">
@@ -851,7 +861,7 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
       </div>
       <div class="demo-text">
         <h3>The quiz experience</h3>
-        <p>Questions are delivered as WhatsApp interactive buttons — no typing required. Each quiz tracks progress and handles resuming where a participant left off.</p>
+        <p>Questions are delivered as WhatsApp interactive buttons, no typing required. Each quiz tracks progress and handles resuming where a participant left off.</p>
         <ul class="demo-features">
           <li><span class="icon">✓</span> Up to 21 quizzes per programme</li>
           <li><span class="icon">✓</span> Progress saved automatically</li>
@@ -868,7 +878,7 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
         <div class="demo-screenshot">
           <div class="screenshot-bar">
             <div class="screenshot-dots"><div class="dot dot-r"></div><div class="dot dot-y"></div><div class="dot dot-g"></div></div>
-            <div class="screenshot-url">EmpowerBot — AI Review</div>
+            <div class="screenshot-url">EmpowerBot, AI Review</div>
           </div>
           <div class="screenshot-body" style="background:#ECE5DD;padding:16px;min-height:400px;">
             <div style="display:flex;flex-direction:column;gap:10px;">
@@ -1004,9 +1014,9 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
     <div class="max-w">
       <div class="section-tag">Pricing</div>
       <h2 style="font-size:46px;margin-bottom:16px;">Simple, honest pricing</h2>
-      <p style="font-size:17px;color:var(--ink-soft);max-width:520px;margin:0 auto 12px;">Free for nonprofits and social organizations — because impact shouldn't be paywalled.</p>
+      <p style="font-size:17px;color:var(--ink-soft);max-width:520px;margin:0 auto 12px;">Free for nonprofits and social organizations, because impact shouldn't be paywalled.</p>
       <div style="display:inline-flex;align-items:center;gap:10px;background:#FEF3C7;color:#92400E;padding:10px 20px;border-radius:30px;font-size:14px;font-weight:500;margin-top:8px;">
-        🌍 Verified nonprofits get the Growth plan for free, forever
+        Verified nonprofits get the Growth plan for free, forever
       </div>
     </div>
   </section>
@@ -1169,162 +1179,158 @@ footer { background: var(--ink); padding: 60px 5% 32px; }
     <div class="about-hero-inner max-w">
       <div>
         <div class="section-tag">Our story</div>
-        <h1>Built in the field, for the field</h1>
-        <p>EmpowerBot was born out of frustration. Running MSME training programmes across Lagos LGAs, we kept hitting the same wall: participants would show up once, then disappear. The apps were too heavy. The websites required logins. The PDFs went unread.</p>
-        <p>Then we tried WhatsApp. Completion rates went from 40% to 89% overnight. The AI explanations in Pidgin English made concepts click. We knew we had something worth building properly.</p>
+        <h1>Built in Lagos, for Lagos entrepreneurs</h1>
+        <p>EmpowerBot was built to solve a real problem. Running MSME training across Lagos LGAs in partnership with LSETF, completion rates were low and participants forgot lessons within days.</p>
+        <p>Moving training to WhatsApp changed everything. Completion rates reached 89 per cent. AI explanations in Pidgin English made concepts stick in ways printed handouts never could.</p>
         <div style="display:flex;gap:12px;flex-wrap:wrap;margin-top:24px;">
           <button class="btn btn-primary btn-lg" onclick="showPage('demo')">See the product</button>
           <button class="btn btn-outline-green btn-lg" onclick="showPage('pricing')">Start free</button>
         </div>
       </div>
       <div style="background:var(--ink);border-radius:var(--radius-xl);padding:40px;color:white;">
-        <div style="font-family:'Fraunces',serif;font-size:48px;color:var(--green-mid);margin-bottom:8px;">89%</div>
-        <div style="font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:32px;">quiz completion rate in pilot programmes</div>
-        <div style="font-family:'Fraunces',serif;font-size:48px;color:var(--amber);margin-bottom:8px;">1,200+</div>
-        <div style="font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:32px;">entrepreneurs trained in Lagos alone</div>
-        <div style="font-family:'Fraunces',serif;font-size:48px;color:#F97316;margin-bottom:8px;">6</div>
-        <div style="font-size:15px;color:rgba(255,255,255,0.7);">LGAs across the pilot programme</div>
+        <div style="font-family:'Fraunces',serif;font-size:48px;color:var(--green-mid);margin-bottom:8px;">120+</div>
+        <div style="font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:28px;">entrepreneurs trained across Epe, Ikorodu, and Alimosho in the 2025 LSETF bootcamp</div>
+        <div style="font-family:'Fraunces',serif;font-size:48px;color:var(--amber);margin-bottom:8px;">89%</div>
+        <div style="font-size:15px;color:rgba(255,255,255,0.7);margin-bottom:28px;">quiz completion rate in the 2025 pilot cohort</div>
+        <div style="font-family:'Fraunces',serif;font-size:48px;color:#F97316;margin-bottom:8px;">4</div>
+        <div style="font-size:15px;color:rgba(255,255,255,0.7);">weekly sessions running in Agege LGA every Thursday in 2026</div>
       </div>
     </div>
   </section>
 
-  <section class="section" style="background:var(--surface-2)">
-    <div class="max-w section-center">
-      <div class="section-tag">Our mission</div>
-      <h2>Technology for human empowerment</h2>
-      <p class="section-sub">We believe that financial literacy, business skills, and market knowledge shouldn't depend on having a smartphone, a data plan, or a university degree.</p>
-      <div class="mission-cards">
-        <div class="mission-card">
-          <div class="icon">🎯</div>
-          <h3>Meet people where they are</h3>
-          <p>WhatsApp is already on 2 billion phones. We don't ask communities to adopt new technology — we bring training to the tool they already use and trust.</p>
-        </div>
-        <div class="mission-card">
-          <div class="icon">🤝</div>
-          <h3>Free for social good</h3>
-          <p>Any NGO, CBO, or government programme working to empower communities gets our full platform for free. Impact shouldn't be paywalled.</p>
-        </div>
-        <div class="mission-card">
-          <div class="icon">📊</div>
-          <h3>Evidence-based everything</h3>
-          <p>We track what works. Every quiz, every explanation, every wrong answer feeds data back to improve both the platform and the learning content.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section">
+  <!-- PARTNER SECTION -->
+  <section style="background:var(--ink);padding:52px 5%;text-align:center;">
     <div class="max-w">
-      <div class="section-tag section-center" style="display:block;text-align:center;">Our impact</div>
-      <h2 style="text-align:center;margin-bottom:48px;">Changing lives, one quiz at a time</h2>
-      <div class="impact-grid">
-        <div class="impact-item">
-          <div class="impact-icon">🏪</div>
-          <div>
-            <h3>MSME capacity building</h3>
-            <p>Training market traders, shop owners, and micro-entrepreneurs in financial literacy, record keeping, and business management across Lagos LGAs in partnership with LSETF.</p>
+      <h2 style="color:white;font-size:26px;margin-bottom:28px;">Our founding partner</h2>
+      <div style="background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:var(--radius-lg);padding:32px;max-width:560px;margin:0 auto;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:20px;flex-wrap:wrap;">
+          <img src="/public/lsetf.png" alt="Lagos State Employment Trust Fund" style="height:48px;object-fit:contain;filter:brightness(0) invert(1);opacity:.85;">
+          <div style="width:1px;height:48px;background:rgba(255,255,255,.2);"></div>
+          <img src="/public/elp.png" alt="ELP Foundation" style="height:56px;object-fit:contain;filter:brightness(0) invert(1);opacity:.8;">
+        </div>
+        <p style="font-size:14px;color:rgba(255,255,255,.6);line-height:1.8;">EmpowerBot is built and maintained by ELP Foundation and delivered in partnership with the Lagos State Employment Trust Fund. LSETF provides institutional backing and beneficiary access. ELP Foundation manages the platform, quiz curriculum, and data systems.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TIMELINE -->
+  <section class="section">
+    <div class="max-w" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
+      <div>
+        <div class="section-tag">Partnership timeline</div>
+        <h2 style="font-size:30px;margin-bottom:28px;">From pilot to platform</h2>
+        <div style="position:relative;padding-left:30px;">
+          <div style="position:absolute;left:6px;top:8px;bottom:8px;width:2px;background:var(--border);"></div>
+
+          <div style="position:relative;padding-bottom:32px;">
+            <div style="position:absolute;left:-24px;top:5px;width:13px;height:13px;border-radius:50%;background:var(--green);border:2px solid white;box-shadow:0 0 0 3px var(--green-light);"></div>
+            <div style="font-size:11.5px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">2025 Pilot</div>
+            <div style="font-size:15px;font-weight:500;margin-bottom:6px;">LSETF/ELP Foundation MSME Bootcamp</div>
+            <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;">EmpowerBot deployed across Epe, Ikorodu, and Alimosho. Approximately 120 entrepreneurs completed quiz-based training on business structuring, financial records, and digital marketing. Completion rate: 89 per cent. Top score: 99 per cent.</div>
+          </div>
+
+          <div style="position:relative;padding-bottom:32px;">
+            <div style="position:absolute;left:-24px;top:5px;width:13px;height:13px;border-radius:50%;background:var(--green);border:2px solid white;box-shadow:0 0 0 3px var(--green-light);"></div>
+            <div style="font-size:11.5px;font-weight:600;color:var(--green);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">2026 Current</div>
+            <div style="font-size:15px;font-weight:500;margin-bottom:6px;">MSME Capacity Building, Agege LGA</div>
+            <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;">EmpowerBot is the primary learning tool for the current LSETF/ELP programme running every Thursday from 26 March to 16 April 2026. Topics cover business values and mindset, LSETF loan products, digital marketing, and financial management.</div>
+          </div>
+
+          <div style="position:relative;">
+            <div style="position:absolute;left:-24px;top:5px;width:13px;height:13px;border-radius:50%;background:var(--amber);border:2px solid white;box-shadow:0 0 0 3px var(--amber-light);"></div>
+            <div style="font-size:11.5px;font-weight:600;color:var(--amber);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px;">2026 Onwards</div>
+            <div style="font-size:15px;font-weight:500;margin-bottom:6px;">Opening to other organisations</div>
+            <div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7;">Following the LSETF success, ELP Foundation is making EmpowerBot available to other NGOs, government programmes, and social enterprises. Nonprofits access the full platform for free.</div>
           </div>
         </div>
-        <div class="impact-item">
-          <div class="impact-icon">📱</div>
-          <div>
-            <h3>Consumer rights education</h3>
-            <p>Educating citizens on their digital rights, SLA standards, and complaint processes in collaboration with government regulatory agencies.</p>
+      </div>
+      <div>
+        <div class="section-tag">What EmpowerBot delivers</div>
+        <h2 style="font-size:24px;margin-bottom:22px;">The digital backbone of the programme</h2>
+        <div style="display:flex;flex-direction:column;gap:13px;">
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,.07)'" onmouseout="this.style.boxShadow='none'">
+            <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Participant onboarding</div>
+            <div style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Every participant self-registers via WhatsApp. Business type, location, age, and main challenge are captured automatically and feed M&amp;E reporting.</div>
           </div>
-        </div>
-        <div class="impact-item">
-          <div class="impact-icon">👩‍💼</div>
-          <div>
-            <h3>Women's economic empowerment</h3>
-            <p>Targeted programmes training women entrepreneurs in underserved communities, with AI content customized to their specific businesses and local market conditions.</p>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,.07)'" onmouseout="this.style.boxShadow='none'">
+            <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Quiz-based knowledge assessment</div>
+            <div style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Participants complete quiz modules per training topic. Results per question give facilitators a clear picture of knowledge gaps across the full cohort.</div>
           </div>
-        </div>
-        <div class="impact-item">
-          <div class="impact-icon">🏛️</div>
-          <div>
-            <h3>Government service delivery</h3>
-            <p>Supporting government agencies to measure the effectiveness of public education campaigns through real-time quiz data and M&amp;E dashboards.</p>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,.07)'" onmouseout="this.style.boxShadow='none'">
+            <div style="font-size:14px;font-weight:500;margin-bottom:6px;">AI-powered reinforcement</div>
+            <div style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Wrong answers trigger personalised AI explanations in simple English and Pidgin, using Naira amounts and examples from the participant's own business type.</div>
+          </div>
+          <div style="background:white;border:1px solid var(--border);border-radius:var(--radius);padding:18px;transition:box-shadow .2s;" onmouseover="this.style.boxShadow='0 8px 24px rgba(0,0,0,.07)'" onmouseout="this.style.boxShadow='none'">
+            <div style="font-size:14px;font-weight:500;margin-bottom:6px;">Live data for reporting</div>
+            <div style="font-size:13px;color:var(--ink-soft);line-height:1.7;">The admin dashboard gives real-time access to completion rates, scores, and wrong answer patterns. All exportable for M&amp;E submissions.</div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- IMPACT NUMBERS -->
   <section class="section" style="background:var(--surface-2)">
     <div class="max-w section-center">
-      <div class="section-tag">Our partners</div>
-      <h2>Working alongside organizations that matter</h2>
-      <p class="section-sub" style="margin-bottom:32px;">We partner with government agencies, development organizations, and NGOs to deliver impact at scale.</p>
-      <div class="partners-strip">
-        <span class="partner-pill">LSETF</span>
-        <span class="partner-pill">IPA Nigeria</span>
-        <span class="partner-pill">NCC</span>
-        <span class="partner-pill">CBN</span>
-        <span class="partner-pill">KADSIPA</span>
-        <span class="partner-pill">ELP Foundation</span>
-        <span class="partner-pill">1864 Research Institute</span>
-        <span class="partner-pill">Universität Münster</span>
+      <div class="section-tag">Impact by numbers</div>
+      <h2 style="margin-bottom:40px;">Results from the LSETF partnership</h2>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;">
+        <div style="text-align:center;padding:28px 16px;background:white;border:1px solid var(--border);border-radius:var(--radius-lg);">
+          <div style="font-family:'Fraunces',serif;font-size:36px;font-weight:600;color:var(--green);">120+</div>
+          <div style="font-size:13px;color:var(--ink-muted);margin-top:5px;line-height:1.5;">entrepreneurs trained across 3 Lagos LGAs in 2025</div>
+        </div>
+        <div style="text-align:center;padding:28px 16px;background:white;border:1px solid var(--border);border-radius:var(--radius-lg);">
+          <div style="font-family:'Fraunces',serif;font-size:36px;font-weight:600;color:var(--green);">89%</div>
+          <div style="font-size:13px;color:var(--ink-muted);margin-top:5px;line-height:1.5;">quiz completion rate in the pilot cohort</div>
+        </div>
+        <div style="text-align:center;padding:28px 16px;background:white;border:1px solid var(--border);border-radius:var(--radius-lg);">
+          <div style="font-family:'Fraunces',serif;font-size:36px;font-weight:600;color:var(--green);">21</div>
+          <div style="font-size:13px;color:var(--ink-muted);margin-top:5px;line-height:1.5;">quiz modules deployed across the programme</div>
+        </div>
+        <div style="text-align:center;padding:28px 16px;background:white;border:1px solid var(--border);border-radius:var(--radius-lg);">
+          <div style="font-family:'Fraunces',serif;font-size:36px;font-weight:600;color:var(--green);">4</div>
+          <div style="font-size:13px;color:var(--ink-muted);margin-top:5px;line-height:1.5;">Agege LGA sessions running in 2026</div>
+        </div>
       </div>
     </div>
   </section>
 
-  <div class="about-quote">
-    <blockquote>"A trader in Agege who never finished secondary school now understands what a limited liability company is — because EmpowerBot explained it using her akara business as the example."</blockquote>
-    <cite>— Programme report, ELP Foundation · Agege LGA Bootcamp 2026</cite>
+  <!-- QUOTE -->
+  <div style="background:linear-gradient(135deg,#0D6B4A 0%,#1A9E6F 100%);padding:64px 5%;text-align:center;">
+    <blockquote style="font-family:'Fraunces',serif;font-size:26px;color:white;max-width:700px;margin:0 auto 18px;line-height:1.55;font-style:italic;">"A market trader who did not complete secondary school now understands what a limited liability company is, because EmpowerBot explained it using her own business as the example."</blockquote>
+    <cite style="font-size:13px;color:rgba(255,255,255,.65);">Programme observation, Agege LGA Capacity Building 2026</cite>
   </div>
 
-  <section class="section">
-    <div class="max-w section-center">
-      <div class="section-tag">The team</div>
-      <h2>Built by researchers who got tired of waiting</h2>
-      <p class="section-sub">We came from academia, development research, and government advisory — and we built the tool we wished existed.</p>
-      <div class="team-grid">
-        <div class="team-card">
-          <div class="team-avatar" style="background:var(--green)">AO</div>
-          <div class="team-name">Abiola Oyebanjo</div>
-          <div class="team-role">Founder &amp; Executive Director</div>
-          <div style="font-size:12px;color:var(--ink-muted);margin-top:6px;">PhD · IPA · Humboldt</div>
-        </div>
-        <div class="team-card">
-          <div class="team-avatar" style="background:var(--blue)">FO</div>
-          <div class="team-name">Faith Oyeneye</div>
-          <div class="team-role">Head of Programme Delivery</div>
-          <div style="font-size:12px;color:var(--ink-muted);margin-top:6px;">ELP Foundation</div>
-        </div>
-        <div class="team-card">
-          <div class="team-avatar" style="background:var(--amber)">CO</div>
-          <div class="team-name">Chidera Okonkwo</div>
-          <div class="team-role">Lead Data Analyst</div>
-          <div style="font-size:12px;color:var(--ink-muted);margin-top:6px;">Power BI · Analytics</div>
-        </div>
-        <div class="team-card">
-          <div class="team-avatar" style="background:var(--coral)">NO</div>
-          <div class="team-name">Dr. Nneka Osadolor</div>
-          <div class="team-role">Research Lead</div>
-          <div style="font-size:12px;color:var(--ink-muted);margin-top:6px;">1864 Research Institute</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <section class="cta-section">
-    <h2>Join the movement</h2>
-    <p>Whether you're an NGO, a government programme, or a social enterprise — if you're training communities, EmpowerBot is for you.</p>
+    <h2>Join the community</h2>
+    <p>Whether you are an NGO, a government programme, or a social enterprise, EmpowerBot is for you.</p>
     <div class="cta-btns">
-      <button class="btn btn-white btn-lg" onclick="showPage('pricing')">Start for free →</button>
-      <button class="btn btn-lg" style="background:rgba(255,255,255,0.15);color:white;border:1.5px solid rgba(255,255,255,0.4)">Contact us</button>
+      <button class="btn btn-white btn-lg" onclick="showPage('pricing')">Start for free</button>
+      <button class="btn btn-lg" style="background:rgba(255,255,255,0.15);color:white;border:1.5px solid rgba(255,255,255,0.4)" onclick="showPage('demo')">See demo</button>
     </div>
   </section>
 
   <footer>
     <div class="footer-grid max-w">
-      <div class="footer-brand"><span class="logo">Empower<em>Bot</em></span><p>WhatsApp-native training for communities across the developing world.</p><div class="nonprofit-banner">🌍 Free forever for nonprofits</div></div>
+      <div class="footer-brand">
+        <span class="logo">Empower<em>Bot</em></span>
+        <p>Powered by ELP Foundation. Partnered with the Lagos State Employment Trust Fund.</p>
+        <div style="display:flex;align-items:center;gap:10px;margin-top:14px;">
+          <img src="/public/lsetf.png" alt="LSETF" style="height:22px;object-fit:contain;opacity:.55;filter:brightness(0) invert(1);">
+          <img src="/public/elp.png" alt="ELP Foundation" style="height:28px;object-fit:contain;opacity:.55;filter:brightness(0) invert(1);">
+        </div>
+        <div class="nonprofit-banner">Free forever for nonprofits</div>
+      </div>
       <div class="footer-col"><h4>Product</h4><a onclick="showPage('features')">Features</a><a onclick="showPage('demo')">Demo</a><a onclick="showPage('pricing')">Pricing</a></div>
-      <div class="footer-col"><h4>Company</h4><a onclick="showPage('about')">About us</a><a>Mission</a><a>Impact</a></div>
-      <div class="footer-col"><h4>Support</h4><a>Help center</a><a>Contact</a><a>Docs</a></div>
+      <div class="footer-col"><h4>Organisation</h4><a onclick="showPage('about')">About us</a><a>Mission</a><a>Impact</a></div>
+      <div class="footer-col"><h4>Support</h4><a>Help centre</a><a>Contact us</a><a>Documentation</a></div>
     </div>
-    <div class="footer-bottom max-w"><span class="footer-copy">© 2026 EmpowerBot. Built with purpose.</span><div class="footer-links"><a>Privacy</a><a>Terms</a><a>Cookies</a></div></div>
+    <div class="footer-bottom max-w">
+      <span class="footer-copy">2026 EmpowerBot. Powered by ELP Foundation.</span>
+      <div class="footer-links"><a>Privacy</a><a>Terms</a><a>Cookies</a></div>
+    </div>
   </footer>
+</div>
 </div>
 
 <script>
@@ -1437,7 +1443,7 @@ function showQuizFeedback(type) {
 
 function showQuizExplain() {
   const div = document.getElementById('quiz-feedback');
-  div.innerHTML += '<div style="background:white;border-radius:0 12px 12px 12px;padding:10px 14px;font-size:12px;max-width:98%;line-height:1.7;margin-top:8px;">Daily reconciliation means checking that the cash in your register matches your sales records every single day 💰<br><br>For your provisions shop, this means: every evening, count your cash and compare to your record book. If they match — perfect! If not — you catch the mistake before it becomes a big problem.<br><br>Wetin you think? Easy to try?</div>';
+  div.innerHTML += '<div style="background:white;border-radius:0 12px 12px 12px;padding:10px 14px;font-size:12px;max-width:98%;line-height:1.7;margin-top:8px;">Daily reconciliation means checking that the cash in your register matches your sales records every single day 💰<br><br>For your provisions shop, this means: every evening, count your cash and compare to your record book. If they match, perfect! If not, you catch the mistake before it becomes a big problem.<br><br>Wetin you think? Easy to try?</div>';
 }
 
 // AI explanation toggle
