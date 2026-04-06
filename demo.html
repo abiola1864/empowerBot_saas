@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Demo — EmpowerBot</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#0D0907;--ink-soft:#3D3730;--ink-muted:#7A7068;--ink-faint:#B5ADA4;--bg:#FAFAF5;--bg2:#F3F2EB;--surface:#FFFFFF;--border:#E4E0D6;--orange:#EA580C;--orange-2:#FB923C;--orange-4:#FFF4EC;--green:#059669;--green-2:#D1FAE5;--blue:#2563EB;--blue-2:#EFF6FF;--r:14px;--r-sm:8px;--r-lg:20px;--r-xl:32px;--t:.22s cubic-bezier(.4,0,.2,1)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:'Syne',sans-serif}
+.max-w{max-width:1160px;margin:0 auto;padding:0 5%}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+@keyframes msgIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--r-sm);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--t);border:none;font-family:'Plus Jakarta Sans',sans-serif;text-decoration:none}
+.btn-primary{background:var(--orange);color:#fff}.btn-primary:hover{background:#C2410C;transform:translateY(-2px);box-shadow:0 6px 20px rgba(234,88,12,.35)}
+.btn-ghost{background:transparent;color:var(--ink-soft);border:1.5px solid var(--border)}.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.btn-ghost-light{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.25)}.btn-ghost-light:hover{background:rgba(255,255,255,.2)}
+.btn-white{background:#fff;color:var(--ink)}.btn-white:hover{background:var(--bg2)}
+.btn-lg{padding:14px 30px;font-size:15px;border-radius:var(--r)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;background:rgba(13,9,7,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,.06)}
+.nav-inner{max-width:1160px;margin:0 auto;padding:0 5%;height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;text-decoration:none}
+.nav-logo em{color:var(--orange);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,.65);transition:color var(--t);text-decoration:none}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-ctas{display:flex;gap:8px}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.nav-burger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all var(--t)}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav{position:fixed;top:62px;left:0;right:0;bottom:0;z-index:190;background:rgba(13,9,7,.97);backdrop-filter:blur(20px);padding:32px 5%;display:flex;flex-direction:column;gap:4px;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.mobile-nav.open{transform:none}
+.mobile-nav a{font-size:22px;font-weight:700;font-family:'Syne',sans-serif;color:rgba(255,255,255,.7);padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);transition:color var(--t);text-decoration:none}
+.mobile-nav .mobile-ctas{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.demo-hero{background:#0D0907;padding:130px 0 60px;position:relative;overflow:hidden}
+.demo-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 60% at 60% 50%,rgba(234,88,12,.1) 0%,transparent 70%);pointer-events:none}
+.dh-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center}
+.dh-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-2);margin-bottom:18px;animation:fadeUp .5s ease both}
+.dh-h{font-size:48px;font-weight:800;letter-spacing:-.04em;color:#fff;line-height:1.1;margin-bottom:16px;animation:fadeUp .6s .1s ease both}
+.dh-sub{font-size:17px;color:rgba(255,255,255,.5);line-height:1.8;margin-bottom:32px;animation:fadeUp .6s .2s ease both}
+.dh-ctas{display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .6s .3s ease both}
+/* DEMO TABS */
+.demo-section{padding:64px 0 80px}
+.demo-tabs{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:44px}
+.demo-tab{padding:12px 24px;font-size:14px;font-weight:600;cursor:pointer;color:var(--ink-muted);border-bottom:2.5px solid transparent;margin-bottom:-2px;transition:all var(--t);font-family:'Plus Jakarta Sans',sans-serif;border:none;background:none}
+.demo-tab:hover{color:var(--ink)}
+.demo-tab.active{color:var(--orange);border-bottom-color:var(--orange)}
+.demo-panel{display:none}
+.demo-panel.active{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+/* WHATSAPP PHONE */
+.wa-phone{width:280px;margin:0 auto;background:#1A1410;border-radius:36px;border:1.5px solid rgba(255,255,255,.08);padding:14px;box-shadow:0 32px 80px rgba(0,0,0,.3)}
+.wa-phone-notch{width:70px;height:18px;background:#0D0907;border-radius:0 0 12px 12px;margin:0 auto 12px}
+.wa-screen{background:#E5DDD5;border-radius:22px;overflow:hidden;min-height:440px}
+.wa-header{background:#075E54;padding:10px 14px;display:flex;align-items:center;gap:10px}
+.wa-av{width:32px;height:32px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff}
+.wa-name{font-size:13px;font-weight:600;color:#fff}
+.wa-online{font-size:10px;color:rgba(255,255,255,.7);display:flex;align-items:center;gap:4px}
+.wa-online::before{content:'';width:5px;height:5px;border-radius:50%;background:#4ADE80;display:inline-block}
+.wa-body{padding:10px;display:flex;flex-direction:column;gap:7px;min-height:360px}
+.msg{padding:8px 11px;font-size:11.5px;line-height:1.55;box-shadow:0 1px 2px rgba(0,0,0,.08);max-width:88%}
+.msg-bot{background:#fff;border-radius:2px 10px 10px 10px}
+.msg-user{background:#D9FDD3;border-radius:10px 2px 10px 10px;margin-left:auto}
+.msg-time{font-size:9.5px;color:#9E9E9E;text-align:right;margin-top:2px}
+.msg-btns{display:flex;gap:4px;flex-wrap:wrap;margin-top:6px}
+.msg-btn{font-size:10.5px;color:#00A884;border:1px solid #00A884;background:transparent;border-radius:18px;padding:3px 10px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.msg-btn:hover,.msg-btn.selected{background:#E8F5E9}
+.typing-ind{display:flex;gap:3px;align-items:center;padding:8px 12px;background:#fff;border-radius:10px;width:fit-content}
+.typing-ind span{width:5px;height:5px;border-radius:50%;background:#9E9E9E}
+.typing-ind span:nth-child(1){animation:typing 1.2s 0s ease infinite}
+.typing-ind span:nth-child(2){animation:typing 1.2s .2s ease infinite}
+.typing-ind span:nth-child(3){animation:typing 1.2s .4s ease infinite}
+/* ANNOTATION PANEL */
+.anno-panel{display:flex;flex-direction:column;gap:20px;padding-top:8px}
+.anno-step{display:flex;gap:16px;align-items:flex-start;opacity:.4;transition:opacity .3s ease}
+.anno-step.active{opacity:1}
+.anno-n{width:32px;height:32px;border-radius:50%;background:var(--orange);color:#fff;font-family:'Syne',sans-serif;font-size:13px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.anno-step.active .anno-n{box-shadow:0 0 0 6px rgba(234,88,12,.12)}
+.anno-text strong{display:block;font-size:14px;font-weight:700;margin-bottom:4px;font-family:'Syne',sans-serif}
+.anno-text p{font-size:13px;color:var(--ink-muted);line-height:1.65}
+/* ADMIN DASHBOARD MOCK */
+.admin-mock{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;box-shadow:var(--shadow)}
+.admin-head{background:var(--bg2);padding:16px 20px;border-bottom:1px solid var(--border);display:flex;gap:12px;align-items:center}
+.admin-title{font-size:14px;font-weight:700}
+.admin-tabs{display:flex;gap:0;padding:0 20px;border-bottom:1px solid var(--border)}
+.at{padding:10px 16px;font-size:12.5px;font-weight:600;color:var(--ink-muted);border-bottom:2px solid transparent;cursor:pointer;transition:all .15s;font-family:'Plus Jakarta Sans',sans-serif;border:none;background:none;margin-bottom:-1px}
+.at.active{color:var(--orange);border-bottom-color:var(--orange)}
+.admin-body{padding:18px 20px}
+.admin-stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:18px}
+.ast{background:var(--bg2);border-radius:var(--r-sm);padding:12px 14px}
+.ast-n{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;letter-spacing:-.03em}
+.ast-l{font-size:11px;color:var(--ink-muted);margin-top:2px}
+.admin-table{width:100%;font-size:12px}
+.admin-table th{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-faint);text-align:left;padding:0 10px 10px 0}
+.admin-table td{padding:8px 10px 8px 0;border-top:1px solid var(--border)}
+.status-pill{font-size:10.5px;font-weight:700;padding:2px 10px;border-radius:20px}
+.done{background:var(--green-2);color:var(--green)}
+.active-pill{background:var(--orange-4);color:var(--orange)}
+.pending{background:var(--bg3);color:var(--ink-muted)}
+.cta-section{background:var(--ink);padding:80px 0;text-align:center;position:relative;overflow:hidden}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(234,88,12,.1) 0%,transparent 70%);pointer-events:none}
+.cta-section h2{font-size:44px;font-weight:800;letter-spacing:-.04em;color:#fff;margin-bottom:14px;position:relative}
+.cta-section p{font-size:16px;color:rgba(255,255,255,.5);max-width:480px;margin:0 auto 36px;line-height:1.8;position:relative}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
+footer{background:#080604;padding:52px 0 24px}
+.foot-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.foot-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;display:block;margin-bottom:10px;text-decoration:none}
+.foot-logo em{color:var(--orange);font-style:normal}
+.foot-desc{font-size:13px;color:rgba(255,255,255,.3);line-height:1.75;max-width:220px}
+.foot-col h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:14px}
+.foot-col a{display:block;font-size:13px;color:rgba(255,255,255,.4);margin-bottom:8px;transition:color var(--t);text-decoration:none}
+.foot-col a:hover{color:var(--orange-2)}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:22px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot-copy{font-size:12.5px;color:rgba(255,255,255,.22)}
+.foot-links{display:flex;gap:18px}
+.foot-links a{font-size:12.5px;color:rgba(255,255,255,.22);text-decoration:none;transition:color var(--t)}
+@media(max-width:768px){
+  .nav-links,.nav-ctas{display:none}.nav-burger{display:flex}
+  .dh-inner{grid-template-columns:1fr}
+  .dh-h{font-size:32px}
+  .demo-panel.active{grid-template-columns:1fr}
+  .wa-phone{width:240px}
+  .admin-stat-row{grid-template-columns:1fr 1fr}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .cta-section h2{font-size:30px}
+}
+</style>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Empower<em>Bot</em></a>
+    <div class="nav-links"><a href="index.html">Home</a><a href="features.html">Features</a><a href="demo.html" class="active">Demo</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+    <div class="nav-ctas"><a href="pricing.html" class="btn btn-ghost-light" style="font-size:13px;padding:8px 16px;">Plans</a><a href="pricing.html" class="btn btn-primary" style="font-size:13px;padding:8px 16px;">Get started →</a></div>
+    <button class="nav-burger" id="navBurger" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="closeMobileNav()">Home</a><a href="features.html" onclick="closeMobileNav()">Features</a><a href="demo.html" onclick="closeMobileNav()">Demo</a><a href="pricing.html" onclick="closeMobileNav()">Pricing</a><a href="about.html" onclick="closeMobileNav()">About</a><a href="blog.html" onclick="closeMobileNav()">Blog</a>
+  <div class="mobile-ctas"><a href="pricing.html" class="btn btn-primary btn-lg" style="justify-content:center;">Get started →</a></div>
+</div>
+
+<section class="demo-hero">
+  <div class="max-w">
+    <div class="dh-inner">
+      <div>
+        <div class="dh-tag"><div style="width:6px;height:6px;border-radius:50%;background:var(--orange-2);display:inline-block;margin-right:8px;"></div>Interactive demo</div>
+        <h1 class="dh-h">See exactly how<br>EmpowerBot works.</h1>
+        <p class="dh-sub">Explore the participant experience, admin dashboard, and AI explanations below — exactly as your cohort will see them.</p>
+        <div class="dh-ctas">
+          <a href="pricing.html" class="btn btn-primary btn-lg">Start free trial</a>
+          <a href="pricing.html" class="btn btn-ghost-light btn-lg">Apply for nonprofit access</a>
+        </div>
+      </div>
+      <div style="animation:fadeUp .8s .25s ease both;">
+        <div style="background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-xl);padding:24px;display:flex;flex-direction:column;gap:14px;">
+          <div style="font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.4);">What you'll see in this demo</div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><div style="width:28px;height:28px;border-radius:8px;background:rgba(234,88,12,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#FB923C" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/></svg></div><div><div style="font-size:13.5px;font-weight:600;color:#fff;">The WhatsApp experience</div><div style="font-size:12.5px;color:rgba(255,255,255,.45);">How participants take quizzes and get AI help</div></div></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><div style="width:28px;height:28px;border-radius:8px;background:rgba(5,150,105,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div><div style="font-size:13.5px;font-weight:600;color:#fff;">The admin dashboard</div><div style="font-size:12.5px;color:rgba(255,255,255,.45);">Live participant tracking, scores, and export</div></div></div>
+          <div style="display:flex;gap:12px;align-items:flex-start;"><div style="width:28px;height:28px;border-radius:8px;background:rgba(37,99,235,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="2"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/><circle cx="5" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/><line x1="12" y1="10" x2="6.5" y2="5.5"/><line x1="12" y1="10" x2="17.5" y2="5.5"/><line x1="12" y1="14" x2="6.5" y2="18.5"/><line x1="12" y1="14" x2="17.5" y2="18.5"/></svg></div><div><div style="font-size:13.5px;font-weight:600;color:#fff;">The AI in action</div><div style="font-size:12.5px;color:rgba(255,255,255,.45);">Context-aware explanations in Pidgin</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="demo-section">
+  <div class="max-w">
+    <div class="demo-tabs">
+      <button class="demo-tab active" onclick="switchTab('participant',this)">Participant view</button>
+      <button class="demo-tab" onclick="switchTab('admin',this)">Admin dashboard</button>
+      <button class="demo-tab" onclick="switchTab('ai',this)">AI explanations</button>
+    </div>
+
+    <!-- PARTICIPANT TAB -->
+    <div class="demo-panel active" id="panel-participant">
+      <div style="display:flex;justify-content:center;">
+        <div class="wa-phone">
+          <div class="wa-phone-notch"></div>
+          <div class="wa-screen">
+            <div class="wa-header">
+              <div class="wa-av">EB</div>
+              <div>
+                <div class="wa-name">EmpowerBot</div>
+                <div class="wa-online">Online</div>
+              </div>
+            </div>
+            <div class="wa-body" id="demoChat">
+              <div class="msg msg-bot" style="animation:msgIn .4s .1s ease both;opacity:0">
+                Welcome back, Amina! 👋<br>Ready for Quiz 4: <strong>Managing Business Finances</strong>?<br><br>Your current rank: <strong>🥇 #1 in cohort</strong>
+                <div class="msg-btns">
+                  <button class="msg-btn" onclick="startQuiz()">▶ Start quiz</button>
+                  <button class="msg-btn" onclick="showScores()">📊 My scores</button>
+                </div>
+                <div class="msg-time">11:02 AM ✓✓</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="anno-panel" id="participantAnno">
+        <div class="anno-step active" id="as1">
+          <div class="anno-n">1</div>
+          <div class="anno-text"><strong>Friendly, personalised greeting</strong><p>EmpowerBot greets participants by name, shows their current ranking, and presents clear next steps. No menus, no navigation — just conversation.</p></div>
+        </div>
+        <div class="anno-step" id="as2">
+          <div class="anno-n">2</div>
+          <div class="anno-text"><strong>Button-based answers — no typing</strong><p>Every question shows tap-to-answer buttons. Works on the most basic Android phone. No typing skills required.</p></div>
+        </div>
+        <div class="anno-step" id="as3">
+          <div class="anno-n">3</div>
+          <div class="anno-text"><strong>Instant AI explanation on wrong answers</strong><p>Wrong answer? The AI explains immediately — using the participant's own business type as the example. In Pidgin if they prefer.</p></div>
+        </div>
+        <div class="anno-step" id="as4">
+          <div class="anno-n">4</div>
+          <div class="anno-text"><strong>Score and encouragement at the end</strong><p>Quiz complete. Score shown. Leaderboard updated. The next module unlocked. All in one smooth conversation.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ADMIN TAB -->
+    <div class="demo-panel" id="panel-admin">
+      <div>
+        <div class="admin-mock">
+          <div class="admin-head">
+            <div style="font-size:18px;">📊</div>
+            <div>
+              <div class="admin-title">Agege MSME Programme · Cohort 2026</div>
+              <div style="font-size:12px;color:var(--ink-muted);">250 active participants · Session 4 of 5</div>
+            </div>
+            <div style="margin-left:auto;display:flex;gap:8px;">
+              <button style="font-size:12px;background:var(--green);color:#fff;border:none;padding:6px 14px;border-radius:8px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;font-weight:600;">↓ Export CSV</button>
+            </div>
+          </div>
+          <div class="admin-tabs">
+            <button class="at active">Overview</button>
+            <button class="at">Participants</button>
+            <button class="at">Analytics</button>
+          </div>
+          <div class="admin-body">
+            <div class="admin-stat-row">
+              <div class="ast"><div class="ast-n" style="color:var(--orange);">250</div><div class="ast-l">Active participants</div></div>
+              <div class="ast"><div class="ast-n" style="color:var(--green);">89%</div><div class="ast-l">Avg completion rate</div></div>
+              <div class="ast"><div class="ast-n" style="color:var(--blue);">76%</div><div class="ast-l">Avg score</div></div>
+              <div class="ast"><div class="ast-n" style="color:var(--amber);">Q4</div><div class="ast-l">Current module</div></div>
+            </div>
+            <table class="admin-table">
+              <thead><tr><th>Participant</th><th>Score</th><th>Quiz</th><th>Status</th></tr></thead>
+              <tbody>
+                <tr><td>Amina Bakare</td><td style="color:var(--green);font-weight:600;">99%</td><td>Q4</td><td><span class="status-pill done">Complete</span></td></tr>
+                <tr><td>Chidi Okonkwo</td><td style="color:var(--green);font-weight:600;">94%</td><td>Q4</td><td><span class="status-pill active-pill">In progress</span></td></tr>
+                <tr><td>Fatimah Aliyu</td><td style="color:var(--amber);font-weight:600;">72%</td><td>Q3</td><td><span class="status-pill active-pill">In progress</span></td></tr>
+                <tr><td>Emeka Eze</td><td style="color:var(--ink-muted);font-weight:600;">—</td><td>Q1</td><td><span class="status-pill pending">Not started</span></td></tr>
+              </tbody>
+            </table>
+            <div style="margin-top:14px;padding:12px;background:rgba(234,88,12,.06);border:1px solid rgba(234,88,12,.15);border-radius:var(--r-sm);font-size:12.5px;color:var(--orange);">
+              ⚠️ <strong>Knowledge gap alert:</strong> 72% of participants failed Q4 — "Record keeping frequency". Consider reinforcing this in your next session.
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="anno-panel">
+        <div class="anno-step active">
+          <div class="anno-n">1</div>
+          <div class="anno-text"><strong>Live cohort overview</strong><p>See all participants, scores, and completion status in real time. Filter by status, quiz, or score range.</p></div>
+        </div>
+        <div class="anno-step active">
+          <div class="anno-n">2</div>
+          <div class="anno-text"><strong>Knowledge gap alerts</strong><p>The platform flags which questions failed most across the cohort — so you can reinforce topics in your next facilitation session.</p></div>
+        </div>
+        <div class="anno-step active">
+          <div class="anno-n">3</div>
+          <div class="anno-text"><strong>One-click M&amp;E export</strong><p>Hit Export CSV and get a file with every field your donor or LSETF report template expects — pre-formatted, no manual work.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI TAB -->
+    <div class="demo-panel" id="panel-ai">
+      <div style="display:flex;justify-content:center;">
+        <div class="wa-phone">
+          <div class="wa-phone-notch"></div>
+          <div class="wa-screen">
+            <div class="wa-header">
+              <div class="wa-av">EB</div>
+              <div><div class="wa-name">EmpowerBot AI</div><div class="wa-online">Online</div></div>
+            </div>
+            <div class="wa-body">
+              <div class="msg msg-user" style="animation:msgIn .4s .1s ease both;opacity:0">B<div class="msg-time">2:14 PM ✓</div></div>
+              <div class="msg msg-bot" style="animation:msgIn .4s .5s ease both;opacity:0">❌ Wrong. Correct answer: <strong>A) Daily</strong><div class="msg-time">2:14 PM ✓✓</div></div>
+              <div class="msg msg-bot" style="animation:msgIn .4s .9s ease both;opacity:0">
+                Amina, make I explain am properly 😊<br><br>
+                For your <strong>provisions shop</strong>, you suppose count your cash <strong>every evening</strong> before you close. Write down: how much you start with, how much come in, how much go out, how much remain.<br><br>
+                If you do am weekly instead, and someone thief ₦2,000 small small every day — by Sunday you don lose ₦14,000 and you no go know how e happen! 😅
+                <div class="msg-time">2:14 PM ✓✓</div>
+              </div>
+              <div class="msg msg-user" style="animation:msgIn .4s 1.4s ease both;opacity:0">But what if no money dey at end of day?<div class="msg-time">2:15 PM ✓</div></div>
+              <div class="typing-ind" style="animation:msgIn .3s 1.8s ease both;opacity:0"><span></span><span></span><span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="anno-panel">
+        <div class="anno-step active">
+          <div class="anno-n">1</div>
+          <div class="anno-text"><strong>Wrong answer triggers the AI instantly</strong><p>No delay, no generic message. The AI builds an explanation around the participant's registered business type — provisions shop, fashion, food vendor, etc.</p></div>
+        </div>
+        <div class="anno-step active">
+          <div class="anno-n">2</div>
+          <div class="anno-text"><strong>Pidgin + Naira = real understanding</strong><p>The AI doesn't use textbook English. It talks the way traders talk — with real naira amounts, real scenarios, and a warm, encouraging tone.</p></div>
+        </div>
+        <div class="anno-step active">
+          <div class="anno-n">3</div>
+          <div class="anno-text"><strong>Follow-up questions answered in context</strong><p>Participants ask natural follow-ups ("but what if...?") and the AI responds with full context from the session. No dead ends.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="max-w">
+    <h2 class="reveal">Ready to run your programme?</h2>
+    <p class="reveal">14-day trial on paid plans. Free forever for nonprofits. No credit card required.</p>
+    <div class="cta-btns reveal"><a href="pricing.html" class="btn btn-white btn-lg" style="width:auto;">View all plans</a><a href="pricing.html" class="btn btn-ghost-light btn-lg" style="width:auto;">Nonprofit access →</a></div>
+  </div>
+</section>
+
+<footer>
+  <div class="max-w">
+    <div class="foot-grid">
+      <div><a class="foot-logo" href="index.html">Empower<em>Bot</em></a><p class="foot-desc">AI-powered training on WhatsApp. Learning outcomes for small businesses.</p></div>
+      <div class="foot-col"><h4>Product</h4><a href="features.html">Features</a><a href="demo.html">Demo</a><a href="pricing.html">Pricing</a></div>
+      <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+      <div class="foot-col"><h4>Support</h4><a href="#">Help</a><a href="#">Contact</a></div>
+    </div>
+    <div class="foot-bottom"><span class="foot-copy">© 2026 EmpowerBot · Built by ELP Foundation</span><div class="foot-links"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
+  </div>
+</footer>
+
+<script>
+const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>revObs.observe(el));
+function switchTab(tab,btn){document.querySelectorAll('.demo-tab').forEach(b=>b.classList.remove('active'));document.querySelectorAll('.demo-panel').forEach(p=>p.classList.remove('active'));btn.classList.add('active');document.getElementById('panel-'+tab).classList.add('active');}
+let quizStep=0;
+function startQuiz(){
+  const chat=document.getElementById('demoChat');
+  if(quizStep>0)return;quizStep=1;
+  const q=document.createElement('div');
+  q.className='msg msg-user';q.style.cssText='animation:msgIn .3s ease both;opacity:0';
+  q.innerHTML='▶ Start quiz<div class="msg-time">11:02 AM ✓</div>';
+  chat.appendChild(q);
+  setTimeout(()=>{
+    const r=document.createElement('div');
+    r.className='msg msg-bot';r.style.cssText='animation:msgIn .3s ease both;opacity:0';
+    r.innerHTML='<strong>Q1 of 5 — Financial Records</strong><br><br>How often should you reconcile your cash with your records?<br><br><div class="msg-btns"><button class="msg-btn" onclick="answerQuiz(false)">A) Weekly</button><button class="msg-btn" onclick="answerQuiz(true)">B) Daily</button><button class="msg-btn" onclick="answerQuiz(false)">C) Monthly</button></div><div class="msg-time">11:02 AM ✓✓</div>';
+    chat.appendChild(r);
+    document.getElementById('as2').classList.add('active');
+    chat.scrollTop=chat.scrollHeight;
+  },700);
+}
+function answerQuiz(correct){
+  const chat=document.getElementById('demoChat');
+  if(quizStep!==1)return;quizStep=2;
+  const choice=correct?'B) Daily':'A) Weekly';
+  const ua=document.createElement('div');ua.className='msg msg-user';ua.style.cssText='animation:msgIn .3s ease both;opacity:0';
+  ua.innerHTML=choice+'<div class="msg-time">11:03 AM ✓</div>';chat.appendChild(ua);
+  setTimeout(()=>{
+    const r=document.createElement('div');r.className='msg msg-bot';r.style.cssText='animation:msgIn .3s ease both;opacity:0';
+    if(correct){r.innerHTML='✅ <strong>Correct!</strong> Daily reconciliation means you catch problems the same day they happen. +10 points!<br><br>📊 <strong>Your score: 10/10 so far</strong><br>Leaderboard rank: 🥇 #1 (unchanged!)<div class="msg-time">11:03 AM ✓✓</div>';}
+    else{r.innerHTML='❌ <strong>Wrong.</strong> Correct: B) Daily<br><br>Make I explain — for your provisions shop, you suppose count cash <strong>every evening</strong>. If you do weekly and someone thief ₦500 daily, by Sunday you don lose ₦3,500!<br><br><div class="msg-btns"><button class="msg-btn">Understand!</button><button class="msg-btn">Continue →</button></div><div class="msg-time">11:03 AM ✓✓</div>';}
+    chat.appendChild(r);
+    document.getElementById('as3').classList.add('active');
+    document.getElementById('as4').classList.add('active');
+    chat.scrollTop=chat.scrollHeight;
+  },800);
+}
+function showScores(){
+  const chat=document.getElementById('demoChat');
+  const ua=document.createElement('div');ua.className='msg msg-user';ua.style.cssText='animation:msgIn .3s ease both;opacity:0';
+  ua.innerHTML='📊 My scores<div class="msg-time">11:02 AM ✓</div>';chat.appendChild(ua);
+  setTimeout(()=>{
+    const r=document.createElement('div');r.className='msg msg-bot';r.style.cssText='animation:msgIn .3s ease both;opacity:0';
+    r.innerHTML='<strong>Your Progress — Amina Bakare</strong><br><br>Q1: ✅ 90% · Q2: ✅ 85% · Q3: ✅ 99%<br><br>🏆 <strong>Overall: 91%</strong> · Rank: #1 in cohort<br><br>Next: Q4 — Managing Business Finances<div class="msg-time">11:02 AM ✓✓</div>';
+    chat.appendChild(r);chat.scrollTop=chat.scrollHeight;
+  },600);
+}
+function toggleMobileNav(){document.getElementById('mobileNav').classList.toggle('open');document.getElementById('navBurger').classList.toggle('open');document.body.style.overflow=document.getElementById('mobileNav').classList.contains('open')?'hidden':'';}
+function closeMobileNav(){document.getElementById('mobileNav').classList.remove('open');document.getElementById('navBurger').classList.remove('open');document.body.style.overflow='';}
+</script>
+</body>
+</html>

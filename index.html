@@ -3,1372 +3,1093 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EmpowerBot — WhatsApp Training Platform</title>
-<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,500;12..96,600;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<title>EmpowerBot — AI Learning Outcomes for Small Businesses</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-:root {
-  --ink: #1A1208;
-  --ink-soft: #44403C;
-  --ink-muted: #78716C;
-  --ink-faint: #A8A29E;
-  --bg: #FAFAF7;
-  --bg2: #F5F5F0;
-  --bg3: #EFEFE8;
-  --surface: #FFFFFF;
-  --border: #E7E5E0;
-  --border-soft: #F0EFE9;
-  --orange: #EA580C;
-  --orange-light: #FFF0E6;
-  --orange-mid: #FB923C;
-  --orange-dark: #C2410C;
-  --green: #16A34A;
-  --green-light: #F0FDF4;
-  --green-mid: #22C55E;
-  --green-dark: #15803D;
-  --amber: #D97706;
-  --amber-light: #FFFBEB;
-  --blue: #2563EB;
-  --blue-light: #EFF6FF;
-  --r-sm: 8px;
-  --r: 14px;
-  --r-lg: 22px;
-  --r-xl: 32px;
+:root{
+  --ink:#0D0907;--ink-soft:#3D3730;--ink-muted:#7A7068;--ink-faint:#B5ADA4;
+  --bg:#FAFAF5;--bg2:#F3F2EB;--bg3:#ECEAE0;--surface:#FFFFFF;
+  --border:#E4E0D6;--border-soft:#EDEBE3;
+  --orange:#EA580C;--orange-2:#FB923C;--orange-3:#FED7AA;--orange-4:#FFF4EC;
+  --amber:#D97706;--amber-2:#FEF3C7;
+  --green:#059669;--green-2:#D1FAE5;
+  --blue:#2563EB;--blue-2:#EFF6FF;
+  --r:14px;--r-sm:8px;--r-lg:20px;--r-xl:32px;
+  --shadow-sm:0 1px 4px rgba(0,0,0,.06);
+  --shadow:0 4px 20px rgba(0,0,0,.08);
+  --shadow-lg:0 12px 48px rgba(0,0,0,.12);
+  --t:.22s cubic-bezier(.4,0,.2,1);
 }
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body { font-family: 'Instrument Sans', sans-serif; color: var(--ink); background: var(--bg); line-height: 1.6; -webkit-font-smoothing: antialiased; }
-h1, h2, h3, .serif { font-family: 'Bricolage Grotesque', sans-serif; }
-.page { display: none; }
-.page.active { display: block; }
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,.display{font-family:'Syne',sans-serif}
+img{max-width:100%;display:block}
+a{color:inherit;text-decoration:none}
+
+/* ─── KEYFRAMES ─── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes slideRight{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes slideLeft{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:translateX(0)}}
+@keyframes scaleIn{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:scale(1)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes floatYSlow{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes gradBlob{0%,100%{border-radius:60% 40% 70% 30%/50% 60% 40% 50%;transform:rotate(0deg)}33%{border-radius:40% 60% 30% 70%/60% 30% 70% 40%;transform:rotate(120deg)}66%{border-radius:70% 30% 40% 60%/30% 70% 60% 40%;transform:rotate(240deg)}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+@keyframes countUp{from{opacity:0}to{opacity:1}}
+@keyframes shimmer{0%{background-position:-200% 0}100%{background-position:200% 0}}
+@keyframes borderGlow{0%,100%{box-shadow:0 0 0 0 rgba(234,88,12,.3)}50%{box-shadow:0 0 0 8px rgba(234,88,12,.0)}}
+@keyframes rotate{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+
+/* ─── REVEAL ─── */
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-24px);transition:opacity .6s ease,transform .6s ease}
+.reveal-left.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal-right.visible{opacity:1;transform:none}
+.reveal-scale{opacity:0;transform:scale(.94);transition:opacity .55s ease,transform .55s ease}
+.reveal-scale.visible{opacity:1;transform:none}
+.stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}.stagger-4{transition-delay:.4s}.stagger-5{transition-delay:.5s}
+
+/* ─── UTILS ─── */
+.max-w{max-width:1160px;margin:0 auto;padding:0 5%}
+
+/* ─── BUTTONS ─── */
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--r-sm);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--t);border:none;font-family:'Plus Jakarta Sans',sans-serif;letter-spacing:-.01em;white-space:nowrap}
+.btn-primary{background:var(--orange);color:#fff}
+.btn-primary:hover{background:#C2410C;transform:translateY(-2px);box-shadow:0 6px 20px rgba(234,88,12,.35)}
+.btn-primary:active{transform:translateY(0)}
+.btn-ghost{background:transparent;color:var(--ink-soft);border:1.5px solid var(--border)}
+.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.btn-ghost-light{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.25)}
+.btn-ghost-light:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5)}
+.btn-dark{background:var(--ink);color:#fff}
+.btn-dark:hover{background:#1E1912;transform:translateY(-2px)}
+.btn-white{background:#fff;color:var(--ink)}
+.btn-white:hover{background:var(--bg2);transform:translateY(-2px)}
+.btn-lg{padding:14px 30px;font-size:15px;border-radius:var(--r)}
+.btn svg{width:16px;height:16px;flex-shrink:0}
+
+/* ─── TAGS ─── */
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:30px}
+.tag-orange{background:var(--orange-4);color:var(--orange)}
+.tag-green{background:var(--green-2);color:var(--green)}
+.tag-blue{background:var(--blue-2);color:var(--blue)}
+.tag-amber{background:var(--amber-2);color:var(--amber)}
 
 /* ─── NAV ─── */
-nav {
-  position: sticky; top: 0; z-index: 100;
-  background: rgba(250,250,247,0.92);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 5%;
-  display: flex; align-items: center; justify-content: space-between;
-  height: 60px;
-}
-.logo { font-family: 'Bricolage Grotesque', sans-serif; font-size: 20px; font-weight: 800; color: var(--ink); cursor: pointer; letter-spacing: -0.02em; }
-.logo em { color: var(--orange); font-style: normal; }
-.nav-links { display: flex; align-items: center; gap: 28px; }
-.nav-links a { font-size: 14px; font-weight: 500; color: var(--ink-muted); text-decoration: none; cursor: pointer; transition: color .15s; }
-.nav-links a:hover, .nav-links a.active { color: var(--ink); }
-.nav-ctas { display: flex; gap: 8px; align-items: center; }
-.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 18px; border-radius: var(--r-sm); font-size: 14px; font-weight: 600; cursor: pointer; transition: all .15s; text-decoration: none; border: none; font-family: 'Instrument Sans', sans-serif; letter-spacing: -0.01em; }
-.btn-ghost { background: transparent; color: var(--ink-soft); border: 1.5px solid var(--border); }
-.btn-ghost:hover { border-color: var(--orange); color: var(--orange); }
-.btn-primary { background: var(--orange); color: white; }
-.btn-primary:hover { background: var(--orange-dark); transform: translateY(-1px); box-shadow: 0 4px 16px rgba(234,88,12,0.3); }
-.btn-lg { padding: 13px 28px; font-size: 15px; border-radius: var(--r); }
-.btn-outline { background: transparent; color: var(--ink); border: 1.5px solid var(--border); }
-.btn-outline:hover { background: var(--bg2); }
-.btn-dark { background: var(--ink); color: white; }
-.btn-dark:hover { background: #2D2416; transform: translateY(-1px); }
-.btn-white { background: white; color: var(--ink); }
-.btn-white:hover { background: var(--bg2); }
-.btn-green { background: var(--green); color: white; }
-.btn-green:hover { background: var(--green-dark); transform: translateY(-1px); }
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;transition:background var(--t),box-shadow var(--t)}
+.nav.scrolled{background:rgba(13,9,7,.92);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.nav-inner{max-width:1160px;margin:0 auto;padding:0 5%;height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;flex-shrink:0}
+.nav-logo em{color:var(--orange);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,.65);transition:color var(--t)}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-ctas{display:flex;gap:8px;align-items:center;flex-shrink:0}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.nav-burger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all var(--t)}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav{position:fixed;top:62px;left:0;right:0;bottom:0;z-index:190;background:rgba(13,9,7,.97);backdrop-filter:blur(20px);padding:32px 5%;display:flex;flex-direction:column;gap:4px;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.mobile-nav.open{transform:none}
+.mobile-nav a{font-size:22px;font-weight:700;font-family:'Syne',sans-serif;color:rgba(255,255,255,.7);padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);transition:color var(--t)}
+.mobile-nav a:hover{color:#fff}
+.mobile-nav .mobile-ctas{margin-top:24px;display:flex;flex-direction:column;gap:10px}
 
 /* ─── HERO ─── */
-.hero {
-  padding: 72px 5% 60px;
-  background: var(--bg);
-  position: relative; overflow: hidden;
-}
-.hero::before {
-  content: '';
-  position: absolute; top: 0; left: 0; right: 0; bottom: 0;
-  background: radial-gradient(ellipse 70% 60% at 85% 20%, rgba(234,88,12,0.06) 0%, transparent 70%),
-              radial-gradient(ellipse 50% 50% at 10% 80%, rgba(22,163,74,0.05) 0%, transparent 60%);
-  pointer-events: none;
-}
-.hero-inner { max-width: 1140px; margin: 0 auto; }
-.hero-eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 12.5px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--orange); margin-bottom: 22px; }
-.hero-eyebrow::before { content: ''; display: block; width: 24px; height: 2px; background: var(--orange); border-radius: 2px; }
-.hero h1 { font-size: 60px; line-height: 1.05; font-weight: 800; letter-spacing: -0.03em; margin-bottom: 22px; max-width: 700px; }
-.hero h1 .accent { color: var(--orange); position: relative; display: inline-block; }
-.hero-sub { font-size: 17px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 36px; max-width: 520px; }
-.hero-paths { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 52px; }
-.hero-path {
-  display: flex; align-items: center; gap: 14px;
-  background: white;
-  border: 1.5px solid var(--border);
-  border-radius: var(--r);
-  padding: 16px 20px;
-  cursor: pointer;
-  transition: all .2s;
-  min-width: 220px;
-}
-.hero-path:hover { border-color: var(--orange); box-shadow: 0 8px 24px rgba(0,0,0,0.07); transform: translateY(-2px); }
-.hero-path.green:hover { border-color: var(--green); }
-.hero-path-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-.hero-path-text .label { font-size: 13px; font-weight: 600; color: var(--ink); }
-.hero-path-text .sublabel { font-size: 12px; color: var(--ink-muted); margin-top: 1px; }
-.hero-path-arrow { margin-left: auto; color: var(--ink-faint); font-size: 18px; }
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;background:#0D0907;overflow:hidden;padding-top:62px}
+.hero-bg{position:absolute;inset:0;overflow:hidden}
+.hero-blob{position:absolute;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;filter:blur(80px);animation:gradBlob 20s ease-in-out infinite;opacity:.35}
+.blob-1{width:600px;height:600px;background:radial-gradient(circle,rgba(234,88,12,.6) 0%,transparent 70%);top:-100px;right:-100px;animation-delay:0s}
+.blob-2{width:500px;height:500px;background:radial-gradient(circle,rgba(217,119,6,.5) 0%,transparent 70%);bottom:-50px;left:-100px;animation-delay:-7s}
+.blob-3{width:400px;height:400px;background:radial-gradient(circle,rgba(5,150,105,.3) 0%,transparent 70%);top:30%;right:30%;animation-delay:-14s}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%)}
+.hero-inner{position:relative;z-index:10;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:80px 5% 60px;max-width:1160px;margin:0 auto;width:100%}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-2);margin-bottom:24px;animation:fadeIn .8s ease forwards}
+.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--orange-2);animation:pulseDot 2.5s ease-in-out infinite}
+.hero-h1{font-size:58px;line-height:1.05;font-weight:800;letter-spacing:-.04em;color:#fff;margin-bottom:22px;animation:fadeUp .8s .1s ease both}
+.hero-h1 em{color:var(--orange-2);font-style:normal;position:relative}
+.hero-h1 em::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--orange-2);border-radius:2px;animation:fadeIn .5s .8s ease both;opacity:0}
+.hero-sub{font-size:17px;color:rgba(255,255,255,.6);line-height:1.8;margin-bottom:36px;max-width:500px;animation:fadeUp .8s .2s ease both}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap;animation:fadeUp .8s .3s ease both}
+.hero-metrics{display:flex;gap:0;margin-top:44px;animation:fadeUp .8s .4s ease both}
+.hm-item{display:flex;flex-direction:column;padding:0 28px 0 0;margin-right:28px;border-right:1px solid rgba(255,255,255,.1)}
+.hm-item:last-child{border-right:none;margin-right:0}
+.hm-item:first-child{padding-left:0}
+.hm-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;letter-spacing:-.04em;line-height:1}
+.hm-label{font-size:12px;color:rgba(255,255,255,.45);margin-top:4px}
+.hero-visual{animation:fadeUp .9s .25s ease both;position:relative}
+.hero-phone-wrap{display:flex;justify-content:center;position:relative;animation:floatY 8s ease-in-out infinite}
 
-/* HERO BOTTOM */
-.hero-proof { display: flex; align-items: center; gap: 32px; flex-wrap: wrap; }
-.hero-stat { text-align: left; }
-.hero-stat .num { font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 700; color: var(--ink); letter-spacing: -0.02em; }
-.hero-stat .lbl { font-size: 12px; color: var(--ink-muted); }
-.hero-divider { width: 1px; height: 40px; background: var(--border); }
-.hero-partners { display: flex; align-items: center; gap: 12px; }
-.hero-partners span { font-size: 12px; color: var(--ink-faint); }
+/* PHONE MOCKUP */
+.phone{width:260px;background:#1A1410;border-radius:36px;border:1.5px solid rgba(255,255,255,.08);padding:14px;box-shadow:0 40px 100px rgba(0,0,0,.5),0 0 0 1px rgba(255,255,255,.04),inset 0 1px 0 rgba(255,255,255,.06)}
+.phone-notch{width:70px;height:18px;background:#0D0907;border-radius:0 0 12px 12px;margin:0 auto 12px}
+.phone-screen{background:#E5DDD5;border-radius:22px;overflow:hidden;min-height:380px}
+.wa-head{background:#075E54;padding:10px 14px;display:flex;align-items:center;gap:9px}
+.wa-av{width:30px;height:30px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.wa-name{font-size:13px;font-weight:600;color:#fff}
+.wa-status{font-size:10px;color:rgba(255,255,255,.75)}
+.wa-body{padding:10px 10px;display:flex;flex-direction:column;gap:7px;min-height:320px}
+.msg{padding:8px 11px;font-size:11.5px;line-height:1.55;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.msg-bot{background:#fff;border-radius:2px 10px 10px 10px;max-width:88%;animation:msgIn .4s ease forwards}
+.msg-user{background:#D9FDD3;border-radius:10px 2px 10px 10px;max-width:80%;margin-left:auto;animation:msgIn .4s ease forwards}
+.msg-time{font-size:9.5px;color:#9E9E9E;text-align:right;margin-top:2px}
+.msg-btns{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
+.msg-btn{font-size:10.5px;color:#00A884;border:1px solid #00A884;background:transparent;border-radius:18px;padding:3px 9px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.msg-btn:hover{background:#E8F5E9}
+.typing-ind{display:flex;gap:3px;align-items:center;padding:6px 10px;background:#fff;border-radius:10px;width:fit-content}
+.typing-ind span{width:5px;height:5px;border-radius:50%;background:#9E9E9E}
+.typing-ind span:nth-child(1){animation:typing 1.2s .0s ease infinite}
+.typing-ind span:nth-child(2){animation:typing 1.2s .2s ease infinite}
+.typing-ind span:nth-child(3){animation:typing 1.2s .4s ease infinite}
 
-/* DUAL PREVIEW */
-.hero-visual { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-top: 52px; }
-.preview-card {
-  border-radius: var(--r-lg);
-  overflow: hidden;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 24px rgba(0,0,0,0.06);
-}
-.preview-label {
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  padding: 10px 16px;
-  display: flex; align-items: center; gap: 8px;
-  font-size: 12px; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.06em;
-}
-.preview-label-dot { width: 8px; height: 8px; border-radius: 50%; }
-
-/* ADMIN PREVIEW */
-.admin-preview { background: white; padding: 20px; }
-.ap-topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
-.ap-title { font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; font-weight: 700; }
-.ap-export { font-size: 12px; padding: 6px 12px; background: var(--orange-light); color: var(--orange); border-radius: 6px; font-weight: 600; border: none; cursor: pointer; }
-.ap-kpis { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; margin-bottom: 16px; }
-.ap-kpi { background: var(--bg); border: 1px solid var(--border); border-radius: var(--r-sm); padding: 12px; }
-.ap-kpi-val { font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; }
-.ap-kpi-lbl { font-size: 11px; color: var(--ink-muted); margin-top: 2px; }
-.ap-table-head { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; padding: 6px 12px; background: var(--bg2); border-radius: 6px; font-size: 11px; font-weight: 600; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; }
-.ap-row { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; padding: 8px 12px; align-items: center; font-size: 12.5px; border-bottom: 1px solid var(--border-soft); }
-.ap-row:last-child { border-bottom: none; }
-.ap-score-wrap { display: flex; align-items: center; gap: 6px; }
-.ap-bar { flex: 1; height: 4px; background: var(--bg3); border-radius: 4px; overflow: hidden; }
-.ap-bar-fill { height: 100%; background: var(--green); border-radius: 4px; }
-.ap-score-num { font-size: 11px; color: var(--ink-muted); min-width: 26px; }
-.badge { font-size: 10.5px; font-weight: 600; padding: 2px 8px; border-radius: 20px; }
-.badge-green { background: var(--green-light); color: var(--green-dark); }
-.badge-amber { background: var(--amber-light); color: var(--amber); }
-
-/* WHATSAPP PREVIEW */
-.wa-preview { background: #E5DDD5; padding: 14px; }
-.wa-prev-header { background: #075E54; border-radius: 8px 8px 0 0; padding: 10px 14px; display: flex; align-items: center; gap: 10px; margin: -14px -14px 12px; }
-.wa-prev-av { width: 32px; height: 32px; border-radius: 50%; background: #25D366; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 700; color: white; }
-.wa-prev-name { font-size: 13px; font-weight: 600; color: white; }
-.wa-prev-status { font-size: 10px; color: rgba(255,255,255,0.75); }
-.wa-bubble { background: white; border-radius: 2px 12px 12px 12px; padding: 8px 11px; font-size: 12px; line-height: 1.55; max-width: 88%; margin-bottom: 8px; box-shadow: 0 1px 2px rgba(0,0,0,0.07); }
-.wa-bubble.out { background: #D9FDD3; border-radius: 12px 2px 12px 12px; margin-left: auto; }
-.wa-time { font-size: 10px; color: #9E9E9E; text-align: right; margin-top: 2px; }
-.wa-btns { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 6px; }
-.wa-opt { font-size: 11px; color: #00A884; border: 1px solid #00A884; background: transparent; border-radius: 20px; padding: 3px 10px; cursor: pointer; font-family: 'Instrument Sans', sans-serif; }
+/* FLOATING CARDS */
+.float-card{position:absolute;background:rgba(255,255,255,.08);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.12);border-radius:var(--r);padding:12px 16px;font-size:12px;animation:floatYSlow 5s ease-in-out infinite}
+.fc-1{top:-20px;right:-50px;animation-delay:0s}
+.fc-2{bottom:40px;left:-50px;animation-delay:-2.5s}
+.fc-label{color:rgba(255,255,255,.5);font-size:10.5px;margin-bottom:2px}
+.fc-value{font-family:'Syne',sans-serif;font-size:22px;font-weight:800;color:#fff;letter-spacing:-.03em}
+.fc-sub{color:rgba(255,255,255,.4);font-size:10px;margin-top:1px}
 
 /* ─── TICKER ─── */
-.ticker { background: var(--ink); padding: 10px 0; overflow: hidden; white-space: nowrap; }
-.ticker-track { display: inline-flex; animation: ticker 28s linear infinite; }
-.ticker-item { font-size: 12.5px; font-weight: 500; color: rgba(255,255,255,0.6); padding: 0 24px; }
-.ticker-item strong { color: var(--orange-mid); font-weight: 600; }
-.ticker-item::after { content: "·"; margin-left: 24px; color: rgba(255,255,255,0.2); }
-@keyframes ticker { from { transform: translateX(0) } to { transform: translateX(-50%) } }
+.ticker{background:var(--orange);padding:11px 0;overflow:hidden;white-space:nowrap}
+.ticker-track{display:inline-flex;animation:ticker 28s linear infinite}
+.ticker-item{font-size:13px;font-weight:600;color:rgba(255,255,255,.9);padding:0 28px}
+.ticker-item::after{content:"·";margin-left:28px;opacity:.4}
 
 /* ─── SECTIONS ─── */
-.section { padding: 80px 5%; }
-.max-w { max-width: 1140px; margin: 0 auto; }
-.section-tag { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); margin-bottom: 14px; }
-.section-tag::before { content: ''; display: block; width: 16px; height: 2px; background: currentColor; border-radius: 2px; }
-.section h2 { font-size: 40px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 14px; }
-.section-sub { font-size: 16px; color: var(--ink-soft); max-width: 560px; line-height: 1.75; margin-bottom: 52px; }
+.section{padding:88px 0}
+.section-tag{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+.section-tag::before{content:'';width:20px;height:2px;background:var(--orange);border-radius:2px;flex-shrink:0}
+.section h2{font-size:42px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin-bottom:14px}
+.section-sub{font-size:16px;color:var(--ink-muted);line-height:1.8;max-width:560px}
 
-/* ─── AUDIENCE SPLIT ─── */
-.audience-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; background: var(--border); border-radius: var(--r-lg); overflow: hidden; }
-.audience-card { background: var(--surface); padding: 44px; }
-.audience-card:first-child { border-radius: var(--r-lg) 0 0 var(--r-lg); }
-.audience-card:last-child { border-radius: 0 var(--r-lg) var(--r-lg) 0; }
-.aud-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; display: inline-flex; align-items: center; gap: 8px; }
-.aud-label::after { content: ''; display: block; width: 20px; height: 1.5px; background: currentColor; }
-.aud-h { font-family: 'Bricolage Grotesque', sans-serif; font-size: 22px; font-weight: 700; letter-spacing: -0.02em; margin-bottom: 12px; }
-.aud-sub { font-size: 14px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 24px; }
-.aud-list { list-style: none; display: flex; flex-direction: column; gap: 8px; }
-.aud-list li { font-size: 13.5px; color: var(--ink-soft); display: flex; gap: 10px; }
-.aud-list li::before { content: '→'; font-weight: 600; flex-shrink: 0; }
+/* ─── WHAT WE DO / VALUE STRIP ─── */
+.value-strip{background:var(--ink);padding:60px 0}
+.value-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);border-radius:var(--r-lg);overflow:hidden}
+.value-item{background:var(--ink);padding:36px 28px;text-align:left;transition:background var(--t);cursor:default}
+.value-item:hover{background:#1A1510}
+.v-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.v-head{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:8px;letter-spacing:-.01em}
+.v-sub{font-size:13px;color:rgba(255,255,255,.45);line-height:1.65}
 
-/* ─── FEATURE ROWS ─── */
-.feat-rows { display: flex; flex-direction: column; gap: 0; }
-.feat-row {
-  display: grid; grid-template-columns: 3fr 1fr; gap: 32px; align-items: center;
-  padding: 28px 0; border-bottom: 1px solid var(--border);
-  transition: background .15s;
-}
-.feat-row:last-child { border-bottom: none; }
-.feat-row:hover { background: var(--bg2); margin: 0 -24px; padding-left: 24px; padding-right: 24px; }
-.fr-num { font-family: 'Bricolage Grotesque', sans-serif; font-size: 12px; font-weight: 700; color: var(--ink-faint); letter-spacing: 0.06em; margin-bottom: 6px; }
-.fr-head { font-family: 'Bricolage Grotesque', sans-serif; font-size: 19px; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 5px; }
-.fr-sub { font-size: 13.5px; color: var(--ink-muted); line-height: 1.65; }
-.fr-tag { font-size: 11px; padding: 3px 10px; border-radius: 20px; font-weight: 600; display: inline-flex; }
+/* ─── AUDIENCE CARDS ─── */
+.audience-split{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:48px}
+.aud-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-xl);padding:44px;transition:all var(--t);cursor:default;position:relative;overflow:hidden}
+.aud-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity var(--t)}
+.aud-card.orange::before{background:linear-gradient(90deg,var(--orange),var(--amber))}
+.aud-card.green::before{background:linear-gradient(90deg,var(--green),#34D399)}
+.aud-card:hover{border-color:transparent;box-shadow:var(--shadow-lg);transform:translateY(-4px)}
+.aud-card:hover::before{opacity:1}
+.aud-label{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:10px}
+.aud-label::after{content:'';height:1.5px;flex:1;background:currentColor;opacity:.25}
+.aud-h{font-family:'Syne',sans-serif;font-size:24px;font-weight:800;letter-spacing:-.025em;margin-bottom:12px;line-height:1.2}
+.aud-sub{font-size:14px;color:var(--ink-muted);line-height:1.75;margin-bottom:26px}
+.aud-bullets{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
+.aud-bullets li{font-size:14px;color:var(--ink-soft);display:flex;gap:11px;align-items:flex-start;line-height:1.5}
+.aud-check{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.5px}
+
+/* ─── AI SECTION ─── */
+.ai-section{background:linear-gradient(160deg,#0D0907 0%,#1A1008 100%);padding:96px 0;position:relative;overflow:hidden}
+.ai-section::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(234,88,12,.12) 0%,transparent 60%);pointer-events:none}
+.ai-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
+.ai-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-2);margin-bottom:20px}
+.ai-tag-pulse{width:8px;height:8px;border-radius:50%;background:var(--orange-2);animation:pulseDot 2s ease-in-out infinite}
+.ai-h{font-size:42px;font-weight:800;letter-spacing:-.04em;color:#fff;line-height:1.1;margin-bottom:16px}
+.ai-sub{font-size:16px;color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:32px}
+.ai-feats{list-style:none;display:flex;flex-direction:column;gap:14px}
+.ai-feat{display:flex;gap:14px;align-items:flex-start}
+.ai-feat-icon{width:36px;height:36px;border-radius:10px;background:rgba(234,88,12,.15);border:1px solid rgba(234,88,12,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.ai-feat-text strong{display:block;font-size:14px;color:#fff;font-weight:600;margin-bottom:3px}
+.ai-feat-text span{font-size:13px;color:rgba(255,255,255,.45);line-height:1.6}
+/* AI CHAT DEMO */
+.ai-chat-demo{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-xl);overflow:hidden;position:relative}
+.ai-chat-header{background:rgba(255,255,255,.06);padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.06);display:flex;align-items:center;gap:12px}
+.ai-chat-dot{width:10px;height:10px;border-radius:50%;background:var(--orange-2);animation:pulseDot 2s ease-in-out infinite}
+.ai-chat-title{font-size:13px;font-weight:600;color:rgba(255,255,255,.7)}
+.ai-chat-badge{margin-left:auto;font-size:10.5px;font-weight:600;padding:3px 10px;border-radius:20px;background:rgba(234,88,12,.2);color:var(--orange-2)}
+.ai-chat-body{padding:20px;display:flex;flex-direction:column;gap:12px;min-height:340px}
+.ai-msg{border-radius:var(--r-sm);padding:12px 14px;font-size:13px;line-height:1.65}
+.ai-msg.bot{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);color:rgba(255,255,255,.8);border-radius:2px 12px 12px 12px;max-width:90%}
+.ai-msg.user{background:rgba(234,88,12,.2);border:1px solid rgba(234,88,12,.15);color:rgba(255,255,255,.9);border-radius:12px 2px 12px 12px;max-width:80%;align-self:flex-end}
+.ai-msg.thinking{background:rgba(255,255,255,.04);color:rgba(255,255,255,.4);font-style:italic;font-size:12px;max-width:70%;display:flex;align-items:center;gap:8px}
+.ai-highlight{color:var(--orange-2);font-weight:600}
 
 /* ─── HOW IT WORKS ─── */
-.hiw-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 2px; background: var(--border); border-radius: var(--r-lg); overflow: hidden; }
-.hiw-step { background: var(--surface); padding: 32px 24px; }
-.hiw-n { font-family: 'Bricolage Grotesque', sans-serif; font-size: 40px; font-weight: 800; color: var(--bg3); letter-spacing: -0.04em; margin-bottom: 16px; line-height: 1; }
-.hiw-step h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 16px; font-weight: 700; letter-spacing: -0.01em; margin-bottom: 8px; }
-.hiw-step p { font-size: 13px; color: var(--ink-muted); line-height: 1.65; }
+.hiw-section{background:var(--bg2);padding:88px 0}
+.hiw-steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:52px;position:relative}
+.hiw-steps::before{content:'';position:absolute;top:28px;left:12%;right:12%;height:1.5px;background:linear-gradient(90deg,transparent,var(--border),var(--border),transparent)}
+.hiw-step{text-align:center;padding:0 16px}
+.hiw-step-num{width:56px;height:56px;border-radius:50%;background:var(--orange);color:#fff;font-family:'Syne',sans-serif;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;position:relative;z-index:1;box-shadow:0 0 0 8px rgba(234,88,12,.1),0 0 0 16px rgba(234,88,12,.05);transition:all var(--t)}
+.hiw-step:hover .hiw-step-num{transform:scale(1.1);box-shadow:0 0 0 12px rgba(234,88,12,.1)}
+.hiw-step h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:8px;letter-spacing:-.01em}
+.hiw-step p{font-size:13px;color:var(--ink-muted);line-height:1.65}
+
+/* ─── SIX THINGS (EXPLORATORY) ─── */
+.things-section{padding:88px 0}
+.things-grid{margin-top:52px;display:flex;flex-direction:column;gap:0}
+.thing-item{border-top:1px solid var(--border);cursor:pointer;transition:all var(--t)}
+.thing-item:last-child{border-bottom:1px solid var(--border)}
+.thing-head{display:grid;grid-template-columns:56px 1fr auto;gap:20px;align-items:center;padding:24px 0;transition:padding var(--t)}
+.thing-head:hover{padding-left:8px;padding-right:8px}
+.thing-item.active .thing-head{padding-left:8px;padding-right:8px;background:var(--bg2);border-radius:var(--r-sm)}
+.thing-n{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--ink-faint);letter-spacing:.04em}
+.thing-h{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.02em;transition:color var(--t)}
+.thing-item:hover .thing-h,.thing-item.active .thing-h{color:var(--orange)}
+.thing-arrow{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--ink-faint);transition:all var(--t);flex-shrink:0}
+.thing-item:hover .thing-arrow,.thing-item.active .thing-arrow{border-color:var(--orange);color:var(--orange);background:var(--orange-4)}
+.thing-item.active .thing-arrow svg{transform:rotate(45deg)}
+.thing-arrow svg{transition:transform var(--t);width:14px;height:14px}
+.thing-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .4s ease}
+.thing-item.active .thing-body{grid-template-rows:1fr}
+.thing-body-inner{overflow:hidden}
+.thing-content{padding:0 0 28px 76px;display:grid;grid-template-columns:1fr 1fr;gap:40px;align-items:start}
+.thing-desc{font-size:15px;color:var(--ink-soft);line-height:1.8;margin-bottom:16px}
+.thing-tags{display:flex;gap:6px;flex-wrap:wrap}
+.thing-visual{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;font-size:13px}
 
 /* ─── STATS ─── */
-.stats-bar { background: var(--ink); padding: 52px 5%; }
-.stats-grid { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: repeat(4,1fr); gap: 0; }
-.stat-item { padding: 0 32px; text-align: left; border-right: 1px solid rgba(255,255,255,0.08); }
-.stat-item:first-child { padding-left: 0; }
-.stat-item:last-child { border-right: none; }
-.stat-n { font-family: 'Bricolage Grotesque', sans-serif; font-size: 44px; font-weight: 800; color: var(--orange-mid); letter-spacing: -0.04em; line-height: 1; }
-.stat-l { font-size: 13px; color: rgba(255,255,255,0.5); margin-top: 6px; }
+.stats-section{background:var(--ink);padding:64px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
+.stat-item{padding:0 36px;border-right:1px solid rgba(255,255,255,.07)}
+.stat-item:first-child{padding-left:0}
+.stat-item:last-child{border-right:none}
+.stat-n{font-family:'Syne',sans-serif;font-size:52px;font-weight:800;letter-spacing:-.05em;line-height:1;color:var(--orange-2)}
+.stat-suf{font-size:28px}
+.stat-l{font-size:13px;color:rgba(255,255,255,.45);margin-top:8px;line-height:1.5}
+
+/* ─── BLOG PREVIEW ─── */
+.blog-section{padding:88px 0}
+.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
+.blog-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t);cursor:pointer}
+.blog-card:hover{transform:translateY(-6px);box-shadow:var(--shadow-lg);border-color:transparent}
+.blog-img{height:180px;overflow:hidden;position:relative}
+.blog-img-inner{width:100%;height:100%;transition:transform .4s ease;display:flex;align-items:center;justify-content:center;font-size:40px}
+.blog-card:hover .blog-img-inner{transform:scale(1.06)}
+.blog-body{padding:22px}
+.blog-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.blog-tag{font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
+.blog-date{font-size:12px;color:var(--ink-faint)}
+.blog-card h3{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.3;margin-bottom:8px;transition:color var(--t)}
+.blog-card:hover h3{color:var(--orange)}
+.blog-excerpt{font-size:13px;color:var(--ink-muted);line-height:1.65;margin-bottom:16px}
+.blog-read{font-size:12.5px;font-weight:600;color:var(--orange);display:flex;align-items:center;gap:5px}
+.blog-read-time{font-size:12px;color:var(--ink-faint)}
 
 /* ─── TESTIMONIALS ─── */
-.testi-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
-.testi-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r-lg); padding: 28px; }
-.testi-stars { display: flex; gap: 2px; margin-bottom: 14px; }
-.testi-star { width: 12px; height: 12px; background: var(--amber); clip-path: polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%); }
-.testi-text { font-size: 14px; color: var(--ink-soft); line-height: 1.75; font-style: italic; margin-bottom: 20px; }
-.testi-from { display: flex; align-items: center; gap: 10px; }
-.testi-av { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 700; color: white; flex-shrink: 0; }
-.testi-name { font-size: 13px; font-weight: 600; }
-.testi-org { font-size: 12px; color: var(--ink-muted); }
-
-/* ─── PRICING ─── */
-.price-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 16px; align-items: start; }
-.price-card { background: var(--surface); border: 1.5px solid var(--border); border-radius: var(--r-lg); padding: 28px; transition: all .2s; }
-.price-card.featured { border-color: var(--orange); background: white; position: relative; box-shadow: 0 8px 32px rgba(234,88,12,0.12); }
-.price-badge { position: absolute; top: -13px; left: 50%; transform: translateX(-50%); background: var(--orange); color: white; font-size: 11px; font-weight: 700; padding: 3px 14px; border-radius: 20px; letter-spacing: 0.04em; white-space: nowrap; }
-.price-tier { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); margin-bottom: 10px; }
-.price-amount { font-family: 'Bricolage Grotesque', sans-serif; font-size: 38px; font-weight: 800; letter-spacing: -0.04em; color: var(--ink); line-height: 1; }
-.price-amount sup { font-size: 18px; vertical-align: super; }
-.price-period { font-size: 13px; color: var(--ink-muted); }
-.price-desc { font-size: 13px; color: var(--ink-soft); line-height: 1.65; margin: 12px 0 20px; }
-.price-hr { height: 1px; background: var(--border); margin: 18px 0; }
-.price-feats { list-style: none; display: flex; flex-direction: column; gap: 9px; margin-bottom: 24px; }
-.price-feats li { font-size: 13px; color: var(--ink-soft); display: flex; gap: 8px; align-items: flex-start; }
-.pf-y { color: var(--green); font-weight: 700; flex-shrink: 0; }
-.pf-n { color: var(--ink-faint); flex-shrink: 0; }
-.price-note { font-size: 11.5px; color: var(--ink-faint); text-align: center; margin-top: 8px; }
-
-/* ─── DEMO ─── */
-.demo-hero { background: var(--ink); padding: 72px 5% 52px; color: white; }
-.demo-hero h1 { font-size: 46px; font-weight: 800; letter-spacing: -0.03em; color: white; margin-bottom: 14px; }
-.demo-hero p { font-size: 16px; color: rgba(255,255,255,0.65); max-width: 520px; margin-bottom: 32px; line-height: 1.75; }
-.demo-tabs { display: flex; gap: 4px; flex-wrap: wrap; }
-.demo-tab { padding: 9px 20px; border-radius: 30px; font-size: 13.5px; font-weight: 600; cursor: pointer; transition: all .15s; border: 1.5px solid rgba(255,255,255,0.15); color: rgba(255,255,255,0.6); background: transparent; font-family: 'Instrument Sans', sans-serif; }
-.demo-tab:hover { border-color: rgba(255,255,255,0.3); color: white; }
-.demo-tab.active { background: white; color: var(--ink); border-color: white; }
-.demo-content { padding: 56px 5%; max-width: 1140px; margin: 0 auto; }
-.demo-panel { display: none; }
-.demo-panel.active { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
-.demo-panel.full { grid-template-columns: 1fr; }
-.demo-screen { border-radius: var(--r-lg); overflow: hidden; border: 1px solid var(--border); box-shadow: 0 16px 56px rgba(0,0,0,0.1); }
-.demo-bar { background: var(--bg2); padding: 10px 14px; display: flex; align-items: center; gap: 8px; border-bottom: 1px solid var(--border); }
-.demo-dots { display: flex; gap: 5px; }
-.demo-dot { width: 11px; height: 11px; border-radius: 50%; }
-.demo-url { flex: 1; background: white; border: 1px solid var(--border); border-radius: 5px; padding: 3px 10px; font-size: 11.5px; color: var(--ink-muted); }
-.demo-text h3 { font-family: 'Bricolage Grotesque', sans-serif; font-size: 26px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 12px; }
-.demo-text p { font-size: 14.5px; color: var(--ink-soft); line-height: 1.75; margin-bottom: 22px; }
-.demo-bullets { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-.demo-bullets li { display: flex; gap: 10px; align-items: flex-start; font-size: 14px; color: var(--ink-soft); }
-.demo-bullets li span { color: var(--green); font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-
-/* ─── ABOUT ─── */
-.about-hero { background: var(--bg); padding: 80px 5% 60px; }
-.about-inner { max-width: 1140px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-.about-stats-box { background: var(--ink); border-radius: var(--r-xl); padding: 44px; }
-.asb-row { margin-bottom: 28px; }
-.asb-row:last-child { margin-bottom: 0; }
-.asb-num { font-family: 'Bricolage Grotesque', sans-serif; font-size: 52px; font-weight: 800; letter-spacing: -0.04em; line-height: 1; margin-bottom: 4px; }
-.asb-lbl { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
-.timeline { position: relative; padding-left: 28px; }
-.timeline::before { content: ''; position: absolute; left: 5px; top: 10px; bottom: 10px; width: 1.5px; background: var(--border); }
-.tl-item { position: relative; padding-bottom: 28px; }
-.tl-item:last-child { padding-bottom: 0; }
-.tl-dot { position: absolute; left: -23px; top: 5px; width: 11px; height: 11px; border-radius: 50%; background: var(--orange); border: 2px solid var(--bg); box-shadow: 0 0 0 2.5px var(--orange-light); }
-.tl-tag { font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: var(--orange); margin-bottom: 3px; }
-.tl-head { font-family: 'Bricolage Grotesque', sans-serif; font-size: 15px; font-weight: 700; margin-bottom: 5px; }
-.tl-body { font-size: 13px; color: var(--ink-soft); line-height: 1.7; }
+.testi-section{background:var(--bg2);padding:88px 0}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
+.testi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;transition:all var(--t)}
+.testi-card:hover{box-shadow:var(--shadow);transform:translateY(-3px)}
+.testi-stars{display:flex;gap:3px;margin-bottom:14px}
+.star{width:13px;height:13px;background:var(--amber);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.testi-q{font-size:14px;color:var(--ink-soft);line-height:1.75;font-style:italic;margin-bottom:20px}
+.testi-from{display:flex;align-items:center;gap:12px}
+.testi-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.testi-name{font-size:13.5px;font-weight:600}
+.testi-org{font-size:12px;color:var(--ink-muted)}
 
 /* ─── CTA ─── */
-.cta-section { background: var(--ink); padding: 80px 5%; text-align: center; position: relative; overflow: hidden; }
-.cta-section::before {
-  content: '';
-  position: absolute; top: -50%; left: -10%; right: -10%;
-  height: 200%;
-  background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(234,88,12,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-.cta-section h2 { font-size: 44px; font-weight: 800; letter-spacing: -0.03em; color: white; margin-bottom: 14px; position: relative; }
-.cta-section p { color: rgba(255,255,255,0.6); font-size: 16px; max-width: 480px; margin: 0 auto 36px; line-height: 1.75; position: relative; }
-.cta-btns { display: flex; gap: 10px; justify-content: center; position: relative; }
+.cta-section{background:var(--ink);padding:96px 0;position:relative;overflow:hidden;text-align:center}
+.cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(234,88,12,.12) 0%,transparent 70%);pointer-events:none}
+.cta-section h2{font-size:50px;font-weight:800;letter-spacing:-.04em;color:#fff;margin-bottom:16px;position:relative}
+.cta-section p{font-size:17px;color:rgba(255,255,255,.55);max-width:500px;margin:0 auto 40px;position:relative;line-height:1.8}
+.cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
 
 /* ─── FOOTER ─── */
-footer { background: #100E09; padding: 60px 5% 28px; }
-.foot-grid { max-width: 1140px; margin: 0 auto 48px; display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; }
-.foot-brand .logo { color: white; display: block; margin-bottom: 10px; }
-.foot-brand p { font-size: 13px; color: rgba(255,255,255,0.4); line-height: 1.7; max-width: 220px; }
-.foot-col h4 { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.35); margin-bottom: 14px; }
-.foot-col a { display: block; font-size: 13px; color: rgba(255,255,255,0.5); text-decoration: none; margin-bottom: 8px; cursor: pointer; transition: color .15s; }
-.foot-col a:hover { color: var(--orange-mid); }
-.foot-bottom { max-width: 1140px; margin: 0 auto; border-top: 1px solid rgba(255,255,255,0.08); padding-top: 22px; display: flex; justify-content: space-between; align-items: center; }
-.foot-copy { font-size: 12.5px; color: rgba(255,255,255,0.3); }
-.foot-links { display: flex; gap: 18px; }
-.foot-links a { font-size: 12.5px; color: rgba(255,255,255,0.3); text-decoration: none; cursor: pointer; }
+footer{background:#080604;padding:64px 0 28px}
+.foot-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:52px;margin-bottom:48px}
+.foot-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;display:block;margin-bottom:12px}
+.foot-logo em{color:var(--orange);font-style:normal}
+.foot-desc{font-size:13px;color:rgba(255,255,255,.35);line-height:1.75;max-width:230px}
+.foot-partners{display:flex;align-items:center;gap:14px;margin-top:16px;padding-top:16px;border-top:1px solid rgba(255,255,255,.05)}
+.foot-partners img{height:18px;opacity:.3;filter:brightness(0) invert(1);object-fit:contain}
+.foot-col h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:16px}
+.foot-col a{display:block;font-size:13px;color:rgba(255,255,255,.45);margin-bottom:9px;transition:color var(--t)}
+.foot-col a:hover{color:var(--orange-2)}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:24px;display:flex;justify-content:space-between;align-items:center;gap:20px}
+.foot-copy{font-size:12.5px;color:rgba(255,255,255,.25)}
+.foot-links{display:flex;gap:20px}
+.foot-links a{font-size:12.5px;color:rgba(255,255,255,.25);transition:color var(--t)}
+.foot-links a:hover{color:rgba(255,255,255,.6)}
 
-/* ─── FEATURES PAGE ACCORDION ─── */
-.fgroup-label { font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); padding: 28px 0 12px; border-bottom: 1px solid var(--border); margin-bottom: 0; }
-.fitem { border-bottom: 1px solid var(--border); cursor: pointer; }
-.fitem-head { display: flex; align-items: center; gap: 14px; padding: 18px 0; }
-.fitem-icon { width: 36px; height: 36px; border-radius: var(--r-sm); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
-.fitem-title { flex: 1; font-size: 15px; font-weight: 600; color: var(--ink); letter-spacing: -0.01em; }
-.fitem-arrow { color: var(--ink-faint); transition: transform .2s; }
-.fitem.open .fitem-arrow { transform: rotate(180deg); }
-.fitem-body { display: none; padding: 0 0 18px 50px; }
-.fitem.open .fitem-body { display: block; }
-.fitem-body p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; margin-bottom: 10px; }
-.fitem-tags { display: flex; gap: 6px; flex-wrap: wrap; }
-.fitem-tags span { font-size: 11px; font-weight: 600; padding: 2px 10px; border-radius: 20px; background: var(--bg2); color: var(--ink-muted); border: 1px solid var(--border); }
-.ftab { padding: 7px 18px; border-radius: 30px; font-size: 13px; font-weight: 600; cursor: pointer; transition: all .15s; border: 1.5px solid var(--border); color: var(--ink-muted); background: white; font-family: 'Instrument Sans', sans-serif; }
-.ftab:hover, .ftab.active { background: var(--ink); color: white; border-color: var(--ink); }
-
-/* ─── STORY SECTION ─── */
-.story-section { background: var(--ink); padding: 80px 5%; }
-.story-text { font-family: 'Bricolage Grotesque', sans-serif; font-size: 28px; line-height: 1.65; font-weight: 500; max-width: 860px; color: rgba(255,255,255,0.25); }
-.story-text .highlight { color: white; }
-.story-text .hl-orange { color: var(--orange-mid); font-weight: 700; }
-
-/* ─── ANIMATIONS ─── */
-@keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
-@keyframes floatY { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
-.reveal { opacity:0; transform:translateY(22px); transition:opacity .55s ease, transform .55s ease; }
-.reveal.visible { opacity:1; transform:translateY(0); }
-.hero-eyebrow { animation: fadeUp .4s ease forwards; opacity:0; }
-.hero h1 { animation: fadeUp .5s .08s ease forwards; opacity:0; }
-.hero-sub { animation: fadeUp .5s .16s ease forwards; opacity:0; }
-.hero-paths { animation: fadeUp .5s .22s ease forwards; opacity:0; }
-.hero-proof { animation: fadeUp .5s .28s ease forwards; opacity:0; }
-.hero-visual { animation: fadeUp .6s .3s ease forwards; opacity:0; }
+/* ─── CUSTOM SVG ICONS ─── */
+.icon-neural{/* neural network style */}
 
 /* ─── RESPONSIVE ─── */
-@media (max-width: 960px) {
-  .hero h1 { font-size: 42px; }
-  .hero-visual, .audience-grid, .about-inner, .demo-panel.active { grid-template-columns: 1fr; }
-  .price-grid, .hiw-steps { grid-template-columns: 1fr 1fr; }
-  .stats-grid, .testi-grid { grid-template-columns: 1fr 1fr; }
-  .nav-links { display: none; }
-  .hero-paths { flex-direction: column; }
-  .hero-path { min-width: 0; }
-  .section h2 { font-size: 30px; }
-  .foot-grid { grid-template-columns: 1fr 1fr; }
+@media(max-width:1024px){
+  .hero-inner{gap:44px}
+  .hero-h1{font-size:46px}
+  .ai-inner{gap:48px}
+  .value-grid{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .blog-grid{grid-template-columns:1fr 1fr}
 }
-@media (max-width: 600px) {
-  .hero { padding: 52px 5% 40px; }
-  .hero h1 { font-size: 34px; }
-  .price-grid, .hiw-steps, .stats-grid, .testi-grid { grid-template-columns: 1fr; }
-  .demo-panel.active { grid-template-columns: 1fr; }
+@media(max-width:768px){
+  .nav-links,.nav-ctas{display:none}
+  .nav-burger{display:flex}
+  .hero-inner{grid-template-columns:1fr;gap:40px;padding:60px 5% 40px}
+  .hero-h1{font-size:38px}
+  .hero-sub{font-size:15px}
+  .hero-visual{display:none}
+  .hero-metrics{flex-wrap:wrap;gap:20px}
+  .hm-item{border-right:none;padding-right:0;margin-right:0}
+  .audience-split{grid-template-columns:1fr}
+  .ai-inner{grid-template-columns:1fr}
+  .hiw-steps{grid-template-columns:1fr 1fr;gap:32px}
+  .hiw-steps::before{display:none}
+  .thing-content{grid-template-columns:1fr}
+  .thing-content .thing-visual{display:none}
+  .value-grid{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .testi-grid{grid-template-columns:1fr}
+  .blog-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:36px}
+  .section h2{font-size:30px}
+  .cta-section h2{font-size:34px}
+}
+@media(max-width:480px){
+  .hero-h1{font-size:30px}
+  .hero-ctas{flex-direction:column;align-items:flex-start}
+  .hiw-steps{grid-template-columns:1fr}
+  .stats-grid{grid-template-columns:1fr}
+  .audience-split,.foot-grid{grid-template-columns:1fr}
+  .cta-btns{flex-direction:column;align-items:center}
 }
 </style>
 </head>
 <body>
 
-<nav>
-  <div class="logo" onclick="showPage('home')">Empower<em>Bot</em></div>
-  <div class="nav-links">
-    <a onclick="showPage('home')" id="nav-home" class="active">Home</a>
-    <a onclick="showPage('features')" id="nav-features">Features</a>
-    <a onclick="showPage('demo')" id="nav-demo">Demo</a>
-    <a onclick="showPage('pricing')" id="nav-pricing">Pricing</a>
-    <a onclick="showPage('about')" id="nav-about">About</a>
-  </div>
-  <div class="nav-ctas">
-    <button class="btn btn-outline" onclick="showPage('pricing')">Plans</button>
-    <button class="btn btn-primary" onclick="showPage('demo')">Try demo →</button>
+<!-- NAV -->
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Empower<em>Bot</em></a>
+    <div class="nav-links">
+      <a href="index.html" class="active">Home</a>
+      <a href="features.html">Features</a>
+      <a href="demo.html">Demo</a>
+      <a href="pricing.html">Pricing</a>
+      <a href="about.html">About</a>
+      <a href="blog.html">Blog</a>
+    </div>
+    <div class="nav-ctas">
+      <a href="pricing.html" class="btn btn-ghost-light" style="font-size:13px;padding:8px 16px;">Plans</a>
+      <a href="demo.html" class="btn btn-primary" style="font-size:13px;padding:8px 16px;">Try demo →</a>
+    </div>
+    <button class="nav-burger" id="navBurger" onclick="toggleMobileNav()">
+      <span></span><span></span><span></span>
+    </button>
   </div>
 </nav>
 
-<!-- ════════════════ HOME ════════════════ -->
-<div id="page-home" class="page active">
-
-<section class="hero">
-  <div class="hero-inner">
-    <div class="hero-eyebrow">WhatsApp-native training platform</div>
-    <h1>Train. Quiz. Measure.<br>All on <span class="accent">WhatsApp.</span></h1>
-    <p class="hero-sub">Deploy quiz-based business training to your cohort — or train yourself. No app. No login. Works on any phone. Results in your dashboard.</p>
-
-    <div class="hero-paths">
-      <div class="hero-path" onclick="scrollToAud('ngo')">
-        <div class="hero-path-icon" style="background:#FFF0E6;">📊</div>
-        <div class="hero-path-text">
-          <div class="label">I run a programme</div>
-          <div class="sublabel">NGO, government, social enterprise</div>
-        </div>
-        <div class="hero-path-arrow">→</div>
-      </div>
-      <div class="hero-path green" onclick="scrollToAud('sme')">
-        <div class="hero-path-icon" style="background:#F0FDF4;">🛒</div>
-        <div class="hero-path-text">
-          <div class="label">I run a business</div>
-          <div class="sublabel">Trader, merchant, micro-entrepreneur</div>
-        </div>
-        <div class="hero-path-arrow">→</div>
-      </div>
-    </div>
-
-    <div class="hero-proof">
-      <div class="hero-stat">
-        <div class="num">120+</div>
-        <div class="lbl">Entrepreneurs trained</div>
-      </div>
-      <div class="hero-divider"></div>
-      <div class="hero-stat">
-        <div class="num">89%</div>
-        <div class="lbl">Completion rate</div>
-      </div>
-      <div class="hero-divider"></div>
-      <div class="hero-stat">
-        <div class="num">0</div>
-        <div class="lbl">App downloads needed</div>
-      </div>
-      <div class="hero-divider"></div>
-      <div class="hero-partners">
-        <span>Partners:</span>
-        <img src="/public/lsetf.png" alt="LSETF" style="height:22px;object-fit:contain;opacity:0.6;">
-        <img src="/public/empowerlogo.png" alt="ELP" style="height:28px;object-fit:contain;opacity:0.6;">
-      </div>
-    </div>
+<!-- MOBILE NAV -->
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="closeMobileNav()">Home</a>
+  <a href="features.html" onclick="closeMobileNav()">Features</a>
+  <a href="demo.html" onclick="closeMobileNav()">Demo</a>
+  <a href="pricing.html" onclick="closeMobileNav()">Pricing</a>
+  <a href="about.html" onclick="closeMobileNav()">About</a>
+  <a href="blog.html" onclick="closeMobileNav()">Blog</a>
+  <div class="mobile-ctas">
+    <a href="pricing.html" class="btn btn-ghost-light btn-lg" style="justify-content:center;">View Plans</a>
+    <a href="demo.html" class="btn btn-primary btn-lg" style="justify-content:center;">Try Demo →</a>
   </div>
+</div>
 
-  <!-- DUAL PREVIEW -->
-  <div class="hero-visual max-w">
-    <div class="preview-card">
-      <div class="preview-label">
-        <div class="preview-label-dot" style="background:#EA580C;"></div>
-        Programme dashboard — what you track
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-blob blob-1"></div>
+    <div class="hero-blob blob-2"></div>
+    <div class="hero-blob blob-3"></div>
+    <div class="hero-grid"></div>
+  </div>
+  <div class="hero-inner max-w">
+    <div class="hero-left">
+      <div class="hero-eyebrow">
+        <div class="hero-eyebrow-dot"></div>
+        AI · WhatsApp · Learning Outcomes
       </div>
-      <div class="admin-preview">
-        <div class="ap-topbar">
-          <div class="ap-title">Agege 2026 Cohort</div>
-          <button class="ap-export">↓ Export M&amp;E</button>
+      <h1 class="hero-h1">Where small business<br>training becomes <em>evidence.</em></h1>
+      <p class="hero-sub">Deploy AI-powered learning on WhatsApp. Measure knowledge outcomes at scale. Give every funder exactly the data they need to keep investing.</p>
+      <div class="hero-ctas">
+        <a href="demo.html" class="btn btn-primary btn-lg">
+          See the platform
+          <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+        </a>
+        <a href="pricing.html" class="btn btn-ghost-light btn-lg">Free for nonprofits</a>
+      </div>
+      <div class="hero-metrics">
+        <div class="hm-item">
+          <div class="hm-num" data-count="1000">0</div>
+          <div class="hm-label">People trained</div>
         </div>
-        <div class="ap-kpis">
-          <div class="ap-kpi"><div class="ap-kpi-val" style="color:var(--orange);">89%</div><div class="ap-kpi-lbl">Completion</div></div>
-          <div class="ap-kpi"><div class="ap-kpi-val" style="color:var(--green);">78%</div><div class="ap-kpi-lbl">Avg score</div></div>
-          <div class="ap-kpi"><div class="ap-kpi-val" style="color:var(--blue);">120</div><div class="ap-kpi-lbl">Participants</div></div>
+        <div class="hm-item">
+          <div class="hm-num">89<span style="font-size:18px">%</span></div>
+          <div class="hm-label">Completion rate</div>
         </div>
-        <div class="ap-table-head"><span>Participant</span><span>Quiz</span><span>Score</span><span>Status</span></div>
-        <div class="ap-row">
-          <span style="font-weight:500;">Participant A</span>
-          <span style="color:var(--ink-muted);font-size:12px;">Quiz 3</span>
-          <div class="ap-score-wrap"><div class="ap-bar"><div class="ap-bar-fill" style="width:88%;"></div></div><div class="ap-score-num">88%</div></div>
-          <span class="badge badge-green">Done</span>
-        </div>
-        <div class="ap-row">
-          <span style="font-weight:500;">Participant B</span>
-          <span style="color:var(--ink-muted);font-size:12px;">Quiz 2</span>
-          <div class="ap-score-wrap"><div class="ap-bar"><div class="ap-bar-fill" style="width:62%;background:var(--amber);"></div></div><div class="ap-score-num">62%</div></div>
-          <span class="badge badge-amber">Active</span>
-        </div>
-        <div class="ap-row">
-          <span style="font-weight:500;">Participant C</span>
-          <span style="color:var(--ink-muted);font-size:12px;">Quiz 4</span>
-          <div class="ap-score-wrap"><div class="ap-bar"><div class="ap-bar-fill" style="width:95%;"></div></div><div class="ap-score-num">95%</div></div>
-          <span class="badge badge-green">Done</span>
+        <div class="hm-item">
+          <div class="hm-num">0</div>
+          <div class="hm-label">App downloads needed</div>
         </div>
       </div>
     </div>
-    <div class="preview-card">
-      <div class="preview-label">
-        <div class="preview-label-dot" style="background:#25D366;"></div>
-        What participants see — just WhatsApp
-      </div>
-      <div class="wa-preview">
-        <div class="wa-prev-header">
-          <div class="wa-prev-av">EB</div>
-          <div>
-            <div class="wa-prev-name">EmpowerBot</div>
-            <div class="wa-prev-status">● Online</div>
+    <div class="hero-visual">
+      <div class="hero-phone-wrap">
+        <div class="float-card fc-1">
+          <div class="fc-label">Completion rate</div>
+          <div class="fc-value">89%</div>
+          <div class="fc-sub">Agege 2026 cohort</div>
+        </div>
+        <div class="phone">
+          <div class="phone-notch"></div>
+          <div class="phone-screen">
+            <div class="wa-head">
+              <div class="wa-av">EB</div>
+              <div>
+                <div class="wa-name">EmpowerBot</div>
+                <div class="wa-status">● Online</div>
+              </div>
+            </div>
+            <div class="wa-body" id="heroChat">
+              <div class="msg msg-bot" style="animation-delay:.2s">
+                Welcome Amina! 👋 Ready for Quiz 3?
+                <div class="msg-btns">
+                  <button class="msg-btn">Start Quiz</button>
+                  <button class="msg-btn">My scores</button>
+                </div>
+                <div class="msg-time">10:14 AM ✓✓</div>
+              </div>
+              <div class="msg msg-user" style="animation-delay:.5s">
+                Start Quiz
+                <div class="msg-time">10:14 AM ✓</div>
+              </div>
+              <div class="msg msg-bot" style="animation-delay:.8s">
+                <strong>Q2 of 5 — Financial Records</strong><br><br>
+                How often should you reconcile your cash?<br><br>
+                A) Once a year &nbsp; B) Every day &nbsp; C) Only when there's a problem
+                <div class="msg-btns">
+                  <button class="msg-btn">A</button>
+                  <button class="msg-btn" onclick="showHeroFeedback()">B</button>
+                  <button class="msg-btn">C</button>
+                </div>
+                <div class="msg-time">10:15 AM ✓✓</div>
+              </div>
+              <div id="heroFeedback" style="display:none;" class="msg msg-bot">
+                ✅ <strong>Correct!</strong> Daily reconciliation means comparing your cash to your records every evening — before errors compound. +10 pts!
+                <div class="msg-time">10:15 AM ✓✓</div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="wa-bubble">
-          Welcome Fatima! 👋<br>Ready for <strong>Quiz 3</strong> — Financial Records?
-          <div class="wa-btns"><button class="wa-opt">Start Quiz</button><button class="wa-opt">My scores</button></div>
-          <div class="wa-time">10:14 AM ✓✓</div>
-        </div>
-        <div class="wa-bubble out">Start Quiz<div class="wa-time">10:14 AM ✓</div></div>
-        <div class="wa-bubble">
-          <strong>Question 2 of 5:</strong><br><br>
-          How often should you reconcile your business cash?<br><br>
-          A) Once a year &nbsp; B) Every day &nbsp; C) Only when there's a problem
-          <div class="wa-btns"><button class="wa-opt">A</button><button class="wa-opt">B</button><button class="wa-opt">C</button></div>
-          <div class="wa-time">10:15 AM ✓✓</div>
+        <div class="float-card fc-2">
+          <div class="fc-label">M&amp;E export</div>
+          <div class="fc-value">1-click</div>
+          <div class="fc-sub">CSV ready for donors</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- TICKER -->
 <div class="ticker">
   <div class="ticker-track">
-    <span class="ticker-item"><strong>AI explanations</strong> in Pidgin English</span>
-    <span class="ticker-item"><strong>No app</strong> download needed</span>
-    <span class="ticker-item">Works on <strong>any phone</strong></span>
-    <span class="ticker-item"><strong>Live leaderboard</strong> drives completion</span>
-    <span class="ticker-item"><strong>M&amp;E export</strong> in one click</span>
-    <span class="ticker-item"><strong>Self-registration</strong> in 2 minutes</span>
-    <span class="ticker-item">Real <strong>Naira examples</strong></span>
-    <span class="ticker-item"><strong>Wrong answer review</strong> mode</span>
-    <span class="ticker-item"><strong>AI explanations</strong> in Pidgin English</span>
-    <span class="ticker-item"><strong>No app</strong> download needed</span>
-    <span class="ticker-item">Works on <strong>any phone</strong></span>
-    <span class="ticker-item"><strong>Live leaderboard</strong> drives completion</span>
-    <span class="ticker-item"><strong>M&amp;E export</strong> in one click</span>
-    <span class="ticker-item"><strong>Self-registration</strong> in 2 minutes</span>
-    <span class="ticker-item">Real <strong>Naira examples</strong></span>
-    <span class="ticker-item"><strong>Wrong answer review</strong> mode</span>
+    <span class="ticker-item">AI explanations in Pidgin English</span>
+    <span class="ticker-item">Real-time admin dashboard</span>
+    <span class="ticker-item">No app download</span>
+    <span class="ticker-item">1-click M&amp;E export</span>
+    <span class="ticker-item">Live leaderboard</span>
+    <span class="ticker-item">Works on any phone</span>
+    <span class="ticker-item">Self-registration in 2 minutes</span>
+    <span class="ticker-item">Wrong answer review mode</span>
+    <span class="ticker-item">Knowledge gap analytics</span>
+    <span class="ticker-item">Funder-ready outcome data</span>
+    <span class="ticker-item">AI explanations in Pidgin English</span>
+    <span class="ticker-item">Real-time admin dashboard</span>
+    <span class="ticker-item">No app download</span>
+    <span class="ticker-item">1-click M&amp;E export</span>
+    <span class="ticker-item">Live leaderboard</span>
+    <span class="ticker-item">Works on any phone</span>
+    <span class="ticker-item">Self-registration in 2 minutes</span>
+    <span class="ticker-item">Wrong answer review mode</span>
+    <span class="ticker-item">Knowledge gap analytics</span>
+    <span class="ticker-item">Funder-ready outcome data</span>
+  </div>
+</div>
+
+<!-- VALUE STRIP -->
+<div class="value-strip">
+  <div class="max-w">
+    <div class="value-grid reveal">
+      <div class="value-item stagger-1">
+        <div class="v-icon" style="background:rgba(234,88,12,.15);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FB923C" stroke-width="1.7"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/><circle cx="5" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/><line x1="12" y1="10" x2="6.5" y2="5.5"/><line x1="12" y1="10" x2="17.5" y2="5.5"/><line x1="12" y1="14" x2="6.5" y2="18.5"/><line x1="12" y1="14" x2="17.5" y2="18.5"/></svg>
+        </div>
+        <div class="v-head">AI at the core</div>
+        <div class="v-sub">Gemini-powered explanations in local context — Pidgin, Naira, their exact business type.</div>
+      </div>
+      <div class="value-item stagger-2">
+        <div class="v-icon" style="background:rgba(5,150,105,.15);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/><line x1="10" y1="6.5" x2="14" y2="6.5"/><line x1="6.5" y1="10" x2="6.5" y2="14"/><line x1="17.5" y1="10" x2="17.5" y2="14"/><line x1="10" y1="17.5" x2="14" y2="17.5"/></svg>
+        </div>
+        <div class="v-head">Measurable outcomes</div>
+        <div class="v-sub">Every quiz session generates structured outcome data your funders and M&amp;E teams can act on.</div>
+      </div>
+      <div class="value-item stagger-3">
+        <div class="v-icon" style="background:rgba(37,99,235,.12);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.7"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z" opacity=".3"/><path d="M8 12h8M12 8l4 4-4 4"/><circle cx="8" cy="12" r="1.5" fill="#60A5FA"/><circle cx="16" cy="12" r="1.5" fill="#60A5FA"/></svg>
+        </div>
+        <div class="v-head">Zero friction delivery</div>
+        <div class="v-sub">No app, no login, no smartphone required. Training lives inside the WhatsApp they already use.</div>
+      </div>
+      <div class="value-item stagger-4">
+        <div class="v-icon" style="background:rgba(217,119,6,.12);">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="1.7"><path d="M3 3h18v4H3zM3 10h7v11H3zM13 10h8v5h-8zM13 18h8v3h-8z"/></svg>
+        </div>
+        <div class="v-head">Donor-ready reports</div>
+        <div class="v-sub">One export generates the evidence base your programme needs for impact reporting and grant renewal.</div>
+      </div>
+    </div>
   </div>
 </div>
 
 <!-- AUDIENCE SPLIT -->
-<section class="section" id="audience-section">
+<section class="section">
   <div class="max-w">
-    <div class="section-tag">Who it's for</div>
-    <h2 class="reveal">Two doors. Same platform.</h2>
-    <p class="section-sub reveal">Whether you're deploying training for 250 entrepreneurs or learning to grow your own shop — EmpowerBot fits your use case.</p>
-    <div class="audience-grid reveal" id="aud-grid">
-      <div class="audience-card" id="aud-ngo">
-        <div class="aud-label" style="color:var(--orange);">For programme managers</div>
-        <div class="aud-h">Deploy, track, and report on training — all from one dashboard.</div>
-        <div class="aud-sub">You run the session. EmpowerBot handles registration, quizzes, AI support, and M&amp;E export. Your LSETF or donor report is ready in one click.</div>
-        <ul class="aud-list">
-          <li>Participant onboarding via WhatsApp — no spreadsheet needed</li>
-          <li>Cohort-wide scores and wrong-answer breakdown</li>
-          <li>CSV export with every field your M&amp;E template expects</li>
-          <li>AI that reinforces your facilitator's session topics</li>
-          <li>Free for verified NGOs and government programmes</li>
+    <div class="section-tag reveal">Who it's for</div>
+    <h2 class="reveal">One platform. Two powerful use cases.</h2>
+    <p class="section-sub reveal">Whether you're building evidence for funders or growing your business one quiz at a time — EmpowerBot is your platform.</p>
+    <div class="audience-split">
+      <div class="aud-card orange reveal reveal-left">
+        <div class="aud-label" style="color:var(--orange);">For Programmes</div>
+        <div class="aud-h">Evidence that wins the next grant.</div>
+        <div class="aud-sub">You design the training. EmpowerBot delivers it at scale via WhatsApp and generates the outcome data your funders and M&amp;E teams need — automatically.</div>
+        <ul class="aud-bullets">
+          <li><div class="aud-check" style="background:var(--orange-4);"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#EA580C" stroke-width="2.5"><polyline points="2 8 6 12 14 4"/></svg></div>Real learning outcomes, not attendance sheets</li>
+          <li><div class="aud-check" style="background:var(--orange-4);"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#EA580C" stroke-width="2.5"><polyline points="2 8 6 12 14 4"/></svg></div>M&amp;E CSV export with every field pre-formatted</li>
+          <li><div class="aud-check" style="background:var(--orange-4);"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#EA580C" stroke-width="2.5"><polyline points="2 8 6 12 14 4"/></svg></div>Participant cohort dashboard, live</li>
+          <li><div class="aud-check" style="background:var(--orange-4);"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#EA580C" stroke-width="2.5"><polyline points="2 8 6 12 14 4"/></svg></div>Free forever for verified NGOs &amp; government</li>
         </ul>
-        <div style="margin-top:24px;"><button class="btn btn-primary" onclick="showPage('pricing')">Apply for free access →</button></div>
+        <a href="pricing.html" class="btn btn-primary btn-lg">Get free access →</a>
       </div>
-      <div class="audience-card" id="aud-sme">
-        <div class="aud-label" style="color:var(--green);">For small business owners</div>
-        <div class="aud-h">Learn business skills between customers. On WhatsApp. At your pace.</div>
-        <div class="aud-sub">No app to download. No time to sit in a class. Message the number, take a quiz, get your wrong answers explained using your own shop as the example.</div>
-        <ul class="aud-list">
-          <li>Register in 2 minutes — just message the number</li>
-          <li>Quizzes on financial management, marketing, records</li>
-          <li>AI explains every wrong answer in plain words or Pidgin</li>
-          <li>Leaderboard to see how you rank in your cohort</li>
-          <li>Free if your NGO or programme sponsor is on EmpowerBot</li>
+      <div class="aud-card green reveal reveal-right">
+        <div class="aud-label" style="color:var(--green);">For Businesses</div>
+        <div class="aud-h">Business school in your pocket.</div>
+        <div class="aud-sub">No classroom. No app. Just tap through quizzes on WhatsApp and let AI explain every wrong answer using your own business as the example.</div>
+        <ul class="aud-bullets">
+          <li><div class="aud-check" style="background:var(--green-2);"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="2 8 6 12 14 4"/></svg></div>Register in 2 minutes — no form, no app</li>
+          <li><div class="aud-check" style="background:var(--green-2);"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="2 8 6 12 14 4"/></svg></div>AI explains in Pidgin, with Naira examples</li>
+          <li><div class="aud-check" style="background:var(--green-2);"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="2 8 6 12 14 4"/></svg></div>Compete on the leaderboard. Stay motivated.</li>
+          <li><div class="aud-check" style="background:var(--green-2);"><svg width="10" height="10" viewBox="0 0 16 16" fill="none" stroke="#059669" stroke-width="2.5"><polyline points="2 8 6 12 14 4"/></svg></div>Free when your NGO or programme is on EmpowerBot</li>
         </ul>
-        <div style="margin-top:24px;"><button class="btn btn-green" onclick="showPage('demo')">See how it works →</button></div>
+        <a href="demo.html" class="btn btn-dark btn-lg">See how it works →</a>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WHAT CHANGES -->
-<section class="section" style="background:var(--bg2); padding-top:72px; padding-bottom:72px;">
-  <div class="max-w" style="max-width:900px;">
-    <div class="section-tag reveal">What's different</div>
-    <h2 class="reveal">Six things that make it work</h2>
-    <div class="feat-rows" style="margin-top:36px;">
-      <div class="feat-row reveal">
-        <div>
-          <div class="fr-num">01</div>
-          <div class="fr-head">The AI explains using their shop, not a textbook</div>
-          <div class="fr-sub">Wrong answer triggers an instant explanation built around their business type, city, and real Naira amounts. Not a generic definition.</div>
-        </div>
-        <div style="text-align:right;"><span class="fr-tag" style="background:var(--orange-light);color:var(--orange);">AI-powered</span></div>
+<!-- AI SECTION -->
+<section class="ai-section">
+  <div class="max-w">
+    <div class="ai-inner">
+      <div class="reveal-left">
+        <div class="ai-tag"><div class="ai-tag-pulse"></div>AI-first by design</div>
+        <h2 class="ai-h">The AI that explains it<br>in <em style="color:var(--orange-2);font-style:normal">their language.</em></h2>
+        <p class="ai-sub">EmpowerBot doesn't just quiz — it teaches. Every wrong answer triggers a personalised AI explanation using the learner's business type, city, and local currency. Not a Wikipedia definition.</p>
+        <ul class="ai-feats">
+          <li class="ai-feat">
+            <div class="ai-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FB923C" stroke-width="1.7"><circle cx="12" cy="12" r="2.5"/><path d="M12 2v2M12 20v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M2 12h2M20 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg></div>
+            <div class="ai-feat-text"><strong>Context-aware explanations</strong><span>The AI knows their business sector, location, and conversation history. Every explanation is different.</span></div>
+          </li>
+          <li class="ai-feat">
+            <div class="ai-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FB923C" stroke-width="1.7"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="M8 10h8M8 14h5"/></svg></div>
+            <div class="ai-feat-text"><strong>Natural follow-up questions</strong><span>Participants type "but why?" and the AI answers in context — no dead ends, no confusion.</span></div>
+          </li>
+          <li class="ai-feat">
+            <div class="ai-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FB923C" stroke-width="1.7"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg></div>
+            <div class="ai-feat-text"><strong>Pidgin, local currency, real scenarios</strong><span>Not generic examples. The AI uses their city, their market, their naira amounts.</span></div>
+          </li>
+          <li class="ai-feat">
+            <div class="ai-feat-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#FB923C" stroke-width="1.7"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.47"/></svg></div>
+            <div class="ai-feat-text"><strong>Wrong-answer review sessions</strong><span>After every quiz, the AI walks through every missed question with a fresh explanation.</span></div>
+          </li>
+        </ul>
       </div>
-      <div class="feat-row reveal">
-        <div>
-          <div class="fr-num">02</div>
-          <div class="fr-head">They can ask "but why?" and get a real answer</div>
-          <div class="fr-sub">Follow-up questions answered in context. The AI stays on topic and remembers the conversation. No dead ends.</div>
+      <div class="reveal-right">
+        <div class="ai-chat-demo">
+          <div class="ai-chat-header">
+            <div class="ai-chat-dot"></div>
+            <div class="ai-chat-title">EmpowerBot AI · Live session</div>
+            <div class="ai-chat-badge">Powered by Gemini</div>
+          </div>
+          <div class="ai-chat-body" id="aiChatDemo">
+            <div class="ai-msg bot">❌ <strong>Wrong answer.</strong> You chose A) LLC. Correct: B) Sole Proprietorship.</div>
+            <div class="ai-msg bot">
+              Amina! Make I explain am well well 😄<br><br>
+              When you be <span class="ai-highlight">sole proprietor</span>, you and your business na the SAME person under law. So if your provisions shop borrow <span class="ai-highlight">₦50,000</span> and you no fit pay, dem fit collect your personal savings, your phone, even your house!<br><br>
+              But <span class="ai-highlight">LLC</span> na like putting a fence between you and your business — if business fail, dem only touch business assets, NOT your personal things. 🏡
+            </div>
+            <div class="ai-msg user">So which one I should register for my shop?</div>
+            <div class="ai-msg thinking">
+              <div class="typing-ind"><span></span><span></span><span></span></div>
+              AI is thinking...
+            </div>
+            <div class="ai-msg bot" id="aiReply" style="display:none;">For a provisions shop in Lagos with <span class="ai-highlight">1–2 staff</span>, LLC registration at CAC costs about <span class="ai-highlight">₦25,000–₦50,000</span> and protects your personal assets. Given you already have stock worth N100k+, it's worth it.</div>
+          </div>
         </div>
-        <div style="text-align:right;"><span class="fr-tag" style="background:var(--blue-light);color:var(--blue);">Conversational</span></div>
-      </div>
-      <div class="feat-row reveal">
-        <div>
-          <div class="fr-num">03</div>
-          <div class="fr-head">The leaderboard makes people competitive about learning</div>
-          <div class="fr-sub">Traders who would quit keep going to stay ranked above a neighbour. Completion rates follow.</div>
-        </div>
-        <div style="text-align:right;"><span class="fr-tag" style="background:#F5F3FF;color:#7C3AED;">Engagement</span></div>
-      </div>
-      <div class="feat-row reveal">
-        <div>
-          <div class="fr-num">04</div>
-          <div class="fr-head">You see exactly where your cohort is stuck</div>
-          <div class="fr-sub">Which questions failed most. Who failed them. Fix the content before the next session runs.</div>
-        </div>
-        <div style="text-align:right;"><span class="fr-tag" style="background:var(--amber-light);color:var(--amber);">Analytics</span></div>
-      </div>
-      <div class="feat-row reveal">
-        <div>
-          <div class="fr-num">05</div>
-          <div class="fr-head">M&amp;E data exports ready to submit</div>
-          <div class="fr-sub">One CSV with every column your donor template expects. No manual reformatting.</div>
-        </div>
-        <div style="text-align:right;"><span class="fr-tag" style="background:var(--green-light);color:var(--green);">Reporting</span></div>
-      </div>
-      <div class="feat-row reveal">
-        <div>
-          <div class="fr-num">06</div>
-          <div class="fr-head">No app. No login. Works on any phone.</div>
-          <div class="fr-sub">Training in the WhatsApp they open 20 times a day. No friction between your cohort and learning.</div>
-        </div>
-        <div style="text-align:right;"><span class="fr-tag" style="background:var(--orange-light);color:var(--orange);">Accessibility</span></div>
       </div>
     </div>
   </div>
 </section>
 
 <!-- HOW IT WORKS -->
-<section class="section">
+<section class="hiw-section">
   <div class="max-w">
-    <div class="section-tag reveal">How it works</div>
-    <h2 class="reveal">Running in 30 minutes</h2>
-    <p class="section-sub reveal">We run the WhatsApp. You add the content. Your participants message in.</p>
-    <div class="hiw-steps reveal">
-      <div class="hiw-step">
-        <div class="hiw-n">01</div>
+    <div class="section-tag reveal" style="justify-content:center;">How it works</div>
+    <h2 class="reveal" style="text-align:center;">Running in 30 minutes</h2>
+    <p class="section-sub reveal" style="text-align:center;margin:0 auto 0;">We run the WhatsApp infrastructure. You add the content. Participants message in.</p>
+    <div class="hiw-steps">
+      <div class="hiw-step reveal stagger-1">
+        <div class="hiw-step-num">1</div>
         <h3>Sign up or apply</h3>
-        <p>Nonprofits verify once and get full access free. Everyone else starts a 14-day trial.</p>
+        <p>NGOs verify once and get full access free. Everyone else starts a 14-day trial — no card required.</p>
       </div>
-      <div class="hiw-step">
-        <div class="hiw-n">02</div>
+      <div class="hiw-step reveal stagger-2">
+        <div class="hiw-step-num">2</div>
         <h3>Upload your quizzes</h3>
-        <p>Add questions through the admin panel. Sector-specific content goes live immediately.</p>
+        <p>Add questions via the admin panel or simple JSON. Content goes live immediately across all cohorts.</p>
       </div>
-      <div class="hiw-step">
-        <div class="hiw-n">03</div>
+      <div class="hiw-step reveal stagger-3">
+        <div class="hiw-step-num">3</div>
         <h3>Share the number</h3>
-        <p>Participants message EmpowerBot and self-register in under 2 minutes. No form needed.</p>
+        <p>Participants message EmpowerBot's WhatsApp number and self-register in under 2 minutes. No form needed.</p>
       </div>
-      <div class="hiw-step">
-        <div class="hiw-n">04</div>
-        <h3>Track and export</h3>
-        <p>Scores, completion, wrong-answer patterns — live in your dashboard and export-ready.</p>
+      <div class="hiw-step reveal stagger-4">
+        <div class="hiw-step-num">4</div>
+        <h3>Track &amp; export outcomes</h3>
+        <p>Live dashboard shows scores, completion, and knowledge gaps. One-click export for M&amp;E submissions.</p>
       </div>
     </div>
   </div>
 </section>
 
-<div class="stats-bar">
-  <div class="stats-grid">
-    <div class="stat-item reveal"><div class="stat-n">120+</div><div class="stat-l">entrepreneurs trained,<br>Lagos 2025</div></div>
-    <div class="stat-item reveal"><div class="stat-n">89%</div><div class="stat-l">quiz completion rate,<br>LSETF pilot cohort</div></div>
-    <div class="stat-item reveal"><div class="stat-n">21</div><div class="stat-l">quiz modules deployed<br>across the programme</div></div>
-    <div class="stat-item reveal"><div class="stat-n">0</div><div class="stat-l">app downloads<br>required by participants</div></div>
+<!-- SIX THINGS (EXPLORATORY) -->
+<section class="things-section">
+  <div class="max-w">
+    <div class="section-tag reveal">What makes it work</div>
+    <h2 class="reveal">Six things you won't find elsewhere</h2>
+    <p class="section-sub reveal">Click each to explore. Every feature below ships on every plan.</p>
+    <div class="things-grid">
+      <!-- Thing 1 -->
+      <div class="thing-item" onclick="toggleThing(this)">
+        <div class="thing-head">
+          <div class="thing-n">01</div>
+          <div class="thing-h">AI that uses their business as the example</div>
+          <div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+        </div>
+        <div class="thing-body"><div class="thing-body-inner"><div class="thing-content">
+          <div>
+            <p class="thing-desc">Wrong answer. Instant AI explanation. But not a textbook definition — the AI builds the response around the participant's business type, city, and real Naira amounts. A food vendor in Kano gets a different explanation than a tailor in Accra.</p>
+            <div class="thing-tags">
+              <span class="tag tag-orange">Gemini-powered</span>
+              <span class="tag tag-green">Business-specific</span>
+              <span class="tag tag-blue">Local currency</span>
+            </div>
+          </div>
+          <div class="thing-visual">
+            <div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">AI explanation preview</div>
+            <div style="background:#F0FDF4;border-radius:8px;padding:12px;font-size:12.5px;line-height:1.65;color:var(--ink-soft);">"Make I explain am: When you be sole proprietor, your ₦50,000 stock and your personal savings na the same thing for law..."</div>
+          </div>
+        </div></div></div>
+      </div>
+      <!-- Thing 2 -->
+      <div class="thing-item" onclick="toggleThing(this)">
+        <div class="thing-head">
+          <div class="thing-n">02</div>
+          <div class="thing-h">Knowledge gaps visible before the next session</div>
+          <div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+        </div>
+        <div class="thing-body"><div class="thing-body-inner"><div class="thing-content">
+          <div>
+            <p class="thing-desc">The admin dashboard shows a ranked list of questions that failed most across the entire cohort. You see the exact concepts your participants haven't grasped — before you run the next facilitation session. Fix content in real time.</p>
+            <div class="thing-tags">
+              <span class="tag tag-orange">Per-question analytics</span>
+              <span class="tag tag-amber">Cohort-wide view</span>
+            </div>
+          </div>
+          <div class="thing-visual">
+            <div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Top failing questions</div>
+            <div style="display:flex;flex-direction:column;gap:8px;">
+              <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden;"><div style="width:72%;height:100%;background:#EF4444;border-radius:4px;"></div></div><span style="font-size:11px;color:var(--ink-muted);flex-shrink:0;">72% failed · Q4</span></div>
+              <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden;"><div style="width:54%;height:100%;background:var(--amber);border-radius:4px;"></div></div><span style="font-size:11px;color:var(--ink-muted);flex-shrink:0;">54% failed · Q2</span></div>
+              <div style="display:flex;align-items:center;gap:10px;"><div style="flex:1;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden;"><div style="width:38%;height:100%;background:#F59E0B;border-radius:4px;"></div></div><span style="font-size:11px;color:var(--ink-muted);flex-shrink:0;">38% failed · Q7</span></div>
+            </div>
+          </div>
+        </div></div></div>
+      </div>
+      <!-- Thing 3 -->
+      <div class="thing-item" onclick="toggleThing(this)">
+        <div class="thing-head">
+          <div class="thing-n">03</div>
+          <div class="thing-h">M&amp;E data that writes itself</div>
+          <div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+        </div>
+        <div class="thing-body"><div class="thing-body-inner"><div class="thing-content">
+          <div>
+            <p class="thing-desc">From registration, EmpowerBot captures every data point your M&amp;E framework needs: participant demographics, business type, location, pre/post knowledge scores, session attendance, and learning outcomes. One button exports a CSV that's pre-formatted for donor reporting.</p>
+            <div class="thing-tags">
+              <span class="tag tag-green">CSV export</span>
+              <span class="tag tag-orange">Pre-formatted</span>
+              <span class="tag tag-blue">Donor-ready</span>
+            </div>
+          </div>
+          <div class="thing-visual">
+            <div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Export fields</div>
+            <div style="display:flex;flex-wrap:wrap;gap:5px;">
+              <span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;">participant_id</span>
+              <span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;">business_type</span>
+              <span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;">location</span>
+              <span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;">avg_score</span>
+              <span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;">completion_rate</span>
+              <span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;">quizzes_passed</span>
+              <span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px;">last_active</span>
+            </div>
+          </div>
+        </div></div></div>
+      </div>
+      <!-- Thing 4 -->
+      <div class="thing-item" onclick="toggleThing(this)">
+        <div class="thing-head">
+          <div class="thing-n">04</div>
+          <div class="thing-h">The leaderboard makes people competitive</div>
+          <div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+        </div>
+        <div class="thing-body"><div class="thing-body-inner"><div class="thing-content">
+          <div>
+            <p class="thing-desc">A live leaderboard, visible to all cohort members via WhatsApp, turns training into something social. Traders who would have quit keep going because they want to stay ranked above a neighbour. This single feature explains most of the 89% completion rate.</p>
+            <div class="thing-tags">
+              <span class="tag tag-amber">Social motivation</span>
+              <span class="tag tag-green">Live rankings</span>
+              <span class="tag tag-orange">Cohort-wide</span>
+            </div>
+          </div>
+          <div class="thing-visual" style="background:var(--ink);">
+            <div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">🏆 Leaderboard — Quiz 3</div>
+            <div style="display:flex;flex-direction:column;gap:7px;">
+              <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:14px;">🥇</span><span style="font-size:12px;color:#fff;flex:1;">Amina</span><span style="font-size:12px;color:var(--orange-2);font-weight:700;">99%</span></div>
+              <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:14px;">🥈</span><span style="font-size:12px;color:#fff;flex:1;">Fatimah</span><span style="font-size:12px;color:var(--orange-2);font-weight:700;">94%</span></div>
+              <div style="display:flex;align-items:center;gap:10px;"><span style="font-size:14px;">🥉</span><span style="font-size:12px;color:#fff;flex:1;">Chidi</span><span style="font-size:12px;color:var(--orange-2);font-weight:700;">88%</span></div>
+            </div>
+          </div>
+        </div></div></div>
+      </div>
+      <!-- Thing 5 -->
+      <div class="thing-item" onclick="toggleThing(this)">
+        <div class="thing-head">
+          <div class="thing-n">05</div>
+          <div class="thing-h">Zero friction — any phone, any network</div>
+          <div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+        </div>
+        <div class="thing-body"><div class="thing-body-inner"><div class="thing-content">
+          <div>
+            <p class="thing-desc">No app download. No Google account. No smartphone required. Participants use the WhatsApp they already have on a basic Android. Self-registration takes under 2 minutes — just a conversation. This is critical for reaching populations with low digital literacy.</p>
+            <div class="thing-tags">
+              <span class="tag tag-green">Any device</span>
+              <span class="tag tag-blue">Low bandwidth</span>
+              <span class="tag tag-orange">No downloads</span>
+            </div>
+          </div>
+          <div class="thing-visual">
+            <div style="display:flex;gap:12px;align-items:center;margin-bottom:10px;"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span style="font-size:13px;font-weight:600;">Works on a ₦10,000 phone</span></div>
+            <div style="font-size:12px;color:var(--ink-muted);line-height:1.6;">Uses WhatsApp's built-in interactive button messages — no typing, no app, no data-heavy content.</div>
+          </div>
+        </div></div></div>
+      </div>
+      <!-- Thing 6 -->
+      <div class="thing-item" onclick="toggleThing(this)">
+        <div class="thing-head">
+          <div class="thing-n">06</div>
+          <div class="thing-h">Every wrong answer gets revisited until it sticks</div>
+          <div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div>
+        </div>
+        <div class="thing-body"><div class="thing-body-inner"><div class="thing-content">
+          <div>
+            <p class="thing-desc">After completing any quiz, participants can enter AI-powered review mode. The bot walks through every missed question with a fresh explanation tailored to their business context. Retakes surface the hard questions first — not the easy ones they already know.</p>
+            <div class="thing-tags">
+              <span class="tag tag-orange">Post-quiz AI review</span>
+              <span class="tag tag-green">Spaced repetition</span>
+              <span class="tag tag-blue">Context memory</span>
+            </div>
+          </div>
+          <div class="thing-visual">
+            <div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;">Retake mode</div>
+            <div style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Retakes present <strong>only the questions previously failed</strong>, with fresh AI explanations. Score improves. Understanding improves.</div>
+          </div>
+        </div></div></div>
+      </div>
+    </div>
+    <div style="text-align:center;margin-top:36px;">
+      <a href="features.html" class="btn btn-ghost btn-lg">See all features →</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-section">
+  <div class="max-w">
+    <div class="stats-grid">
+      <div class="stat-item reveal stagger-1">
+        <div class="stat-n"><span class="count-up" data-target="1000">0</span><span class="stat-suf">+</span></div>
+        <div class="stat-l">People trained globally across<br>multiple programmes</div>
+      </div>
+      <div class="stat-item reveal stagger-2">
+        <div class="stat-n"><span class="count-up" data-target="89">0</span><span class="stat-suf">%</span></div>
+        <div class="stat-l">Average quiz completion rate<br>across all cohorts</div>
+      </div>
+      <div class="stat-item reveal stagger-3">
+        <div class="stat-n"><span class="count-up" data-target="21">0</span></div>
+        <div class="stat-l">Quiz modules available<br>across the platform</div>
+      </div>
+      <div class="stat-item reveal stagger-4">
+        <div class="stat-n">0</div>
+        <div class="stat-l">App downloads required<br>to participate</div>
+      </div>
+    </div>
   </div>
 </div>
 
-<!-- STORY -->
-<div class="story-section">
+<!-- BLOG PREVIEW -->
+<section class="blog-section">
   <div class="max-w">
-    <p class="story-text">
-      A trader in Lagos <span class="highlight">messaged a number.</span>
-      <span class="hl-orange">Zero downloads.</span>
-      Two minutes later she was registered.
-      <span class="highlight">She completed <em class="sn" data-target="21" style="font-style:normal;">0</em> quizzes.</span>
-      Every wrong answer was explained using her own shop.
-      <span class="hl-orange">She finished on <em class="sn" data-target="99" style="font-style:normal;">0</em>%.</span>
-      <span class="highlight"><em class="sn" data-target="120" style="font-style:normal;">0</em>+ others did the same.</span>
-      <span style="display:block;margin-top:24px;font-size:20px;color:rgba(255,255,255,0.25);">That is EmpowerBot.</span>
-    </p>
+    <div class="section-tag reveal">From the blog</div>
+    <h2 class="reveal">Research. Insights. Updates.</h2>
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0;flex-wrap:wrap;gap:12px;">
+      <p class="section-sub reveal" style="margin-bottom:0;">Thinking on AI, learning outcomes, and small business development.</p>
+      <a href="blog.html" class="btn btn-ghost reveal" style="flex-shrink:0;">All posts →</a>
+    </div>
+    <div class="blog-grid">
+      <div class="blog-card reveal stagger-1" onclick="window.location='blog.html'">
+        <div class="blog-img" style="background:linear-gradient(135deg,#0D0907 0%,#2D1A08 100%);">
+          <div class="blog-img-inner" style="font-size:36px;">🤖</div>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-tag tag-orange">AI &amp; Learning</span>
+            <span class="blog-date">Mar 2026</span>
+          </div>
+          <h3>Why AI-Powered Explanations Outperform Classroom Training for Micro-Entrepreneurs</h3>
+          <p class="blog-excerpt">When Amina got a question wrong about business registration, EmpowerBot didn't show her a definition. It explained LLC using her own shop as the example.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="blog-read">Read more →</div>
+            <div class="blog-read-time">6 min read</div>
+          </div>
+        </div>
+      </div>
+      <div class="blog-card reveal stagger-2" onclick="window.location='blog.html'">
+        <div class="blog-img" style="background:linear-gradient(135deg,#064E3B 0%,#065F46 100%);">
+          <div class="blog-img-inner">📊</div>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-tag tag-green">M&amp;E &amp; Funding</span>
+            <span class="blog-date">Feb 2026</span>
+          </div>
+          <h3>From Attendance Sheet to Evidence Base: A Practical Guide for NGO Programme Managers</h3>
+          <p class="blog-excerpt">Your donor doesn't want to know how many people showed up. They want to know what changed. Here's how to make the shift.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="blog-read">Read more →</div>
+            <div class="blog-read-time">8 min read</div>
+          </div>
+        </div>
+      </div>
+      <div class="blog-card reveal stagger-3" onclick="window.location='blog.html'">
+        <div class="blog-img" style="background:linear-gradient(135deg,#1E3A5F 0%,#1E40AF 100%);">
+          <div class="blog-img-inner">📱</div>
+        </div>
+        <div class="blog-body">
+          <div class="blog-meta">
+            <span class="blog-tag tag-blue">Case Study</span>
+            <span class="blog-date">Jan 2026</span>
+          </div>
+          <h3>1,000 Traders, One WhatsApp Number: What We Learned From the Agege Experiment</h3>
+          <p class="blog-excerpt">Running MSME training across five Lagos LGAs in 2025. Completion rates. What worked. What didn't. The full breakdown.</p>
+          <div style="display:flex;justify-content:space-between;align-items:center;">
+            <div class="blog-read">Read more →</div>
+            <div class="blog-read-time">10 min read</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-</div>
+</section>
 
 <!-- TESTIMONIALS -->
-<section class="section">
+<section class="testi-section">
   <div class="max-w">
-    <div class="section-tag reveal">What participants say</div>
-    <h2 class="reveal">LSETF bootcamp, Lagos 2025</h2>
-    <p class="section-sub reveal">Three LGAs. One WhatsApp number. 89% completion.</p>
+    <div class="section-tag reveal" style="justify-content:center;">From participants</div>
+    <h2 class="reveal" style="text-align:center;">What people actually say</h2>
     <div class="testi-grid">
-      <div class="testi-card reveal">
-        <div class="testi-stars"><div class="testi-star"></div><div class="testi-star"></div><div class="testi-star"></div><div class="testi-star"></div><div class="testi-star"></div></div>
-        <p class="testi-text">"I did not need to download anything. Just my normal WhatsApp. The questions were about real business situations I face every day."</p>
-        <div class="testi-from">
-          <div class="testi-av" style="background:#16A34A;"></div>
-          <div><div class="testi-name">Programme participant</div><div class="testi-org">Food vendor, Alimosho LGA 2025</div></div>
-        </div>
+      <div class="testi-card reveal stagger-1">
+        <div class="testi-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="testi-q">"I did not need to download anything. Just my normal WhatsApp. The questions were about real business situations I face every day."</p>
+        <div class="testi-from"><div class="testi-av" style="background:var(--green);">A</div><div><div class="testi-name">Programme participant</div><div class="testi-org">Food vendor · Alimosho LGA, 2025</div></div></div>
       </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars"><div class="testi-star"></div><div class="testi-star"></div><div class="testi-star"></div><div class="testi-star"></div><div class="testi-star"></div></div>
-        <p class="testi-text">"The AI explained record keeping in Pidgin using Naira examples. I finally understood it. I scored 88 percent."</p>
-        <div class="testi-from">
-          <div class="testi-av" style="background:#EA580C;"></div>
-          <div><div class="testi-name">Programme participant</div><div class="testi-org">MSME Bootcamp, Ikorodu LGA 2025</div></div>
-        </div>
+      <div class="testi-card reveal stagger-2">
+        <div class="testi-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="testi-q">"The AI explained record keeping in Pidgin using Naira examples. I finally understood what my accountant was talking about. I scored 88%."</p>
+        <div class="testi-from"><div class="testi-av" style="background:var(--orange);">F</div><div><div class="testi-name">Programme participant</div><div class="testi-org">Tailor · Ikorodu LGA, 2025</div></div></div>
       </div>
-      <div class="testi-card reveal">
-        <div class="testi-stars"><div class="testi-star"></div><div class="testi-star"></div><div class="testi-star"></div><div class="testi-star"></div><div class="testi-star"></div></div>
-        <p class="testi-text">"I scored 92 per cent. I kept going because I wanted to beat my friend on the leaderboard. Then I realised I had actually learned something."</p>
-        <div class="testi-from">
-          <div class="testi-av" style="background:#2563EB;"></div>
-          <div><div class="testi-name">Programme participant</div><div class="testi-org">MSME Bootcamp, Epe LGA 2025</div></div>
-        </div>
+      <div class="testi-card reveal stagger-3">
+        <div class="testi-stars"><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div><div class="star"></div></div>
+        <p class="testi-q">"I scored 92%. I kept going because I wanted to beat my friend on the leaderboard. Then I realised I had actually learned something useful."</p>
+        <div class="testi-from"><div class="testi-av" style="background:var(--blue);">C</div><div><div class="testi-name">Programme participant</div><div class="testi-org">Provisions trader · Epe LGA, 2025</div></div></div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- CTA -->
 <section class="cta-section">
-  <h2>Start training your community today</h2>
-  <p>Free for verified nonprofits. 14-day trial for everyone else. No credit card needed.</p>
-  <div class="cta-btns">
-    <button class="btn btn-white btn-lg" onclick="showPage('pricing')">See all plans</button>
-    <button class="btn btn-lg" style="background:rgba(255,255,255,0.12);color:white;border:1.5px solid rgba(255,255,255,0.25);" onclick="showPage('demo')">Explore demo →</button>
+  <div class="max-w">
+    <h2 class="reveal">Start building evidence<br>for your programme</h2>
+    <p class="reveal">Free forever for verified nonprofits. 14-day trial for everyone else. No credit card.</p>
+    <div class="cta-btns reveal">
+      <a href="pricing.html" class="btn btn-white btn-lg">See all plans</a>
+      <a href="demo.html" class="btn btn-ghost-light btn-lg">Explore demo →</a>
+    </div>
   </div>
 </section>
 
+<!-- FOOTER -->
 <footer>
-  <div class="foot-grid">
-    <div class="foot-brand">
-      <span class="logo">Empower<em>Bot</em></span>
-      <p>WhatsApp training for market traders, merchants, and micro-entrepreneurs. Built by ELP Foundation.</p>
-      <div style="display:flex;align-items:center;gap:12px;margin-top:14px;">
-        <img src="/public/lsetf.png" alt="LSETF" style="height:18px;object-fit:contain;opacity:.3;filter:brightness(0) invert(1);">
-        <img src="/public/empowerlogo.png" alt="ELP" style="height:24px;object-fit:contain;opacity:.3;filter:brightness(0) invert(1);">
+  <div class="max-w">
+    <div class="foot-grid">
+      <div>
+        <a class="foot-logo" href="index.html">Empower<em>Bot</em></a>
+        <p class="foot-desc">AI-powered training on WhatsApp. Measurable learning outcomes for small businesses. Built by ELP Foundation.</p>
+        <div class="foot-partners">
+          <img src="assets/lsetf.png" alt="LSETF">
+          <img src="assets/elp.png" alt="ELP Foundation">
+        </div>
+      </div>
+      <div class="foot-col">
+        <h4>Product</h4>
+        <a href="features.html">Features</a>
+        <a href="demo.html">Demo</a>
+        <a href="pricing.html">Pricing</a>
+        <a href="#">API docs</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="about.html">About us</a>
+        <a href="blog.html">Blog</a>
+        <a href="#">Impact reports</a>
+        <a href="#">Press</a>
+      </div>
+      <div class="foot-col">
+        <h4>Support</h4>
+        <a href="#">Help centre</a>
+        <a href="#">Contact us</a>
+        <a href="#">Community</a>
+        <a href="#">Status</a>
       </div>
     </div>
-    <div class="foot-col"><h4>Product</h4><a onclick="showPage('features')">Features</a><a onclick="showPage('demo')">Demo</a><a onclick="showPage('pricing')">Pricing</a><a>API docs</a></div>
-    <div class="foot-col"><h4>Organisation</h4><a onclick="showPage('about')">About us</a><a>Impact reports</a><a>Press</a></div>
-    <div class="foot-col"><h4>Support</h4><a>Help centre</a><a>Contact us</a><a>Community</a></div>
-  </div>
-  <div class="foot-bottom">
-    <span class="foot-copy">© 2026 EmpowerBot · Built with purpose by ELP Foundation</span>
-    <div class="foot-links"><a>Privacy</a><a>Terms</a><a>Cookies</a></div>
+    <div class="foot-bottom">
+      <span class="foot-copy">© 2026 EmpowerBot · Built by ELP Foundation · Partnered with LSETF</span>
+      <div class="foot-links">
+        <a href="#">Privacy</a>
+        <a href="#">Terms</a>
+        <a href="#">Cookies</a>
+      </div>
+    </div>
   </div>
 </footer>
-</div>
-
-<!-- ════════════════ FEATURES ════════════════ -->
-<div id="page-features" class="page">
-<section style="background:var(--bg);padding:72px 5% 52px;text-align:center;">
-  <div class="max-w">
-    <div class="section-tag" style="justify-content:center;">Full feature set</div>
-    <h2 style="font-size:44px;letter-spacing:-0.03em;margin-bottom:12px;">Everything in one platform</h2>
-    <p style="font-size:16px;color:var(--ink-soft);max-width:480px;margin:0 auto 36px;line-height:1.75;">Every feature listed here is included on every plan. Click to expand.</p>
-    <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;" id="feat-tabs">
-      <button class="ftab active" onclick="filterFeats('all',this)">All</button>
-      <button class="ftab" onclick="filterFeats('ai',this)">AI and learning</button>
-      <button class="ftab" onclick="filterFeats('quiz',this)">Participant experience</button>
-      <button class="ftab" onclick="filterFeats('admin',this)">Admin and analytics</button>
-    </div>
-  </div>
-</section>
-
-<section style="padding:0 5% 80px;">
-  <div class="max-w" style="max-width:760px;">
-    <div class="fgroup" data-cat="ai">
-      <div class="fgroup-label">AI and learning</div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:#EFF6FF;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg></div><div class="fitem-title">AI explains using their business, not a textbook</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>Wrong answer. Instant explanation. Built around their business type, city, and real Naira amounts. The same question gets a different explanation for a food vendor versus a clothing seller.</p><div class="fitem-tags"><span>Powered by Gemini</span><span>Business-specific</span><span>Naira examples</span></div></div></div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:#EFF6FF;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg></div><div class="fitem-title">They can ask follow-up questions and get real answers</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>After any explanation, participants type a natural question. The AI recognises on-topic follow-ups, answers in full context, and gently redirects if the conversation drifts.</p><div class="fitem-tags"><span>Natural language</span><span>Context memory</span><span>Smart redirect</span></div></div></div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:#EFF6FF;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><polyline points="1 4 1 10 7 10"/><path d="M3.51 15a9 9 0 1 0 .49-3.47"/></svg></div><div class="fitem-title">Wrong answers revisited until they stick</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>After completing any quiz, participants enter a review session. Every incorrect answer is presented again with a fresh explanation until all concepts are covered.</p><div class="fitem-tags"><span>Post-quiz</span><span>Per-question review</span><span>Fresh explanations</span></div></div></div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:#EFF6FF;"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg></div><div class="fitem-title">No assumption that they know the terminology</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>Every unfamiliar term is explained inline. Pidgin English and plain language support. No background knowledge assumed.</p><div class="fitem-tags"><span>Plain English</span><span>Pidgin support</span><span>No jargon assumed</span></div></div></div>
-    </div>
-    <div class="fgroup" data-cat="quiz">
-      <div class="fgroup-label">Participant experience</div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:var(--green-light);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><div class="fitem-title">No typing. No app. Tap A, B, or C.</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>Every question is a WhatsApp interactive button message. Works on any phone with WhatsApp installed.</p><div class="fitem-tags"><span>Zero typing</span><span>No download</span><span>Any phone</span></div></div></div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:var(--green-light);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div class="fitem-title">Self-registration in under 2 minutes</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>A short guided conversation. Name, business type, location, main challenge. Under 2 minutes. No form, no link, no app. All data feeds the admin dashboard and M&E export.</p><div class="fitem-tags"><span>Under 2 minutes</span><span>No form needed</span><span>Feeds AI context</span></div></div></div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:var(--green-light);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"/><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"/><path d="M18 2H6v7a6 6 0 0 0 12 0V2z"/></svg></div><div class="fitem-title">Live leaderboard drives competition</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>Participants check their standing at any time. The leaderboard is visible to the full cohort, turning a training into something social and competitive.</p><div class="fitem-tags"><span>Anytime access</span><span>Cohort-wide</span><span>Per-quiz and overall</span></div></div></div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:var(--green-light);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#16A34A" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div><div class="fitem-title">New modules unlock as they progress</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>Up to 21 quiz modules. You control the pacing from the admin panel. Modules unlock after the prior one is completed.</p><div class="fitem-tags"><span>Up to 21 modules</span><span>Admin-controlled</span><span>Structured learning</span></div></div></div>
-    </div>
-    <div class="fgroup" data-cat="admin">
-      <div class="fgroup-label">Admin and analytics</div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:var(--orange-light);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div><div class="fitem-title">See every participant's score and status live</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>Set pass thresholds. Filter by quiz range. Sort any column. See pass/fail, completion status, and last-active date per participant in real time.</p><div class="fitem-tags"><span>Custom thresholds</span><span>Sortable columns</span><span>Real-time</span></div></div></div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:var(--orange-light);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg></div><div class="fitem-title">One-click M&amp;E export</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>Export all participant data to CSV. Every column your M&E report or donor template expects is included.</p><div class="fitem-tags"><span>CSV export</span><span>M&amp;E ready</span><span>Full history</span></div></div></div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:var(--orange-light);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/></svg></div><div class="fitem-title">See exactly where your cohort is struggling</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>Ranked list of the questions that failed most across all participants. Fix content before the next training cycle.</p><div class="fitem-tags"><span>Per-question</span><span>Cohort-wide</span><span>Content improvement</span></div></div></div>
-      <div class="fitem" onclick="toggleFeat(this)"><div class="fitem-head"><div class="fitem-icon" style="background:var(--orange-light);"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg></div><div class="fitem-title">Enable or disable any quiz — instantly</div><div class="fitem-arrow"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 12 15 18 9"/></svg></div></div><div class="fitem-body"><p>Toggle quiz modules on or off from the admin panel. Changes take effect immediately for all participants without disrupting sessions already in progress.</p><div class="fitem-tags"><span>Instant effect</span><span>Non-disruptive</span><span>Admin-controlled</span></div></div></div>
-    </div>
-  </div>
-</section>
-
-<section class="cta-section">
-  <h2>See every feature live</h2>
-  <p>Try the interactive demo before signing up.</p>
-  <div class="cta-btns">
-    <button class="btn btn-white btn-lg" onclick="showPage('demo')">Explore demo</button>
-    <button class="btn btn-lg" style="background:rgba(255,255,255,0.12);color:white;border:1.5px solid rgba(255,255,255,0.25);" onclick="showPage('pricing')">View pricing →</button>
-  </div>
-</section>
-<footer><div class="foot-grid"><div class="foot-brand"><span class="logo">Empower<em>Bot</em></span><p>Built by ELP Foundation. Partnered with LSETF.</p></div><div class="foot-col"><h4>Product</h4><a onclick="showPage('features')">Features</a><a onclick="showPage('demo')">Demo</a><a onclick="showPage('pricing')">Pricing</a></div><div class="foot-col"><h4>Organisation</h4><a onclick="showPage('about')">About</a><a>Impact</a></div><div class="foot-col"><h4>Support</h4><a>Help</a><a>Contact</a></div></div><div class="foot-bottom"><span class="foot-copy">© 2026 EmpowerBot</span><div class="foot-links"><a>Privacy</a><a>Terms</a></div></div></footer>
-</div>
-
-<!-- ════════════════ DEMO ════════════════ -->
-<div id="page-demo" class="page">
-<div class="demo-hero">
-  <div style="max-width:1140px;margin:0 auto;">
-    <h1>See EmpowerBot in action</h1>
-    <p>Explore the participant WhatsApp journey, AI review, and the admin dashboard through interactive previews.</p>
-    <div class="demo-tabs">
-      <button class="demo-tab active" onclick="switchDemo(this,'demo-chat')">WhatsApp chat</button>
-      <button class="demo-tab" onclick="switchDemo(this,'demo-quiz')">Quiz flow</button>
-      <button class="demo-tab" onclick="switchDemo(this,'demo-ai')">AI review</button>
-      <button class="demo-tab" onclick="switchDemo(this,'demo-admin')">Admin panel</button>
-    </div>
-  </div>
-</div>
-
-<div class="demo-content">
-
-  <!-- CHAT -->
-  <div class="demo-panel active" id="demo-chat">
-    <div>
-      <div class="demo-screen">
-        <div class="demo-bar"><div class="demo-dots"><div class="demo-dot" style="background:#FF5F57;"></div><div class="demo-dot" style="background:#FFBD2E;"></div><div class="demo-dot" style="background:#28CA41;"></div></div><div class="demo-url">wa.me/+2349134774276</div></div>
-        <div style="background:#E5DDD5;padding:14px;min-height:380px;">
-          <div style="display:flex;flex-direction:column;gap:8px;" id="chat-messages">
-            <div class="wa-bubble">👋 Welcome to EmpowerBot!<br>What's your full name?<div class="wa-time">09:00 AM ✓✓</div></div>
-          </div>
-          <div style="margin-top:12px;display:flex;gap:8px;flex-wrap:wrap;" id="chat-options"></div>
-        </div>
-      </div>
-      <div style="margin-top:16px;background:var(--orange-light);border-radius:var(--r);padding:14px 16px;font-size:13px;color:var(--orange-dark);">
-        <strong>Try it →</strong> Click through to experience the onboarding and quiz flow as a participant would on their phone.
-      </div>
-    </div>
-    <div class="demo-text">
-      <h3>The participant experience</h3>
-      <p>Participants message EmpowerBot's WhatsApp number. No app, no signup form — just a conversation they already know how to use.</p>
-      <ul class="demo-bullets">
-        <li><span>✓</span> Self-registration in under 2 minutes</li>
-        <li><span>✓</span> Business context captured automatically</li>
-        <li><span>✓</span> Quiz delivered via tap buttons — no typing</li>
-        <li><span>✓</span> Instant feedback on every answer</li>
-        <li><span>✓</span> AI explanations in plain language or Pidgin</li>
-        <li><span>✓</span> Works on any phone with WhatsApp</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- QUIZ -->
-  <div class="demo-panel" id="demo-quiz">
-    <div>
-      <div class="demo-screen">
-        <div class="demo-bar"><div class="demo-dots"><div class="demo-dot" style="background:#FF5F57;"></div><div class="demo-dot" style="background:#FFBD2E;"></div><div class="demo-dot" style="background:#28CA41;"></div></div><div class="demo-url">EmpowerBot · Quiz 3</div></div>
-        <div style="background:#E5DDD5;padding:14px;min-height:380px;">
-          <div class="wa-bubble">
-            <strong>Quiz 3 — Financial Records</strong><br>Quiz 1 ✓ &nbsp; Quiz 2 ✓ &nbsp; Quiz 3 →
-          </div>
-          <div class="wa-bubble">
-            <strong>Question 2 of 5:</strong><br><br>
-            How often should you reconcile your business cash?<br><br>
-            A) Once a year<br>B) Every day<br>C) Only when there's a problem
-            <div class="wa-btns">
-              <button class="wa-opt" onclick="showQuizFeedback('wrong')">A</button>
-              <button class="wa-opt" onclick="showQuizFeedback('correct')">B</button>
-              <button class="wa-opt" onclick="showQuizFeedback('wrong')">C</button>
-            </div>
-          </div>
-          <div id="quiz-feedback"></div>
-        </div>
-      </div>
-    </div>
-    <div class="demo-text">
-      <h3>The quiz experience</h3>
-      <p>Questions are delivered as WhatsApp button messages. One tap to answer. Progress saved automatically. Resume any time.</p>
-      <ul class="demo-bullets">
-        <li><span>✓</span> Up to 21 quizzes per programme</li>
-        <li><span>✓</span> Progress saved — resume any time</li>
-        <li><span>✓</span> Instant correct / wrong feedback</li>
-        <li><span>✓</span> Scores tracked per quiz and overall</li>
-        <li><span>✓</span> Retakes surface wrong answers first</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- AI REVIEW -->
-  <div class="demo-panel" id="demo-ai">
-    <div>
-      <div class="demo-screen">
-        <div class="demo-bar"><div class="demo-dots"><div class="demo-dot" style="background:#FF5F57;"></div><div class="demo-dot" style="background:#FFBD2E;"></div><div class="demo-dot" style="background:#28CA41;"></div></div><div class="demo-url">EmpowerBot · AI Review</div></div>
-        <div style="background:#E5DDD5;padding:14px;min-height:400px;">
-          <div class="wa-bubble">
-            👋 Let's review your wrong answers from Quiz 1!<br><br>
-            <strong>Quiz 1 — 4 incorrect</strong>
-            <div class="wa-btns"><button class="wa-opt">Start review</button></div>
-          </div>
-          <div class="wa-bubble out">Start review<div class="wa-time">10:22 AM ✓</div></div>
-          <div class="wa-bubble">
-            <strong>Question 3:</strong><br><br>
-            Under which structure is your personal property at risk?<br><br>
-            Your answer: A) LLC<br>Correct: B) Sole Proprietorship<br><br>
-            <em>Want an explanation?</em>
-            <div class="wa-btns"><button class="wa-opt" onclick="showAIExplanation()">Yes please</button><button class="wa-opt">Skip</button></div>
-          </div>
-          <div id="ai-explanation" style="display:none;" class="wa-bubble">
-            Fatima! Make I explain am well well! 😄<br><br>
-            When you be <strong>sole proprietor</strong>, you and your business na the SAME person for law. If your provisions shop borrow N50,000 and you no fit pay, dem fit collect your savings, phone, even house!<br><br>
-            But LLC na like fence between you and your business. If business fail, dem only take business property, NOT your personal things. 🏡<br><br>
-            <strong>Quick tip:</strong> Register LLC at CAC — e dey protect you for long run.
-            <div class="wa-btns"><button class="wa-opt">Ask follow-up</button><button class="wa-opt">Next question</button></div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="demo-text">
-      <h3>AI-powered review sessions</h3>
-      <p>After a quiz, participants enter AI review mode. Every wrong answer is explained in context — using their business type, local language, and real Naira amounts.</p>
-      <ul class="demo-bullets">
-        <li><span>✓</span> Reviews every incorrect question</li>
-        <li><span>✓</span> Pidgin English and plain language</li>
-        <li><span>✓</span> Local currency and market examples</li>
-        <li><span>✓</span> Follow-up questions supported</li>
-        <li><span>✓</span> Personalised to business type and sector</li>
-      </ul>
-    </div>
-  </div>
-
-  <!-- ADMIN -->
-  <div class="demo-panel full" id="demo-admin">
-    <div>
-      <div class="demo-screen" style="max-width:100%;">
-        <div class="demo-bar"><div class="demo-dots"><div class="demo-dot" style="background:#FF5F57;"></div><div class="demo-dot" style="background:#FFBD2E;"></div><div class="demo-dot" style="background:#28CA41;"></div></div><div class="demo-url">admin.empowerbot.app/dashboard</div></div>
-        <div style="display:flex;min-height:480px;background:var(--bg2);">
-          <div style="width:190px;background:var(--ink);padding:18px;flex-shrink:0;">
-            <div style="font-family:'Bricolage Grotesque',sans-serif;color:var(--orange-mid);font-size:15px;font-weight:800;letter-spacing:-0.02em;margin-bottom:22px;">EmpowerBot</div>
-            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:7px;background:rgba(255,255,255,0.1);color:white;font-size:12.5px;font-weight:600;margin-bottom:4px;cursor:pointer;">📊 Dashboard</div>
-            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;color:rgba(255,255,255,0.5);font-size:12.5px;cursor:pointer;margin-bottom:4px;">📝 Quizzes</div>
-            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;color:rgba(255,255,255,0.5);font-size:12.5px;cursor:pointer;margin-bottom:4px;">👥 Participants</div>
-            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;color:rgba(255,255,255,0.5);font-size:12.5px;cursor:pointer;margin-bottom:4px;">📈 Analytics</div>
-            <div style="display:flex;align-items:center;gap:8px;padding:7px 10px;color:rgba(255,255,255,0.5);font-size:12.5px;cursor:pointer;">⚙️ Settings</div>
-          </div>
-          <div style="flex:1;padding:22px;">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:18px;">
-              <div style="font-family:'Bricolage Grotesque',sans-serif;font-size:17px;font-weight:800;letter-spacing:-0.02em;">Agege 2026 — Dashboard</div>
-              <button style="background:var(--orange);color:white;border:none;border-radius:7px;padding:8px 14px;font-size:12px;font-weight:700;cursor:pointer;font-family:'Instrument Sans',sans-serif;">↓ Export M&amp;E</button>
-            </div>
-            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;">
-              <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:14px;"><div style="font-size:10px;color:var(--ink-muted);font-weight:600;margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;">Participants</div><div style="font-family:'Bricolage Grotesque',sans-serif;font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-0.03em;">120</div></div>
-              <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:14px;"><div style="font-size:10px;color:var(--ink-muted);font-weight:600;margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;">Avg score</div><div style="font-family:'Bricolage Grotesque',sans-serif;font-size:24px;font-weight:800;color:var(--green);letter-spacing:-0.03em;">78%</div></div>
-              <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:14px;"><div style="font-size:10px;color:var(--ink-muted);font-weight:600;margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;">Completion</div><div style="font-family:'Bricolage Grotesque',sans-serif;font-size:24px;font-weight:800;color:var(--orange);letter-spacing:-0.03em;">89%</div></div>
-              <div style="background:white;border:1px solid var(--border);border-radius:10px;padding:14px;"><div style="font-size:10px;color:var(--ink-muted);font-weight:600;margin-bottom:3px;text-transform:uppercase;letter-spacing:.05em;">Active quizzes</div><div style="font-family:'Bricolage Grotesque',sans-serif;font-size:24px;font-weight:800;color:var(--blue);letter-spacing:-0.03em;">21</div></div>
-            </div>
-            <div style="background:white;border:1px solid var(--border);border-radius:10px;overflow:hidden;">
-              <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:9px 14px;background:var(--bg2);border-bottom:1px solid var(--border);font-size:10px;font-weight:700;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.07em;"><span>Participant</span><span>Quiz</span><span>Score</span><span>Status</span></div>
-              <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:9px 14px;border-bottom:1px solid var(--border-soft);font-size:12.5px;align-items:center;"><span style="font-weight:600;">Participant A</span><span style="color:var(--ink-muted);">Quiz 3</span><span><div style="display:flex;align-items:center;gap:5px;"><div style="flex:1;height:4px;background:var(--bg3);border-radius:4px;overflow:hidden;"><div style="width:88%;height:100%;background:var(--green);border-radius:4px;"></div></div><span style="font-size:11px;color:var(--ink-muted);">88%</span></div></span><span class="badge badge-green">Completed</span></div>
-              <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:9px 14px;border-bottom:1px solid var(--border-soft);font-size:12.5px;align-items:center;"><span style="font-weight:600;">Participant B</span><span style="color:var(--ink-muted);">Quiz 2</span><span><div style="display:flex;align-items:center;gap:5px;"><div style="flex:1;height:4px;background:var(--bg3);border-radius:4px;overflow:hidden;"><div style="width:60%;height:100%;background:var(--amber);border-radius:4px;"></div></div><span style="font-size:11px;color:var(--ink-muted);">60%</span></div></span><span class="badge badge-amber">In progress</span></div>
-              <div style="display:grid;grid-template-columns:2fr 1fr 1fr 1fr;padding:9px 14px;font-size:12.5px;align-items:center;"><span style="font-weight:600;">Participant C</span><span style="color:var(--ink-muted);">Quiz 4</span><span><div style="display:flex;align-items:center;gap:5px;"><div style="flex:1;height:4px;background:var(--bg3);border-radius:4px;overflow:hidden;"><div style="width:95%;height:100%;background:var(--green);border-radius:4px;"></div></div><span style="font-size:11px;color:var(--ink-muted);">95%</span></div></span><span class="badge badge-green">Completed</span></div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:20px;">
-        <div style="background:var(--orange-light);border-radius:var(--r);padding:18px;"><div style="font-size:18px;margin-bottom:8px;">📝</div><div style="font-size:13px;font-weight:700;margin-bottom:5px;">Quiz manager</div><div style="font-size:12.5px;color:var(--ink-soft);">Enable, disable, and reorder quizzes. Changes apply immediately to all participants.</div></div>
-        <div style="background:var(--blue-light);border-radius:var(--r);padding:18px;"><div style="font-size:18px;margin-bottom:8px;">📊</div><div style="font-size:13px;font-weight:700;margin-bottom:5px;">M&amp;E export</div><div style="font-size:12.5px;color:var(--ink-soft);">Export all data to CSV. Every column your donor report expects, already formatted.</div></div>
-        <div style="background:var(--green-light);border-radius:var(--r);padding:18px;"><div style="font-size:18px;margin-bottom:8px;">👤</div><div style="font-size:13px;font-weight:700;margin-bottom:5px;">Participant profiles</div><div style="font-size:12.5px;color:var(--ink-soft);">Business type, quiz history, scores, and AI chat log. All in one view per participant.</div></div>
-      </div>
-    </div>
-  </div>
-
-</div>
-
-<section class="cta-section">
-  <h2>Ready to get started?</h2>
-  <p>Free for nonprofits. Paid plans for organisations that need more scale.</p>
-  <div class="cta-btns"><button class="btn btn-white btn-lg" onclick="showPage('pricing')">See pricing →</button></div>
-</section>
-<footer><div class="foot-grid"><div class="foot-brand"><span class="logo">Empower<em>Bot</em></span><p>WhatsApp-native training platform.</p></div><div class="foot-col"><h4>Product</h4><a onclick="showPage('features')">Features</a><a onclick="showPage('demo')">Demo</a><a onclick="showPage('pricing')">Pricing</a></div><div class="foot-col"><h4>Company</h4><a onclick="showPage('about')">About</a><a>Impact</a></div><div class="foot-col"><h4>Support</h4><a>Help</a><a>Contact</a></div></div><div class="foot-bottom"><span class="foot-copy">© 2026 EmpowerBot</span><div class="foot-links"><a>Privacy</a><a>Terms</a></div></div></footer>
-</div>
-
-<!-- ════════════════ PRICING ════════════════ -->
-<div id="page-pricing" class="page">
-<section style="background:var(--bg);padding:72px 5% 56px;text-align:center;">
-  <div class="max-w">
-    <div class="section-tag" style="justify-content:center;">Pricing</div>
-    <h2 style="font-size:46px;letter-spacing:-0.03em;margin-bottom:14px;">Simple, honest pricing</h2>
-    <p style="font-size:16px;color:var(--ink-soft);max-width:500px;margin:0 auto 18px;line-height:1.75;">Free for NGOs and social organisations, because impact shouldn't be paywalled.</p>
-    <div style="display:inline-flex;align-items:center;gap:8px;background:var(--amber-light);color:var(--amber);padding:10px 20px;border-radius:30px;font-size:13.5px;font-weight:600;">
-      🎉 Verified nonprofits get Growth plan free, forever
-    </div>
-  </div>
-</section>
-
-<section class="section" style="padding-top:0;">
-  <div class="max-w">
-    <div class="price-grid">
-      <div class="price-card" style="border-color:var(--amber);background:linear-gradient(160deg,#FFFBEB,white);">
-        <div style="display:inline-block;background:var(--amber);color:white;font-size:10px;font-weight:700;padding:2px 12px;border-radius:20px;margin-bottom:12px;letter-spacing:0.04em;">NGO / GOVT FREE</div>
-        <div class="price-tier">Community</div>
-        <div class="price-amount">Free</div>
-        <div style="font-size:12.5px;color:var(--ink-muted);margin-top:4px;">forever, after verification</div>
-        <div class="price-desc">For NGOs, government programmes, and social enterprises. 90% of all features included.</div>
-        <div class="price-hr"></div>
-        <ul class="price-feats">
-          <li><span class="pf-y">✓</span> Up to 500 participants</li>
-          <li><span class="pf-y">✓</span> Unlimited quizzes</li>
-          <li><span class="pf-y">✓</span> AI explanations</li>
-          <li><span class="pf-y">✓</span> Full analytics dashboard</li>
-          <li><span class="pf-y">✓</span> M&amp;E CSV export</li>
-          <li><span class="pf-y">✓</span> Leaderboard</li>
-          <li><span class="pf-n">–</span> <span style="color:var(--ink-faint);">White-label branding</span></li>
-          <li><span class="pf-n">–</span> <span style="color:var(--ink-faint);">API access</span></li>
-        </ul>
-        <button class="btn btn-lg" style="width:100%;justify-content:center;background:var(--amber);color:white;">Apply for free access →</button>
-        <p class="price-note">Requires CAC or NGO registration proof</p>
-      </div>
-
-      <div class="price-card">
-        <div class="price-tier">Starter</div>
-        <div class="price-amount"><sup>$</sup>99<span class="price-period">/mo</span></div>
-        <div class="price-desc">For cooperatives, small social enterprises, and pilot programmes testing at scale.</div>
-        <div class="price-hr"></div>
-        <ul class="price-feats">
-          <li><span class="pf-y">✓</span> Up to 500 participants</li>
-          <li><span class="pf-y">✓</span> 15 quizzes</li>
-          <li><span class="pf-y">✓</span> AI explanations</li>
-          <li><span class="pf-y">✓</span> Analytics dashboard</li>
-          <li><span class="pf-y">✓</span> Leaderboard</li>
-          <li><span class="pf-y">✓</span> Email support</li>
-          <li><span class="pf-n">–</span> <span style="color:var(--ink-faint);">Record keeping</span></li>
-          <li><span class="pf-n">–</span> <span style="color:var(--ink-faint);">White-label</span></li>
-        </ul>
-        <button class="btn btn-outline btn-lg" style="width:100%;justify-content:center;">Start free trial</button>
-        <p class="price-note">14-day trial · no card needed</p>
-      </div>
-
-      <div class="price-card featured">
-        <div class="price-badge">MOST POPULAR</div>
-        <div class="price-tier">Growth</div>
-        <div class="price-amount"><sup>$</sup>299<span class="price-period">/mo</span></div>
-        <div class="price-desc">For established organisations running ongoing training programmes with large cohorts.</div>
-        <div class="price-hr"></div>
-        <ul class="price-feats">
-          <li><span class="pf-y">✓</span> Up to 2,000 participants</li>
-          <li><span class="pf-y">✓</span> Unlimited quizzes</li>
-          <li><span class="pf-y">✓</span> AI explanations + follow-up</li>
-          <li><span class="pf-y">✓</span> Full analytics + export</li>
-          <li><span class="pf-y">✓</span> Record keeping</li>
-          <li><span class="pf-y">✓</span> Leaderboard</li>
-          <li><span class="pf-y">✓</span> Priority support</li>
-          <li><span class="pf-n">–</span> <span style="color:var(--ink-faint);">White-label</span></li>
-        </ul>
-        <button class="btn btn-primary btn-lg" style="width:100%;justify-content:center;">Start free trial</button>
-        <p class="price-note">14-day trial · no card needed</p>
-      </div>
-
-      <div class="price-card">
-        <div class="price-tier">Enterprise</div>
-        <div class="price-amount"><sup>$</sup>999<span class="price-period">/mo</span></div>
-        <div class="price-desc">For government agencies, large NGOs, and development organisations with complex needs.</div>
-        <div class="price-hr"></div>
-        <ul class="price-feats">
-          <li><span class="pf-y">✓</span> Unlimited participants</li>
-          <li><span class="pf-y">✓</span> Unlimited quizzes</li>
-          <li><span class="pf-y">✓</span> Custom AI persona and tone</li>
-          <li><span class="pf-y">✓</span> White-label branding</li>
-          <li><span class="pf-y">✓</span> Full API access</li>
-          <li><span class="pf-y">✓</span> Dedicated account manager</li>
-          <li><span class="pf-y">✓</span> SLA guarantee (99.9%)</li>
-          <li><span class="pf-y">✓</span> Invoiced billing</li>
-        </ul>
-        <button class="btn btn-ghost btn-lg" style="width:100%;justify-content:center;">Contact sales</button>
-        <p class="price-note">Custom pricing for government</p>
-      </div>
-    </div>
-
-    <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:32px;margin-top:40px;text-align:center;">
-      <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-size:20px;font-weight:800;letter-spacing:-0.02em;margin-bottom:20px;">Included on every plan</h3>
-      <div style="display:flex;flex-wrap:wrap;gap:10px;justify-content:center;">
-        <span style="background:white;border:1px solid var(--border);padding:7px 14px;border-radius:30px;font-size:13px;">✓ WhatsApp delivery via our number</span>
-        <span style="background:white;border:1px solid var(--border);padding:7px 14px;border-radius:30px;font-size:13px;">✓ No app downloads for participants</span>
-        <span style="background:white;border:1px solid var(--border);padding:7px 14px;border-radius:30px;font-size:13px;">✓ Encrypted data storage</span>
-        <span style="background:white;border:1px solid var(--border);padding:7px 14px;border-radius:30px;font-size:13px;">✓ Admin dashboard</span>
-        <span style="background:white;border:1px solid var(--border);padding:7px 14px;border-radius:30px;font-size:13px;">✓ AI-powered explanations</span>
-        <span style="background:white;border:1px solid var(--border);padding:7px 14px;border-radius:30px;font-size:13px;">✓ Participant self-registration</span>
-      </div>
-    </div>
-
-    <div style="margin-top:52px;">
-      <h3 style="font-family:'Bricolage Grotesque',sans-serif;font-size:24px;font-weight:800;letter-spacing:-0.02em;margin-bottom:28px;text-align:center;">Common questions</h3>
-      <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:22px;"><h4 style="font-size:14px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em;">Do participants need WhatsApp Business?</h4><p style="font-size:13px;color:var(--ink-soft);line-height:1.7;">No. Participants use their regular WhatsApp to message EmpowerBot's number. No business account or registration needed.</p></div>
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:22px;"><h4 style="font-size:14px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em;">How does nonprofit verification work?</h4><p style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Submit your CAC certificate, NGO registration, or government documentation. We review within 2 business days and activate your free account.</p></div>
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:22px;"><h4 style="font-size:14px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em;">Can I upload my own quiz content?</h4><p style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Yes. Upload via the admin panel or our simple JSON format. Content development support is available for Enterprise clients.</p></div>
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:22px;"><h4 style="font-size:14px;font-weight:700;margin-bottom:8px;letter-spacing:-0.01em;">What languages does the AI support?</h4><p style="font-size:13px;color:var(--ink-soft);line-height:1.7;">English and Nigerian Pidgin are live. Yoruba is in beta. Hausa and Igbo are in development. Custom language support on Enterprise.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="cta-section">
-  <h2>Start training your community</h2>
-  <p>Free for nonprofits. 14-day trial for everyone else.</p>
-  <div class="cta-btns">
-    <button class="btn btn-white btn-lg" onclick="showPage('demo')">Try the demo first</button>
-    <button class="btn btn-lg" style="background:rgba(255,255,255,0.12);color:white;border:1.5px solid rgba(255,255,255,0.25);">Get started free →</button>
-  </div>
-</section>
-<footer><div class="foot-grid"><div class="foot-brand"><span class="logo">Empower<em>Bot</em></span><p>WhatsApp-native training platform.</p></div><div class="foot-col"><h4>Product</h4><a onclick="showPage('features')">Features</a><a onclick="showPage('demo')">Demo</a><a onclick="showPage('pricing')">Pricing</a></div><div class="foot-col"><h4>Company</h4><a onclick="showPage('about')">About</a><a>Impact</a></div><div class="foot-col"><h4>Support</h4><a>Help</a><a>Contact</a></div></div><div class="foot-bottom"><span class="foot-copy">© 2026 EmpowerBot</span><div class="foot-links"><a>Privacy</a><a>Terms</a></div></div></footer>
-</div>
-
-<!-- ════════════════ ABOUT ════════════════ -->
-<div id="page-about" class="page">
-<section class="about-hero">
-  <div class="about-inner max-w">
-    <div>
-      <div class="section-tag">Our story</div>
-      <h2 style="font-size:44px;letter-spacing:-0.03em;margin-bottom:18px;">Built in Lagos, for Lagos entrepreneurs</h2>
-      <p style="font-size:16px;color:var(--ink-soft);line-height:1.8;margin-bottom:16px;">EmpowerBot came out of a real problem. Running MSME training across Lagos LGAs in partnership with LSETF, completion rates were low and participants forgot lessons within days.</p>
-      <p style="font-size:16px;color:var(--ink-soft);line-height:1.8;margin-bottom:28px;">Moving training to WhatsApp changed everything. Completion reached 89%. AI explanations in Pidgin made concepts stick in ways printed handouts never could.</p>
-      <div style="display:flex;gap:10px;flex-wrap:wrap;">
-        <button class="btn btn-primary btn-lg" onclick="showPage('demo')">See the product</button>
-        <button class="btn btn-outline btn-lg" onclick="showPage('pricing')">Start free</button>
-      </div>
-    </div>
-    <div class="about-stats-box">
-      <div class="asb-row">
-        <div class="asb-num" style="color:var(--orange-mid);">120+</div>
-        <div class="asb-lbl">entrepreneurs trained across Epe, Ikorodu, and Alimosho in the 2025 LSETF bootcamp</div>
-      </div>
-      <div class="asb-row">
-        <div class="asb-num" style="color:var(--amber);">89%</div>
-        <div class="asb-lbl">quiz completion rate in the 2025 pilot cohort</div>
-      </div>
-      <div class="asb-row">
-        <div class="asb-num" style="color:var(--green-mid);">4</div>
-        <div class="asb-lbl">weekly sessions running in Agege LGA, every Thursday 2026</div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section style="background:var(--ink);padding:52px 5%;text-align:center;">
-  <div class="max-w">
-    <h3 style="color:white;font-size:22px;font-family:'Bricolage Grotesque',sans-serif;font-weight:800;letter-spacing:-0.02em;margin-bottom:24px;">Our founding partner</h3>
-    <div style="background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:var(--r-lg);padding:32px;max-width:540px;margin:0 auto;">
-      <div style="display:flex;align-items:center;justify-content:center;gap:24px;margin-bottom:18px;flex-wrap:wrap;">
-        <img src="/public/lsetf.png" alt="LSETF" style="height:44px;object-fit:contain;filter:brightness(0) invert(1);opacity:.7;">
-        <div style="width:1px;height:44px;background:rgba(255,255,255,.15);"></div>
-        <img src="/public/empowerlogo.png" alt="ELP Foundation" style="height:52px;object-fit:contain;filter:brightness(0) invert(1);opacity:.7;">
-      </div>
-      <p style="font-size:13.5px;color:rgba(255,255,255,.5);line-height:1.8;">EmpowerBot is built and maintained by ELP Foundation and delivered in partnership with the Lagos State Employment Trust Fund. LSETF provides institutional backing and beneficiary access. ELP Foundation manages the platform, quiz curriculum, and data systems.</p>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="max-w" style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start;">
-    <div>
-      <div class="section-tag">Timeline</div>
-      <h2 style="font-size:28px;margin-bottom:28px;">From pilot to platform</h2>
-      <div class="timeline">
-        <div class="tl-item"><div class="tl-dot"></div><div class="tl-tag">2025 Pilot</div><div class="tl-head">LSETF/ELP Foundation MSME Bootcamp</div><div class="tl-body">Deployed across Epe, Ikorodu, and Alimosho. Approximately 120 entrepreneurs completed quiz-based training on business structuring, financial records, and digital marketing. Completion rate: 89%. Top score: 99%.</div></div>
-        <div class="tl-item"><div class="tl-dot"></div><div class="tl-tag">2026 Current</div><div class="tl-head">MSME Capacity Building, Agege LGA</div><div class="tl-body">EmpowerBot is the primary learning tool for the current LSETF/ELP programme running every Thursday from 26 March to 16 April 2026, covering business values, LSETF loan products, digital marketing, and financial management.</div></div>
-        <div class="tl-item" style="padding-bottom:0;"><div class="tl-dot" style="background:var(--amber);box-shadow:0 0 0 2.5px var(--amber-light);"></div><div class="tl-tag" style="color:var(--amber);">2026 Onwards</div><div class="tl-head">Opening to other organisations</div><div class="tl-body">Following the LSETF success, ELP Foundation is making EmpowerBot available to other NGOs, government programmes, and social enterprises. Nonprofits access the full platform for free.</div></div>
-      </div>
-    </div>
-    <div>
-      <div class="section-tag">What EmpowerBot delivers</div>
-      <h2 style="font-size:22px;margin-bottom:20px;">The digital backbone of the programme</h2>
-      <div style="display:flex;flex-direction:column;gap:10px;">
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:18px;"><div style="font-size:14px;font-weight:700;letter-spacing:-0.01em;margin-bottom:5px;">Participant onboarding</div><div style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Every participant self-registers via WhatsApp. Business type, location, age, and main challenge captured automatically for M&E reporting.</div></div>
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:18px;"><div style="font-size:14px;font-weight:700;letter-spacing:-0.01em;margin-bottom:5px;">Knowledge assessment</div><div style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Quiz modules per training topic. Per-question results give facilitators a clear picture of knowledge gaps across the full cohort.</div></div>
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:18px;"><div style="font-size:14px;font-weight:700;letter-spacing:-0.01em;margin-bottom:5px;">AI-powered reinforcement</div><div style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Wrong answers trigger personalised explanations in Pidgin or plain English, using Naira amounts and examples from the participant's own business type.</div></div>
-        <div style="background:white;border:1px solid var(--border);border-radius:var(--r);padding:18px;"><div style="font-size:14px;font-weight:700;letter-spacing:-0.01em;margin-bottom:5px;">M&E export-ready data</div><div style="font-size:13px;color:var(--ink-soft);line-height:1.7;">Real-time dashboard showing completion rates, scores, and wrong-answer patterns. All exportable for LSETF and donor submissions.</div></div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<div style="background:var(--ink);padding:64px 5%;text-align:center;">
-  <p style="font-family:'Bricolage Grotesque',sans-serif;font-size:26px;line-height:1.6;color:white;max-width:700px;margin:0 auto 16px;font-weight:700;letter-spacing:-0.02em;">"A market trader who did not complete secondary school now understands what a limited liability company is — because EmpowerBot explained it using her own business."</p>
-  <cite style="font-size:13px;color:rgba(255,255,255,.4);">Programme observation, Agege LGA Capacity Building 2026</cite>
-</div>
-
-<section class="cta-section">
-  <h2>Join the community</h2>
-  <p>NGO, government programme, or social enterprise — EmpowerBot is for you.</p>
-  <div class="cta-btns">
-    <button class="btn btn-white btn-lg" onclick="showPage('pricing')">Start for free</button>
-    <button class="btn btn-lg" style="background:rgba(255,255,255,0.12);color:white;border:1.5px solid rgba(255,255,255,0.25);" onclick="showPage('demo')">See demo</button>
-  </div>
-</section>
-<footer><div class="foot-grid"><div class="foot-brand"><span class="logo">Empower<em>Bot</em></span><p>Powered by ELP Foundation. Partnered with LSETF.</p><div style="display:flex;align-items:center;gap:10px;margin-top:14px;"><img src="/public/lsetf.png" alt="LSETF" style="height:18px;opacity:.3;filter:brightness(0) invert(1);"><img src="/public/empowerlogo.png" alt="ELP" style="height:24px;opacity:.3;filter:brightness(0) invert(1);"></div></div><div class="foot-col"><h4>Product</h4><a onclick="showPage('features')">Features</a><a onclick="showPage('demo')">Demo</a><a onclick="showPage('pricing')">Pricing</a></div><div class="foot-col"><h4>Organisation</h4><a onclick="showPage('about')">About</a><a>Mission</a><a>Impact</a></div><div class="foot-col"><h4>Support</h4><a>Help centre</a><a>Contact</a><a>Documentation</a></div></div><div class="foot-bottom"><span class="foot-copy">© 2026 EmpowerBot · Built by ELP Foundation</span><div class="foot-links"><a>Privacy</a><a>Terms</a></div></div></footer>
-</div>
 
 <script>
-// Page routing
-function showPage(name) {
-  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-  document.querySelectorAll('.nav-links a').forEach(a => a.classList.remove('active'));
-  document.getElementById('page-' + name).classList.add('active');
-  const navEl = document.getElementById('nav-' + name);
-  if (navEl) navEl.classList.add('active');
-  window.scrollTo(0, 0);
-  // Re-attach scroll observer for new page
-  attachReveal();
+// ─── NAV SCROLL ───
+window.addEventListener('scroll',()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>40);
+},{passive:true});
+// Always scrolled on dark page
+document.getElementById('mainNav').classList.add('scrolled');
+
+// ─── MOBILE NAV ───
+function toggleMobileNav(){
+  document.getElementById('mobileNav').classList.toggle('open');
+  document.getElementById('navBurger').classList.toggle('open');
+  document.body.style.overflow=document.getElementById('mobileNav').classList.contains('open')?'hidden':'';
+}
+function closeMobileNav(){
+  document.getElementById('mobileNav').classList.remove('open');
+  document.getElementById('navBurger').classList.remove('open');
+  document.body.style.overflow='';
 }
 
-function scrollToAud(type) {
-  showPage('home');
-  setTimeout(() => {
-    const el = document.getElementById('audience-section');
-    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    if (type === 'ngo') { document.getElementById('aud-ngo').style.background = '#FFF5EE'; setTimeout(() => document.getElementById('aud-ngo').style.background = '', 1200); }
-    if (type === 'sme') { document.getElementById('aud-sme').style.background = '#F0FFF4'; setTimeout(() => document.getElementById('aud-sme').style.background = '', 1200); }
-  }, 80);
+// ─── HERO FEEDBACK ───
+function showHeroFeedback(){
+  document.getElementById('heroFeedback').style.display='block';
+  document.getElementById('heroFeedback').style.animation='msgIn .4s ease forwards';
 }
 
-// Demo tabs
-function switchDemo(btn, panelId) {
-  document.querySelectorAll('.demo-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.demo-panel').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById(panelId).classList.add('active');
+// ─── AI CHAT DEMO ───
+setTimeout(()=>{
+  const reply=document.getElementById('aiReply');
+  if(reply){reply.style.display='block';reply.style.animation='msgIn .5s ease forwards';}
+},2800);
+
+// ─── THING TOGGLE ───
+function toggleThing(el){
+  const isOpen=el.classList.contains('active');
+  document.querySelectorAll('.thing-item.active').forEach(i=>i.classList.remove('active'));
+  if(!isOpen) el.classList.add('active');
 }
 
-// Feature accordion
-function toggleFeat(el) {
-  const isOpen = el.classList.contains('open');
-  document.querySelectorAll('.fitem.open').forEach(f => f.classList.remove('open'));
-  if (!isOpen) el.classList.add('open');
-}
-
-// Feature filter tabs
-function filterFeats(cat, btn) {
-  document.querySelectorAll('.ftab').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-  document.querySelectorAll('.fgroup').forEach(g => {
-    g.style.display = (cat === 'all' || g.dataset.cat === cat) ? 'block' : 'none';
+// ─── SCROLL REVEAL ───
+const revObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}
   });
-}
-
-// Interactive chat
-const chatFlow = [
-  { from: 'bot', text: '👋 Welcome to EmpowerBot!\nWhat\'s your full name?', options: [] },
-  { from: 'user_input', field: 'name' },
-  { from: 'bot', text: 'Great to meet you, {name}! 🎉\nWhat type of business do you run?', options: ['Food/Provisions', 'Clothing/Fashion', 'Services', 'Other'] },
-  { from: 'bot_auto', text: 'Got it! Which area are you in?', options: ['Agege', 'Ikeja', 'Ikorodu', 'Other Lagos'] },
-  { from: 'bot_auto', text: 'Welcome, {name}! You\'re all set. ✅\nWhat would you like to do?', options: ['Start Quiz 1', 'My scores', 'Chat with AI'] }
-];
-
-let chatStep = 0, userName = '';
-
-function renderOpts(opts) {
-  const div = document.getElementById('chat-options');
-  if (!div) return;
-  div.innerHTML = '';
-  if (opts.length) {
-    opts.forEach(o => {
-      const b = document.createElement('button');
-      b.className = 'wa-opt';
-      b.textContent = o;
-      b.onclick = () => advanceChat(o);
-      div.appendChild(b);
-    });
-  }
-}
-
-function addMsg(from, text) {
-  const c = document.getElementById('chat-messages');
-  if (!c) return;
-  const d = document.createElement('div');
-  d.className = from === 'bot' ? 'wa-bubble' : 'wa-bubble out';
-  d.innerHTML = text.replace(/\n/g, '<br>') + `<div class="wa-time">${new Date().toLocaleTimeString('en',{hour:'2-digit',minute:'2-digit'})} ✓✓</div>`;
-  c.appendChild(d);
-  c.scrollTop = c.scrollHeight;
-}
-
-function addInput() {
-  const div = document.getElementById('chat-options');
-  if (!div) return;
-  div.innerHTML = `<input type="text" placeholder="Type your name..." style="flex:1;padding:7px 13px;border:1.5px solid var(--border);border-radius:20px;font-size:13px;font-family:'Instrument Sans',sans-serif;outline:none;background:white;" id="ci" onkeydown="if(event.key==='Enter'){const v=this.value.trim();if(v)advanceChat(v);}"><button class="wa-opt" onclick="const v=document.getElementById('ci').value.trim();if(v)advanceChat(v);" style="padding:7px 14px;">Send</button>`;
-}
-
-function advanceChat(input) {
-  if (input) {
-    if (chatStep === 1) userName = input;
-    addMsg('user', input);
-  }
-  document.getElementById('chat-options').innerHTML = '';
-  chatStep++;
-  if (chatStep >= chatFlow.length) {
-    chatStep = 0;
-    setTimeout(() => { const m = document.getElementById('chat-messages'); if (m) m.innerHTML = ''; addMsg('bot', '👋 Welcome to EmpowerBot!\nWhat\'s your full name?'); addInput(); }, 1000);
-    return;
-  }
-  const s = chatFlow[chatStep];
-  if (s.from === 'bot' || s.from === 'bot_auto') {
-    setTimeout(() => {
-      addMsg('bot', s.text.replace(/{name}/g, userName || 'there'));
-      if (s.options.length) renderOpts(s.options);
-      else if (s.from === 'bot_auto') setTimeout(() => advanceChat(null), 1200);
-    }, 600);
-  } else if (s.from === 'user_input') {
-    addInput();
-  }
-}
-// Init chat
-addMsg('bot', '👋 Welcome to EmpowerBot!\nWhat\'s your full name?');
-addInput();
-
-// Quiz feedback
-function showQuizFeedback(type) {
-  const div = document.getElementById('quiz-feedback');
-  if (!div) return;
-  if (type === 'correct') {
-    div.innerHTML = '<div class="wa-bubble">✅ <strong>Correct!</strong> Daily reconciliation helps you catch errors early. +10 points!</div>';
-  } else {
-    div.innerHTML = '<div class="wa-bubble">❌ <strong>Wrong.</strong> Correct answer: B) Every day.<br><br>Want an explanation?<div class="wa-btns"><button class="wa-opt" onclick="showQuizExplain()">Yes please</button><button class="wa-opt">Skip</button></div></div>';
-  }
-}
-function showQuizExplain() {
-  const div = document.getElementById('quiz-feedback');
-  div.innerHTML += '<div class="wa-bubble">Daily reconciliation means checking that your cash matches your records every evening. For your provisions shop: count the cash, compare to your record book. If they match — perfect. If not, you catch the error before it becomes a big problem. 💰</div>';
-}
-function showAIExplanation() {
-  document.getElementById('ai-explanation').style.display = 'block';
-}
-
-// Story count-up
-(function() {
-  function anim(el, target) {
-    const s = performance.now(), dur = 900;
-    (function step(now) {
-      const p = Math.min((now - s) / dur, 1), e = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.floor(e * target);
-      if (p < 1) requestAnimationFrame(step); else el.textContent = target;
-    })(s);
-  }
-  let done = false;
-  function check() {
-    if (done) return;
-    const els = document.querySelectorAll('.sn');
-    if (!els.length) return;
-    const r = els[0].getBoundingClientRect();
-    if (r.top < window.innerHeight * 0.9) {
-      done = true;
-      els.forEach((el, i) => setTimeout(() => anim(el, +el.dataset.target), i * 180));
-    }
-  }
-  window.addEventListener('scroll', check, { passive: true });
-  setTimeout(check, 400);
-})();
-
-// Scroll reveal
-function attachReveal() {
-  const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => {
-      if (e.isIntersecting) {
-        const siblings = Array.from(e.target.parentElement.querySelectorAll('.reveal:not(.visible)'));
-        const idx = Math.max(siblings.indexOf(e.target), 0);
-        setTimeout(() => e.target.classList.add('visible'), idx * 80);
-        obs.unobserve(e.target);
-      }
-    });
-  }, { threshold: 0.1, rootMargin: '0px 0px -24px 0px' });
-  document.querySelectorAll('.reveal:not(.visible)').forEach(el => obs.observe(el));
-}
+},{threshold:.1,rootMargin:'0px 0px -30px 0px'});
+function attachReveal(){document.querySelectorAll('.reveal,.reveal-left,.reveal-right,.reveal-scale').forEach(el=>revObs.observe(el));}
 attachReveal();
+
+// ─── COUNT UP ───
+function animateCount(el,target,duration=1200){
+  const start=performance.now();
+  (function step(now){
+    const p=Math.min((now-start)/duration,1);
+    const ease=1-Math.pow(1-p,3);
+    el.textContent=Math.floor(ease*target).toLocaleString();
+    if(p<1)requestAnimationFrame(step);
+    else el.textContent=target.toLocaleString();
+  })(start);
+}
+const countObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.count-up').forEach(el=>animateCount(el,+el.dataset.target));
+      countObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.stats-section').forEach(el=>countObs.observe(el));
+// Hero count
+(()=>{
+  const hmNum=document.querySelector('.hm-num[data-count]');
+  if(hmNum){
+    let v=0,target=1000;
+    const step=()=>{v+=Math.ceil((target-v)/8);hmNum.textContent=v.toLocaleString()+(v>=target?'+':'');if(v<target)setTimeout(step,30);};
+    setTimeout(step,800);
+  }
+})();
 </script>
 </body>
 </html>
