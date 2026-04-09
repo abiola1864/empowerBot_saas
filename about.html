@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>About — EmpowerBot</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+:root{
+  --ink:#0D0907;--ink-soft:#3D3730;--ink-muted:#7A7068;--ink-faint:#B5ADA4;
+  --bg:#FAFAF5;--bg2:#F3F2EB;--bg3:#ECEAE0;--surface:#FFFFFF;
+  --border:#E4E0D6;
+  --dark:#1C1208;--dark-2:#241808;--dark-3:#2E1E0A;--footer:#100B05;
+  --orange:#EA580C;--orange-2:#FB923C;--orange-3:#FED7AA;--orange-4:#FFF4EC;
+  --amber:#D97706;--amber-2:#FEF3C7;
+  --green:#059669;--green-2:#D1FAE5;
+  --blue:#2563EB;--blue-2:#EFF6FF;
+  --r:14px;--r-sm:8px;--r-lg:20px;--r-xl:32px;
+  --shadow-sm:0 1px 4px rgba(0,0,0,.06);--shadow:0 4px 20px rgba(0,0,0,.08);--shadow-lg:0 12px 48px rgba(0,0,0,.14);
+  --t:.22s cubic-bezier(.4,0,.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3{font-family:'Syne',sans-serif}
+a{color:inherit;text-decoration:none}
+img{max-width:100%;display:block}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+@keyframes gradBlob{0%,100%{border-radius:60% 40% 70% 30%/50% 60% 40% 50%}33%{border-radius:40% 60% 30% 70%/60% 30% 70% 40%}66%{border-radius:70% 30% 40% 60%/30% 70% 60% 40%}}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.reveal-left{opacity:0;transform:translateX(-24px);transition:opacity .6s ease,transform .6s ease}
+.reveal-left.visible{opacity:1;transform:none}
+.reveal-right{opacity:0;transform:translateX(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal-right.visible{opacity:1;transform:none}
+.stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}.stagger-4{transition-delay:.4s}
+.max-w{max-width:1160px;margin:0 auto;padding:0 5%}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--r-sm);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--t);border:none;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;text-decoration:none}
+.btn-primary{background:var(--orange);color:#fff}.btn-primary:hover{background:#C2410C;transform:translateY(-2px);box-shadow:0 6px 20px rgba(234,88,12,.35)}
+.btn-ghost{background:transparent;color:var(--ink-soft);border:1.5px solid var(--border)}.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.btn-ghost-light{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.25)}.btn-ghost-light:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5)}
+.btn-dark{background:var(--dark);color:#fff}.btn-dark:hover{background:var(--dark-2);transform:translateY(-2px)}
+.btn-white{background:#fff;color:var(--ink)}.btn-white:hover{background:var(--bg2);transform:translateY(-2px)}
+.btn-lg{padding:14px 30px;font-size:15px;border-radius:var(--r)}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:30px}
+.tag-orange{background:var(--orange-4);color:var(--orange)}.tag-green{background:var(--green-2);color:var(--green)}
+.tag-blue{background:var(--blue-2);color:var(--blue)}.tag-amber{background:var(--amber-2);color:var(--amber)}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;transition:background var(--t),box-shadow var(--t)}
+.nav.scrolled{background:rgba(28,18,8,.93);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.nav-inner{max-width:1160px;margin:0 auto;padding:0 5%;height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.nav-logo em{color:var(--orange);font-style:normal}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,.65);transition:color var(--t)}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-ctas{display:flex;gap:8px}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.nav-burger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all var(--t)}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.nav-burger.open span:nth-child(2){opacity:0}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav{position:fixed;top:62px;left:0;right:0;bottom:0;z-index:190;background:rgba(28,18,8,.97);backdrop-filter:blur(20px);padding:32px 5%;display:flex;flex-direction:column;gap:4px;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.mobile-nav.open{transform:none}
+.mobile-nav a{font-size:22px;font-weight:700;font-family:'Syne',sans-serif;color:rgba(255,255,255,.7);padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);transition:color var(--t)}
+.mobile-nav a:hover{color:#fff}
+.mobile-nav .mobile-ctas{margin-top:24px;display:flex;flex-direction:column;gap:10px}
+.section{padding:88px 0}
+.section-tag{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+.section-tag::before{content:'';width:20px;height:2px;background:var(--orange);border-radius:2px;flex-shrink:0}
+.section h2{font-size:42px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin-bottom:14px}
+.section-sub{font-size:16px;color:var(--ink-muted);line-height:1.8;max-width:560px}
+footer{background:var(--footer);padding:56px 0 26px}
+.foot-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.foot-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;display:block;margin-bottom:11px}
+.foot-logo em{color:var(--orange);font-style:normal}
+.foot-desc{font-size:13px;color:rgba(255,255,255,.3);line-height:1.75;max-width:230px}
+.foot-partners{display:flex;align-items:center;gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.05)}
+.foot-partners img{height:18px;opacity:.3;filter:brightness(0) invert(1);object-fit:contain}
+.foot-col h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:14px}
+.foot-col a{display:block;font-size:13px;color:rgba(255,255,255,.4);margin-bottom:8px;transition:color var(--t)}
+.foot-col a:hover{color:var(--orange-2)}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:22px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot-copy{font-size:12.5px;color:rgba(255,255,255,.22)}
+.foot-links{display:flex;gap:18px}
+.foot-links a{font-size:12.5px;color:rgba(255,255,255,.22);transition:color var(--t)}
+.foot-links a:hover{color:rgba(255,255,255,.55)}
+@media(max-width:768px){
+  .nav-links,.nav-ctas{display:none}.nav-burger{display:flex}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .section h2{font-size:28px}
+}
+</style>
+</head>
+<body>
+<nav class="nav" id="mainNav"><div class="nav-inner">
+  <a class="nav-logo" href="index.html">Empower<em>Bot</em></a>
+  <div class="nav-links"><a href="index.html" >Home</a><a href="features.html" >Features</a><a href="demo.html" >Demo</a><a href="pricing.html" >Pricing</a><a href="about.html" class=active>About</a><a href="blog.html" >Blog</a></div>
+  <div class="nav-ctas">
+    <a href="pricing.html" class="btn btn-ghost-light" style="font-size:13px;padding:8px 16px;">Plans</a>
+    <a href="demo.html" class="btn btn-primary" style="font-size:13px;padding:8px 16px;">Try demo →</a>
+  </div>
+  <button class="nav-burger" id="navBurger" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+</div></nav>
+<div class="mobile-nav" id="mobileNav"><a href="index.html" onclick="closeMobileNav()">Home</a><a href="features.html" onclick="closeMobileNav()">Features</a><a href="demo.html" onclick="closeMobileNav()">Demo</a><a href="pricing.html" onclick="closeMobileNav()">Pricing</a><a href="about.html" onclick="closeMobileNav()">About</a><a href="blog.html" onclick="closeMobileNav()">Blog</a><div class="mobile-ctas"><a href="pricing.html" class="btn btn-ghost-light btn-lg" style="justify-content:center">View Plans</a><a href="demo.html" class="btn btn-primary btn-lg" style="justify-content:center">Try Demo →</a></div></div>
+
+<section style="background:var(--dark);padding:140px 0 80px;position:relative;overflow:hidden">
+  <div style="position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(234,88,12,.12) 0%,transparent 60%);pointer-events:none"></div>
+  <div style="position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(180,120,40,.06) 0%,transparent 60%);pointer-events:none"></div>
+  <div class="max-w">
+    <div style="display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-2);margin-bottom:20px;animation:fadeIn .6s ease both"><div style="width:6px;height:6px;border-radius:50%;background:var(--orange-2)"></div>Our story</div>
+    <h1 style="font-size:54px;font-weight:800;letter-spacing:-.04em;color:#fff;line-height:1.1;margin-bottom:20px;animation:fadeUp .8s ease both">Built where the need was greatest.<br>Built for everywhere it exists.</h1>
+    <p style="font-size:18px;color:rgba(255,255,255,.55);line-height:1.8;max-width:600px;margin-bottom:36px;animation:fadeUp .8s .15s ease both">EmpowerBot started in a Lagos market. It runs on the evidence that small businesses everywhere deserve access to the same quality of learning infrastructure that large enterprises take for granted.</p>
+    <div style="display:flex;gap:12px;flex-wrap:wrap;animation:fadeUp .8s .25s ease both">
+      <a href="demo.html" class="btn btn-primary btn-lg">See the platform</a>
+      <a href="pricing.html" class="btn btn-ghost-light btn-lg">Start free</a>
+    </div>
+  </div>
+</section>
+<section style="background:var(--surface);padding:64px 0;border-bottom:1px solid var(--border)"><div class="max-w">
+  <div class="section-tag reveal" style="justify-content:center">What we believe</div>
+  <h2 class="reveal" style="text-align:center;font-size:36px">Three things we won't compromise on</h2>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border-radius:var(--r-lg);overflow:hidden;margin-top:40px">
+    <div style="background:var(--surface);padding:36px 28px" class="reveal stagger-1"><div style="width:48px;height:48px;border-radius:12px;background:#FFF4EC;display:flex;align-items:center;justify-content:center;margin-bottom:20px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#EA580C" stroke-width="1.7"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/><circle cx="5" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/><line x1="12" y1="10" x2="6.5" y2="5.5"/><line x1="12" y1="10" x2="17.5" y2="5.5"/><line x1="12" y1="14" x2="6.5" y2="18.5"/><line x1="12" y1="14" x2="17.5" y2="18.5"/></svg></div><h3 style="font-size:18px;font-weight:700;margin-bottom:10px">AI is a democratisation tool</h3><p style="font-size:13.5px;color:var(--ink-muted);line-height:1.7">The same AI that powers billion-dollar companies can explain business concepts in Pidgin to a market trader in Kano — that is not a side feature. That is the mission.</p></div>
+    <div style="background:var(--surface);padding:36px 28px;border-left:1px solid var(--border);border-right:1px solid var(--border)" class="reveal stagger-2"><div style="width:48px;height:48px;border-radius:12px;background:#D1FAE5;display:flex;align-items:center;justify-content:center;margin-bottom:20px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="1.7"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></div><h3 style="font-size:18px;font-weight:700;margin-bottom:10px">Outcomes, not attendance</h3><p style="font-size:13.5px;color:var(--ink-muted);line-height:1.7">A programme that can't prove what changed in its participants can't sustain funding. We turn training sessions into verifiable evidence of knowledge change.</p></div>
+    <div style="background:var(--surface);padding:36px 28px" class="reveal stagger-3"><div style="width:48px;height:48px;border-radius:12px;background:#EFF6FF;display:flex;align-items:center;justify-content:center;margin-bottom:20px"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#2563EB" stroke-width="1.7"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><h3 style="font-size:18px;font-weight:700;margin-bottom:10px">Zero friction for learners</h3><p style="font-size:13.5px;color:var(--ink-muted);line-height:1.7">If training requires participants to download an app or create an account, you've already lost half your cohort. WhatsApp is infrastructure. We build on it.</p></div>
+  </div>
+</div></section>
+<section style="padding:80px 0;background:var(--bg2)"><div class="max-w"><div style="display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:start">
+  <div>
+    <div class="section-tag reveal">Where it started</div>
+    <h2 class="reveal" style="font-size:32px">A problem in Lagos.<br>A platform for the world.</h2>
+    <div style="position:relative;padding-left:28px;margin-top:24px" class="reveal">
+      <div style="position:absolute;left:5px;top:10px;bottom:10px;width:1.5px;background:var(--border)"></div>
+      <div style="position:relative;padding-bottom:28px"><div style="position:absolute;left:-24px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--orange);border:2.5px solid var(--bg2);box-shadow:0 0 0 3px rgba(234,88,12,.2)"></div><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:4px">The problem</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px">MSME training wasn't sticking</div><div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">Running training across Lagos LGAs with LSETF, completion rates were low. Printed handouts. Classroom sessions. None of it translated to behaviour change a donor could point to.</div></div>
+      <div style="position:relative;padding-bottom:28px"><div style="position:absolute;left:-24px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--orange);border:2.5px solid var(--bg2);box-shadow:0 0 0 3px rgba(234,88,12,.2)"></div><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:4px">The experiment · 2025</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px">What if training lived in WhatsApp?</div><div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">ELP Foundation moved training to WhatsApp. Quizzes via button messages. AI explanations on wrong answers. A live leaderboard. Completion rate jumped to 89%. 1,000+ participants.</div></div>
+      <div style="position:relative;padding-bottom:28px"><div style="position:absolute;left:-24px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--orange);border:2.5px solid var(--bg2);box-shadow:0 0 0 3px rgba(234,88,12,.2)"></div><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:4px">The insight · 2025–2026</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px">The data was worth more than the training</div><div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">Funders didn't just appreciate the completion rates — they needed the structured outcome data. EmpowerBot wasn't just a training tool. It was an evidence platform. That changed everything.</div></div>
+      <div style="position:relative"><div style="position:absolute;left:-24px;top:5px;width:11px;height:11px;border-radius:50%;background:var(--green);border:2.5px solid var(--bg2);box-shadow:0 0 0 3px rgba(5,150,105,.2)"></div><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--green);margin-bottom:4px">Today · Global</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:6px">Open to programmes everywhere</div><div style="font-size:13.5px;color:var(--ink-soft);line-height:1.7">Now available to NGOs, government programmes, development partners, and social enterprises globally. The evidence model works wherever small businesses need support.</div></div>
+    </div>
+  </div>
+  <div><div style="background:var(--dark);border-radius:var(--r-xl);padding:44px;display:flex;flex-direction:column;gap:28px" class="reveal">
+    <div><div style="font-family:'Syne',sans-serif;font-size:52px;font-weight:800;letter-spacing:-.05em;line-height:1;margin-bottom:5px;color:var(--orange-2)">1,000+</div><div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.55">People trained across multiple programmes globally since 2025</div></div>
+    <div style="height:1px;background:rgba(255,255,255,.07)"></div>
+    <div><div style="font-family:'Syne',sans-serif;font-size:52px;font-weight:800;letter-spacing:-.05em;line-height:1;margin-bottom:5px;color:#34D399">89%</div><div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.55">Average quiz completion rate — versus an industry average below 40% for digital training</div></div>
+    <div style="height:1px;background:rgba(255,255,255,.07)"></div>
+    <div><div style="font-family:'Syne',sans-serif;font-size:52px;font-weight:800;letter-spacing:-.05em;line-height:1;margin-bottom:5px;color:#60A5FA">21</div><div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.55">Quiz modules covering financial management, marketing, legal, and operations</div></div>
+    <div style="height:1px;background:rgba(255,255,255,.07)"></div>
+    <div><div style="font-family:'Syne',sans-serif;font-size:52px;font-weight:800;letter-spacing:-.05em;line-height:1;margin-bottom:5px;color:#FCD34D">Free</div><div style="font-size:13px;color:rgba(255,255,255,.5);line-height:1.55">Forever for verified NGOs and government programmes — because impact shouldn't be paywalled</div></div>
+  </div></div>
+</div></div></section>
+<section style="padding:80px 0"><div class="max-w">
+  <div class="section-tag reveal">Global by design</div>
+  <h2 class="reveal">Built for any programme. Anywhere small businesses operate.</h2>
+  <p class="section-sub reveal">EmpowerBot's AI adapts to language, currency, and business context. The evidence model, WhatsApp delivery, and AI explanations work wherever small businesses need support.</p>
+  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px">
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;transition:all var(--t)" class="reveal stagger-1"><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:6px">West Africa</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">Nigeria, Ghana, Senegal</div><div style="font-size:13px;color:var(--ink-muted);line-height:1.65">Platform origin. Piloted across Lagos, Kaduna, Abuja. Pidgin English and Yoruba AI support live. Hausa in development.</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;transition:all var(--t)" class="reveal stagger-2"><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:6px">East Africa</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">Kenya, Uganda, Rwanda</div><div style="font-size:13px;color:var(--ink-muted);line-height:1.65">Strong WhatsApp penetration and NGO programme density. Enterprise deployments available. Kiswahili AI support in development.</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;transition:all var(--t)" class="reveal stagger-3"><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:6px">South Asia</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">Bangladesh, India, Pakistan</div><div style="font-size:13px;color:var(--ink-muted);line-height:1.65">High density of microfinance-linked MSME programmes. Outcome data aligns with MFI and USAID reporting frameworks.</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;transition:all var(--t)" class="reveal stagger-1"><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:6px">Latin America</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">Colombia, Peru, Brazil</div><div style="font-size:13px;color:var(--ink-muted);line-height:1.65">WhatsApp is the dominant messaging platform. Spanish and Portuguese AI support available.</div></div>
+    <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;transition:all var(--t)" class="reveal stagger-2"><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:6px">Development sector</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">UN, World Bank, USAID partners</div><div style="font-size:13px;color:var(--ink-muted);line-height:1.65">Structured outcome data integrates with standard M&E frameworks used by development finance institutions.</div></div>
+    <div style="background:var(--orange-4);border-radius:var(--r-lg);padding:28px" class="reveal stagger-3"><div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:6px">Any context</div><div style="font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin-bottom:8px">If WhatsApp is there, EmpowerBot works.</div><div style="font-size:13px;color:var(--ink-soft);line-height:1.65">WhatsApp has 2.9 billion users. It is the de facto communication infrastructure for micro-entrepreneurs globally.</div></div>
+  </div>
+</div></section>
+<section style="background:linear-gradient(135deg,var(--dark) 0%,var(--dark-3) 100%);padding:56px 0;text-align:center"><div class="max-w">
+  <p style="font-family:'Syne',sans-serif;font-size:26px;font-weight:700;letter-spacing:-.025em;color:#fff;max-width:720px;margin:0 auto 14px;line-height:1.55" class="reveal">"A market trader who did not complete secondary school now understands what a limited liability company is — because EmpowerBot explained it using her own business as the example."</p>
+  <div style="font-size:13px;color:rgba(255,255,255,.35)" class="reveal">Programme observation · ELP Foundation / LSETF · Agege LGA Capacity Building 2026</div>
+</div></section>
+<section style="background:var(--dark);padding:88px 0;text-align:center;position:relative;overflow:hidden">
+  <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(234,88,12,.1) 0%,transparent 70%);pointer-events:none"></div>
+  <div class="max-w" style="position:relative">
+    <h2 style="font-size:44px;font-weight:800;letter-spacing:-.04em;color:#fff;margin-bottom:14px" class="reveal">Join the community</h2>
+    <p style="font-size:16px;color:rgba(255,255,255,.5);max-width:480px;margin:0 auto 36px;line-height:1.8" class="reveal">NGO, government programme, social enterprise, or development partner — EmpowerBot is for you.</p>
+    <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap" class="reveal">
+      <a href="pricing.html" class="btn btn-white btn-lg">Start for free</a>
+      <a href="demo.html" class="btn btn-ghost-light btn-lg">See demo →</a>
+    </div>
+  </div>
+</section>
+<footer><div class="max-w">
+  <div class="foot-grid">
+    <div><a class="foot-logo" href="index.html">Empower<em>Bot</em></a>
+    <p class="foot-desc">AI-powered training on WhatsApp. Measurable learning outcomes for small businesses. Built by ELP Foundation.</p>
+    <div class="foot-partners"><img src="/public/lsetf.png" alt="LSETF" onerror="this.style.display='none'"><img src="/public/elp.png" alt="ELP Foundation" onerror="this.style.display='none'"></div></div>
+    <div class="foot-col"><h4>Product</h4><a href="features.html">Features</a><a href="demo.html">Demo</a><a href="pricing.html">Pricing</a></div>
+    <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a><a href="#">Impact</a></div>
+    <div class="foot-col"><h4>Support</h4><a href="#">Help centre</a><a href="#">Contact</a></div>
+  </div>
+  <div class="foot-bottom"><span class="foot-copy">© 2026 EmpowerBot · Built by ELP Foundation · Partnered with LSETF</span><div class="foot-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div>
+</div></footer>
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>30);},{passive:true});
+document.getElementById('mainNav').classList.add('scrolled');
+function toggleMobileNav(){document.getElementById('mobileNav').classList.toggle('open');document.getElementById('navBurger').classList.toggle('open');document.body.style.overflow=document.getElementById('mobileNav').classList.contains('open')?'hidden':'';}
+function closeMobileNav(){document.getElementById('mobileNav').classList.remove('open');document.getElementById('navBurger').classList.remove('open');document.body.style.overflow='';}
+const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>revObs.observe(el));
+</script>
+
+</body>
+</html>
