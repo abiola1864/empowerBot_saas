@@ -1,427 +1,1390 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Blog — EmpowerBot</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --bg:#FAFAF7;--bg2:#F4F2ED;--bg3:#ECEAE3;--bg-dark:#1E0E08;--bg-dark2:#2D1810;
-  --text:#1E0E08;--text-2:#57534E;--text-3:#A8A29E;
-  --border:#E7E5DF;--border-dark:rgba(255,255,255,.1);
-  --surface:#FFFFFF;
-  --orange:#EA580C;--orange-d:#C2410C;--orange-l:#FFF4EC;--orange-m:#FED7AA;
-  --green:#16A34A;--green-l:#F0FDF4;
-  --blue:#2563EB;--blue-l:#EFF6FF;
-  --amber:#D97706;--amber-l:#FFFBEB;
-  --r:10px;--r-lg:18px;--r-xl:24px;
-  --t:.2s cubic-bezier(.4,0,.2,1);
-  --shadow-sm:0 1px 3px rgba(0,0,0,.06),0 1px 2px rgba(0,0,0,.04);
-  --shadow:0 4px 16px rgba(0,0,0,.08);
-  --shadow-lg:0 12px 48px rgba(0,0,0,.12);
+  --ink:#0D0907;--ink-soft:#3D3730;--ink-muted:#7A7068;--ink-faint:#B5ADA4;
+  --bg:#FAFAF5;--bg2:#F3F2EB;--bg3:#ECEAE0;--surface:#FFFFFF;
+  --border:#E4E0D6;
+  --dark:#1C1208;--dark-2:#241808;--dark-3:#2E1E0A;--footer:#100B05;
+  --orange:#EA580C;--orange-2:#FB923C;--orange-3:#FED7AA;--orange-4:#FFF4EC;
+  --amber:#D97706;--amber-2:#FEF3C7;
+  --green:#059669;--green-2:#D1FAE5;
+  --blue:#2563EB;--blue-2:#EFF6FF;
+  --r:14px;--r-sm:8px;--r-lg:20px;--r-xl:32px;
+  --shadow-sm:0 1px 4px rgba(0,0,0,.06);--shadow:0 4px 20px rgba(0,0,0,.08);--shadow-lg:0 12px 48px rgba(0,0,0,.14);
+  --t:.22s cubic-bezier(.4,0,.2,1);
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
-h1,h2,h3{font-family:'Outfit',sans-serif}
+body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+h1,h2,h3,h4{font-family:'Syne',sans-serif}
 a{text-decoration:none;color:inherit}
-
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes slideL{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
-@keyframes slideR{from{opacity:0;transform:translateX(24px)}to{opacity:1;transform:none}}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-@keyframes msgIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
-@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
-@keyframes pulseDot{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
-@keyframes tick{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-
-.sr{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
-.sl{opacity:0;transform:translateX(-24px);transition:opacity .6s ease,transform .6s ease}
-.sr2{opacity:0;transform:translateX(24px);transition:opacity .6s ease,transform .6s ease}
-.sr.on,.sl.on,.sr2.on{opacity:1;transform:none}
-.d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}.d4{transition-delay:.28s}
-
-.wrap{max-width:1120px;margin:0 auto;padding:0 5%}
-
-/* BUTTONS */
-.btn{display:inline-flex;align-items:center;gap:7px;padding:11px 22px;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;font-family:'Inter',sans-serif;transition:all var(--t);border:none;white-space:nowrap;text-decoration:none}
-.btn-lg{padding:13px 26px;font-size:15px;border-radius:12px}
-.btn-orange{background:var(--orange);color:#fff;box-shadow:0 2px 8px rgba(234,88,12,.25)}
-.btn-orange:hover{background:var(--orange-d);transform:translateY(-2px);box-shadow:0 6px 20px rgba(234,88,12,.35)}
-.btn-outline{background:transparent;color:var(--text);border:1.5px solid var(--border)}
-.btn-outline:hover{border-color:var(--orange);color:var(--orange)}
-.btn-ghost{background:var(--bg2);color:var(--text-2);border:1px solid var(--border)}
-.btn-ghost:hover{background:var(--bg3);color:var(--text)}
-.btn-dark{background:var(--bg-dark);color:#fff}
-.btn-dark:hover{background:var(--bg-dark2);transform:translateY(-2px)}
-.btn-white{background:#fff;color:var(--text);box-shadow:var(--shadow-sm)}
-.btn-white:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
-
-/* TAGS */
-.tag{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;padding:3px 10px;border-radius:20px}
-.tag-o{background:var(--orange-l);color:var(--orange)}
-.tag-g{background:var(--green-l);color:var(--green)}
-.tag-b{background:var(--blue-l);color:var(--blue)}
-.tag-a{background:var(--amber-l);color:var(--amber)}
+.reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
+.reveal.visible{opacity:1;transform:none}
+.stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}
+.max-w{max-width:1160px;margin:0 auto;padding:0 5%}
+.max-w-narrow{max-width:760px;margin:0 auto;padding:0 5%}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--r-sm);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--t);border:none;font-family:'Plus Jakarta Sans',sans-serif;text-decoration:none}
+.btn-primary{background:var(--orange);color:#fff}.btn-primary:hover{background:#C2410C;transform:translateY(-2px)}
+.btn-ghost{background:transparent;color:var(--ink-soft);border:1.5px solid var(--border)}.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
+.btn-ghost-light{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.25)}.btn-ghost-light:hover{background:rgba(255,255,255,.2)}
+.btn-lg{padding:14px 30px;font-size:15px;border-radius:var(--r)}
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:30px}
+.tag-orange{background:var(--orange-4);color:var(--orange)}
+.tag-green{background:var(--green-2);color:var(--green)}
+.tag-blue{background:var(--blue-2);color:var(--blue)}
+.tag-amber{background:var(--amber-2);color:var(--amber)}
 
 /* NAV */
-.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:60px;background:rgba(250,250,247,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);box-shadow:var(--shadow-sm)}
-.nav-in{max-width:1120px;margin:0 auto;padding:0 5%;height:100%;display:flex;align-items:center}
-.nav-logo{font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:var(--text);letter-spacing:-.02em;flex-shrink:0;margin-right:28px}
+.nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;transition:background var(--t)}
+.nav.scrolled{background:rgba(28,18,8,.93);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.nav-inner{max-width:1160px;margin:0 auto;padding:0 5%;height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
+.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em}
 .nav-logo em{color:var(--orange);font-style:normal}
-.nav-links{display:flex;gap:2px;flex:1}
-.nav-links a{font-size:13.5px;font-weight:500;color:var(--text-2);padding:6px 10px;border-radius:8px;transition:all var(--t)}
-.nav-links a:hover,.nav-links a.active{color:var(--text);background:var(--bg2)}
-.nav-ctas{display:flex;gap:8px;margin-left:auto}
-.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:5px;border:none;background:none}
-.nav-burger span{display:block;width:20px;height:1.5px;background:var(--text);border-radius:2px;transition:all var(--t)}
-.nav-burger.open span:nth-child(1){transform:translateY(6.5px) rotate(45deg)}
+.nav-links{display:flex;align-items:center;gap:28px}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,.65);transition:color var(--t)}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-ctas{display:flex;gap:8px}
+.nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
+.nav-burger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:all var(--t)}
+.nav-burger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
 .nav-burger.open span:nth-child(2){opacity:0}
-.nav-burger.open span:nth-child(3){transform:translateY(-6.5px) rotate(-45deg)}
-.m-nav{position:fixed;inset:60px 0 0;z-index:190;background:rgba(250,250,247,.98);padding:20px 5%;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .28s ease;border-top:1px solid var(--border)}
-.m-nav.open{transform:none}
-.m-nav a{font-size:20px;font-weight:700;font-family:'Outfit',sans-serif;color:var(--text-2);padding:12px 0;border-bottom:1px solid var(--border);display:block;transition:color var(--t)}
-.m-nav a:hover{color:var(--text)}
-.m-nav .mc{margin-top:20px;display:flex;flex-direction:column;gap:8px}
+.nav-burger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-nav{position:fixed;top:62px;left:0;right:0;bottom:0;z-index:190;background:rgba(28,18,8,.97);backdrop-filter:blur(20px);padding:32px 5%;display:flex;flex-direction:column;gap:4px;transform:translateX(100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.mobile-nav.open{transform:none}
+.mobile-nav a{font-size:22px;font-weight:700;font-family:'Syne',sans-serif;color:rgba(255,255,255,.7);padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);transition:color var(--t)}
+.mobile-nav a:hover{color:#fff}
+.mobile-nav .mobile-ctas{margin-top:24px;display:flex;flex-direction:column;gap:10px}
 
 /* HERO */
-.hero{min-height:100vh;display:grid;grid-template-rows:1fr auto;padding-top:60px;position:relative;overflow:hidden;background:var(--bg)}
-.hero-deco{position:absolute;inset:0;pointer-events:none;overflow:hidden}
-.hero-deco::before{content:'';position:absolute;top:-200px;right:-150px;width:700px;height:700px;background:radial-gradient(circle,rgba(234,88,12,.08) 0%,transparent 65%);border-radius:50%}
-.hero-deco::after{content:'';position:absolute;bottom:-100px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(234,88,12,.05) 0%,transparent 65%);border-radius:50%}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:52px 52px;opacity:.5;mask-image:radial-gradient(ellipse 70% 70% at 60% 40%,black,transparent)}
+.blog-hero{background:var(--dark);padding:140px 0 72px;position:relative;overflow:hidden}
+.blog-hero::before{content:'';position:absolute;top:-200px;right:-200px;width:600px;height:600px;background:radial-gradient(circle,rgba(234,88,12,.1) 0%,transparent 60%);pointer-events:none}
+.bh-tag{display:inline-flex;align-items:center;gap:8px;font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-2);margin-bottom:18px;animation:fadeIn .6s ease both}
+.bh-h{font-size:48px;font-weight:800;letter-spacing:-.04em;color:#fff;line-height:1.1;margin-bottom:16px;animation:fadeUp .7s .1s ease both;max-width:640px}
+.bh-sub{font-size:17px;color:rgba(255,255,255,.5);line-height:1.8;max-width:540px;animation:fadeUp .7s .2s ease both}
 
-.hero-body{position:relative;z-index:5;display:grid;grid-template-columns:1.1fr 1fr;gap:52px;align-items:center;padding:64px 5% 48px;max-width:1120px;margin:0 auto;width:100%}
+/* FILTER TABS */
+.filter-bar{background:var(--surface);border-bottom:1px solid var(--border);position:sticky;top:62px;z-index:100}
+.filter-inner{max-width:1160px;margin:0 auto;padding:0 5%;display:flex;gap:0;overflow-x:auto}
+.filter-btn{padding:14px 18px;font-size:13.5px;font-weight:600;color:var(--ink-muted);border-bottom:2px solid transparent;background:none;border-top:none;border-left:none;border-right:none;cursor:pointer;white-space:nowrap;font-family:'Plus Jakarta Sans',sans-serif;transition:all var(--t)}
+.filter-btn:hover{color:var(--ink)}
+.filter-btn.active{color:var(--orange);border-bottom-color:var(--orange)}
 
-.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:20px;animation:fadeIn .6s ease both}
-.eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--orange);animation:pulseDot 2.5s ease-in-out infinite}
+/* FEATURED POST */
+.featured-wrap{padding:56px 0 0}
+.featured-post{display:grid;grid-template-columns:1.3fr 1fr;border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;background:var(--surface);box-shadow:var(--shadow-sm);cursor:pointer;transition:all var(--t)}
+.featured-post:hover{box-shadow:var(--shadow-lg);transform:translateY(-3px)}
+.fp-visual{background:linear-gradient(135deg,var(--dark) 0%,var(--dark-3) 100%);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:48px 40px;gap:20px}
+.fp-emoji{font-size:64px}
+.fp-category-badge{font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;background:rgba(234,88,12,.2);color:var(--orange-2);padding:5px 14px;border-radius:30px}
+.fp-body{padding:44px}
+.fp-meta{display:flex;align-items:center;gap:10px;margin-bottom:16px}
+.fp-date{font-size:12px;color:var(--ink-faint)}
+.fp-read-time{font-size:12px;color:var(--ink-faint)}
+.fp-h{font-size:26px;font-weight:800;letter-spacing:-.03em;line-height:1.25;margin-bottom:14px;transition:color var(--t)}
+.featured-post:hover .fp-h{color:var(--orange)}
+.fp-excerpt{font-size:15px;color:var(--ink-muted);line-height:1.8;margin-bottom:24px}
+.fp-cta{font-size:13.5px;font-weight:600;color:var(--orange);display:flex;align-items:center;gap:6px}
 
-.hero-h1{font-family:'Outfit',sans-serif;font-size:clamp(40px,5vw,66px);font-weight:800;letter-spacing:-.035em;line-height:1.06;color:var(--text);margin-bottom:20px;animation:fadeUp .7s .06s ease both}
-.hero-h1 .hi{color:var(--orange);position:relative;display:inline-block}
-.hero-h1 .hi::after{content:'';position:absolute;bottom:-3px;left:0;right:0;height:2.5px;background:var(--orange);border-radius:2px}
+/* ARTICLE GRID */
+.articles-section{padding:48px 0 80px}
+.articles-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:0}
+.article-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t);cursor:pointer;box-shadow:var(--shadow-sm)}
+.article-card:hover{transform:translateY(-5px);box-shadow:var(--shadow-lg);border-color:transparent}
+.ac-img{height:160px;display:flex;align-items:center;justify-content:center;font-size:40px;border-bottom:1px solid var(--border)}
+.ac-body{padding:24px}
+.ac-meta{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+.ac-date{font-size:12px;color:var(--ink-faint)}
+.ac-read-time{font-size:12px;color:var(--ink-faint)}
+.ac-h{font-family:'Syne',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.02em;line-height:1.3;margin-bottom:10px;transition:color var(--t)}
+.article-card:hover .ac-h{color:var(--orange)}
+.ac-excerpt{font-size:13px;color:var(--ink-muted);line-height:1.7;margin-bottom:16px}
+.ac-cta{font-size:12.5px;font-weight:600;color:var(--orange)}
 
-.hero-sub{font-size:17px;color:var(--text-2);line-height:1.8;max-width:420px;margin-bottom:30px;animation:fadeUp .7s .14s ease both}
-.hero-ctas{display:flex;gap:10px;flex-wrap:wrap;animation:fadeUp .7s .22s ease both}
+/* ARTICLE MODAL / EXPANDED VIEW */
+.article-overlay{position:fixed;inset:0;z-index:500;background:rgba(13,9,7,.7);backdrop-filter:blur(6px);display:none;align-items:flex-start;justify-content:center;padding:80px 5% 40px;overflow-y:auto}
+.article-overlay.open{display:flex}
+.article-modal{background:var(--surface);border-radius:var(--r-xl);max-width:720px;width:100%;position:relative;box-shadow:0 32px 80px rgba(0,0,0,.25)}
+.am-header{padding:40px 48px 32px;border-bottom:1px solid var(--border)}
+.am-close{position:absolute;top:20px;right:20px;width:36px;height:36px;border-radius:50%;background:var(--bg2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--t)}
+.am-close:hover{background:var(--bg3)}
+.am-close svg{width:16px;height:16px}
+.am-tag-row{display:flex;align-items:center;gap:10px;margin-bottom:14px}
+.am-date{font-size:12px;color:var(--ink-faint)}
+.am-read-time{font-size:12px;color:var(--ink-faint)}
+.am-h{font-size:30px;font-weight:800;letter-spacing:-.035em;line-height:1.2;margin-bottom:12px}
+.am-lede{font-size:16px;color:var(--ink-muted);line-height:1.8;font-style:italic}
+.am-body{padding:36px 48px 48px;font-size:15px;color:var(--ink-soft);line-height:1.85}
+.am-body h3{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;letter-spacing:-.02em;margin:28px 0 12px;color:var(--ink)}
+.am-body h4{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;margin:22px 0 8px;color:var(--ink)}
+.am-body p{margin-bottom:16px}
+.am-body p:last-child{margin-bottom:0}
+.am-body strong{font-weight:600;color:var(--ink)}
+.am-body .pullquote{background:var(--orange-4);border-left:3px solid var(--orange);padding:18px 22px;border-radius:0 var(--r-sm) var(--r-sm) 0;margin:24px 0;font-style:italic;font-size:16px;color:var(--ink-soft);line-height:1.75}
+.am-body .callout{background:var(--bg2);border:1px solid var(--border);padding:18px 22px;border-radius:var(--r-sm);margin:24px 0}
+.am-body .callout strong{display:block;margin-bottom:5px;font-size:13px;letter-spacing:.05em;text-transform:uppercase;color:var(--orange)}
+.am-footer{padding:20px 48px 32px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+.am-author{font-size:13px;color:var(--ink-muted)}
+.am-share{font-size:13px;font-weight:600;color:var(--orange);cursor:pointer}
 
-/* PHONE */
-.hero-right{display:flex;justify-content:center;align-items:center;animation:slideR .8s .25s ease both;opacity:0}
-.phone-float{animation:float 7s ease-in-out infinite}
-.phone{width:276px;background:#1E0E08;border-radius:38px;border:8px solid #1E0E08;box-shadow:0 0 0 1px rgba(0,0,0,.15),var(--shadow-lg),inset 0 1px 0 rgba(255,255,255,.06)}
-.p-notch{width:64px;height:16px;background:#1A0A05;border-radius:0 0 10px 10px;margin:0 auto 10px}
-.p-screen{background:#E5DDD5;border-radius:22px;overflow:hidden}
-.wa-head{background:#075E54;padding:10px 13px;display:flex;align-items:center;gap:9px}
-.wa-av{width:30px;height:30px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;flex-shrink:0}
-.wa-name{font-size:12.5px;font-weight:600;color:#fff;line-height:1.2}
-.wa-stat{font-size:9.5px;color:rgba(255,255,255,.7)}
-.wa-body{padding:10px 10px 14px;display:flex;flex-direction:column;gap:7px}
-.bub{border-radius:2px 12px 12px 12px;background:#fff;padding:8px 11px;font-size:11px;line-height:1.55;color:#222;box-shadow:0 1px 2px rgba(0,0,0,.07);max-width:90%}
-.bub.r{background:#D9FDD3;border-radius:12px 2px 12px 12px;margin-left:auto;max-width:72%}
-.bub.ai{background:#fff7ed;border:1px solid rgba(234,88,12,.1)}
-.b-time{font-size:9px;color:#9E9E9E;text-align:right;margin-top:2px}
-.b-btns{display:flex;gap:4px;flex-wrap:wrap;margin-top:5px}
-.b-btn{font-size:10px;color:#00A884;border:1px solid #00A884;background:transparent;border-radius:16px;padding:2px 8px;cursor:pointer;font-family:'Inter',sans-serif;transition:background .15s}
-.b-btn:hover{background:rgba(0,168,132,.08)}
-.typing-r{display:flex;gap:3px;align-items:center;padding:6px 9px;background:#fff;border-radius:9px;width:fit-content}
-.typing-r span{width:5px;height:5px;border-radius:50%;background:#9E9E9E;animation:typing 1.2s ease infinite}
-.typing-r span:nth-child(2){animation-delay:.2s}
-.typing-r span:nth-child(3){animation-delay:.4s}
-.m1{animation:msgIn .4s .4s ease both;opacity:0}
-.m2{animation:msgIn .4s .9s ease both;opacity:0}
-.m3{animation:msgIn .4s 1.5s ease both;opacity:0}
-.m4{animation:msgIn .4s 2.1s ease both;opacity:0}
-.mtype{animation:msgIn .3s 1.1s ease both;opacity:0}
-
-/* STAT BAR */
-.stat-bar{position:relative;z-index:5;border-top:1px solid var(--border);background:var(--surface);padding:18px 5%}
-.sbar-in{max-width:1120px;margin:0 auto;display:flex;align-items:center;flex-wrap:wrap}
-.su{display:flex;align-items:baseline;gap:9px;padding-right:32px;margin-right:32px;border-right:1px solid var(--border)}
-.su:last-of-type{border-right:none;margin-right:auto}
-.sn{font-family:'Outfit',sans-serif;font-size:26px;font-weight:800;color:var(--text);letter-spacing:-.04em}
-.sl2{font-size:12.5px;color:var(--text-3)}
-.slink{font-size:12.5px;color:var(--text-3)}
-.slink a{color:var(--orange);font-weight:600;transition:opacity var(--t)}
-.slink a:hover{opacity:.7}
-
-/* TICKER */
-.ticker{background:var(--orange);padding:10px 0;overflow:hidden;white-space:nowrap}
-.tick-t{display:inline-flex;animation:tick 32s linear infinite}
-.tick-i{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.9);padding:0 26px}
-.tick-i::after{content:"·";margin-left:26px;opacity:.45}
-
-/* SECTIONS */
-.sec{padding:84px 0;border-top:1px solid var(--border)}
-.sec-ey{font-size:11.5px;font-weight:600;letter-spacing:.09em;text-transform:uppercase;color:var(--orange);margin-bottom:11px;display:flex;align-items:center;gap:8px}
-.sec-ey::before{content:'';width:16px;height:2px;background:var(--orange);border-radius:2px;flex-shrink:0}
-.sec h2{font-family:'Outfit',sans-serif;font-size:clamp(26px,3.2vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:10px;color:var(--text)}
-.sec-sub{font-size:15.5px;color:var(--text-2);line-height:1.75;max-width:520px}
-
-/* VALUE GRID */
-.val-grid{display:grid;grid-template-columns:repeat(4,1fr);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;margin-top:40px;background:var(--surface)}
-.val-c{padding:30px 22px;border-right:1px solid var(--border);transition:background var(--t)}
-.val-c:last-child{border-right:none}
-.val-c:hover{background:var(--bg2)}
-.val-icon{width:38px;height:38px;border-radius:9px;display:flex;align-items:center;justify-content:center;margin-bottom:13px}
-.val-h{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;color:var(--text);margin-bottom:6px}
-.val-b{font-size:13px;color:var(--text-2);line-height:1.65}
-
-/* AUDIENCE */
-.aud-grid{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:40px}
-.aud-c{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-xl);padding:38px;position:relative;overflow:hidden;transition:all .3s;box-shadow:var(--shadow-sm)}
-.aud-c::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;transform:scaleX(0);transition:transform .4s ease;transform-origin:left}
-.aud-c.org::before{background:linear-gradient(90deg,var(--orange),var(--amber))}
-.aud-c.grn::before{background:linear-gradient(90deg,var(--green),#34d399)}
-.aud-c:hover{border-color:transparent;box-shadow:var(--shadow-lg);transform:translateY(-4px)}
-.aud-c:hover::before{transform:scaleX(1)}
-.aud-lbl{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-bottom:13px;display:flex;align-items:center;gap:10px}
-.aud-lbl::after{content:'';height:1px;flex:1;background:currentColor;opacity:.2}
-.aud-h{font-family:'Outfit',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.025em;line-height:1.2;margin-bottom:9px;color:var(--text)}
-.aud-sub{font-size:13.5px;color:var(--text-2);line-height:1.75;margin-bottom:20px}
-.aud-list{list-style:none;display:flex;flex-direction:column;gap:8px;margin-bottom:24px}
-.aud-list li{font-size:13.5px;color:var(--text-2);display:flex;gap:9px;align-items:flex-start;line-height:1.5}
-.aud-list li::before{content:'✓';font-size:10px;font-weight:700;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:2px}
-.aud-c.org .aud-list li::before{background:var(--orange-l);color:var(--orange)}
-.aud-c.grn .aud-list li::before{background:var(--green-l);color:var(--green)}
-
-/* AI SECTION — dark for contrast */
-.ai-sec{background:var(--bg-dark);padding:84px 0}
-.ai-two{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center}
-.ai-h{font-family:'Outfit',sans-serif;font-size:clamp(26px,3.2vw,38px);font-weight:800;letter-spacing:-.03em;line-height:1.1;margin-bottom:10px;color:#fff}
-.ai-sub{font-size:15px;color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:26px}
-.ai-feats{list-style:none;display:flex;flex-direction:column;gap:14px}
-.ai-feat{display:flex;gap:13px}
-.af-icon{width:34px;height:34px;border-radius:9px;background:rgba(234,88,12,.12);border:1px solid rgba(234,88,12,.2);display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.af-text strong{display:block;font-size:13.5px;color:#fff;font-weight:600;margin-bottom:2px}
-.af-text span{font-size:13px;color:rgba(255,255,255,.45);line-height:1.6}
-.chat-win{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09);border-radius:var(--r-xl);overflow:hidden}
-.chat-head{background:rgba(255,255,255,.04);padding:13px 18px;border-bottom:1px solid rgba(255,255,255,.07);display:flex;align-items:center;gap:10px}
-.chat-dot{width:8px;height:8px;border-radius:50%;background:var(--orange);animation:pulseDot 2s ease-in-out infinite}
-.chat-title{font-size:12.5px;font-weight:600;color:rgba(255,255,255,.55)}
-.chat-badge{margin-left:auto;font-size:10.5px;font-weight:600;padding:2px 9px;border-radius:20px;background:rgba(234,88,12,.15);color:#fb923c}
-.chat-body{padding:18px;display:flex;flex-direction:column;gap:11px;min-height:280px}
-.cm{border-radius:var(--r);padding:11px 13px;font-size:13px;line-height:1.65}
-.cm.bot{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.07);color:rgba(255,255,255,.8);border-radius:2px 12px 12px 12px;max-width:90%}
-.cm.usr{background:rgba(234,88,12,.15);border:1px solid rgba(234,88,12,.12);color:rgba(255,255,255,.9);border-radius:12px 2px 12px 12px;max-width:78%;align-self:flex-end}
-.cm.think{background:rgba(255,255,255,.03);color:rgba(255,255,255,.3);font-style:italic;font-size:12px;display:flex;align-items:center;gap:8px}
-.cm-hi{color:#fb923c;font-weight:600}
-.dots{display:flex;gap:3px}.dots span{width:4px;height:4px;border-radius:50%;background:rgba(255,255,255,.3);animation:typing 1.2s ease infinite}.dots span:nth-child(2){animation-delay:.2s}.dots span:nth-child(3){animation-delay:.4s}
-
-/* HOW IT WORKS */
-.hiw-bg{background:var(--bg2)}
-.hiw-steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:48px;position:relative}
-.hiw-steps::before{content:'';position:absolute;top:24px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--border),var(--border),transparent)}
-.hiw-step{text-align:center;padding:0 12px}
-.hiw-n{width:48px;height:48px;border-radius:50%;background:var(--orange);color:#fff;font-family:'Outfit',sans-serif;font-size:17px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 16px;position:relative;z-index:1;box-shadow:0 0 0 8px var(--orange-l);transition:transform .3s,box-shadow .3s}
-.hiw-step:hover .hiw-n{transform:scale(1.08);box-shadow:0 0 0 12px var(--orange-l)}
-.hiw-step h3{font-family:'Outfit',sans-serif;font-size:14.5px;font-weight:700;margin-bottom:6px;color:var(--text)}
-.hiw-step p{font-size:13px;color:var(--text-2);line-height:1.65}
-
-/* SIX THINGS */
-.things{display:flex;flex-direction:column;margin-top:40px}
-.thing{border-top:1px solid var(--border);cursor:pointer;transition:background .2s}
-.thing:last-child{border-bottom:1px solid var(--border)}
-.thing:hover{background:var(--bg2)}
-.thing.open{background:var(--bg2)}
-.thing-head{display:grid;grid-template-columns:48px 1fr 28px;gap:16px;align-items:center;padding:20px 8px}
-.thing-num{font-family:'Outfit',sans-serif;font-size:12px;font-weight:700;color:var(--text-3);letter-spacing:.05em}
-.thing-ttl{font-family:'Outfit',sans-serif;font-size:17px;font-weight:700;letter-spacing:-.02em;color:var(--text);transition:color .2s}
-.thing:hover .thing-ttl,.thing.open .thing-ttl{color:var(--orange)}
-.thing-arr{width:28px;height:28px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--text-3);transition:all .2s;flex-shrink:0;background:var(--surface)}
-.thing:hover .thing-arr,.thing.open .thing-arr{border-color:var(--orange);color:var(--orange);background:var(--orange-l)}
-.thing-arr svg{transition:transform .2s;width:12px;height:12px}
-.thing.open .thing-arr svg{transform:rotate(45deg)}
-.thing-body{display:grid;grid-template-rows:0fr;transition:grid-template-rows .35s ease}
-.thing.open .thing-body{grid-template-rows:1fr}
-.thing-inner{overflow:hidden}
-.thing-ct{padding:0 8px 22px 64px;display:grid;grid-template-columns:1fr 1fr;gap:28px}
-.thing-desc{font-size:14.5px;color:var(--text-2);line-height:1.8;margin-bottom:12px}
-.thing-tags{display:flex;gap:5px;flex-wrap:wrap}
-.thing-vis{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:16px;font-size:12.5px;box-shadow:var(--shadow-sm)}
-
-/* STATS — dark band */
-.stats-sec{background:var(--bg-dark)}
-.stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
-.stat-c{padding:0 32px;border-right:1px solid rgba(255,255,255,.08)}
-.stat-c:first-child{padding-left:0}.stat-c:last-child{border-right:none}
-.stat-big{font-family:'Outfit',sans-serif;font-size:50px;font-weight:800;letter-spacing:-.05em;line-height:1;color:var(--orange)}
-.stat-big .suf{font-size:26px}
-.stat-lbl{font-size:13px;color:rgba(255,255,255,.4);margin-top:7px;line-height:1.5}
-
-/* BLOG */
-.blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:40px}
-.blog-c{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:all .3s;box-shadow:var(--shadow-sm)}
-.blog-c:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:transparent}
-.blog-img{height:150px;display:flex;align-items:center;justify-content:center;font-size:34px;transition:transform .4s ease}.blog-c:hover .blog-img{transform:scale(1.05)}
-.blog-body{padding:18px}
-.blog-meta{display:flex;align-items:center;gap:8px;margin-bottom:9px}
-.blog-date{font-size:11.5px;color:var(--text-3)}
-.blog-c h3{font-family:'Outfit',sans-serif;font-size:15.5px;font-weight:700;letter-spacing:-.02em;line-height:1.3;margin-bottom:6px;color:var(--text);transition:color .2s}
-.blog-c:hover h3{color:var(--orange)}
-.blog-exc{font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:12px}
-.blog-more{font-size:12.5px;font-weight:600;color:var(--orange)}
-
-/* TESTIMONIALS */
-.testi-bg{background:var(--bg2)}
-.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:40px}
-.testi-c{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:24px;transition:all .3s;box-shadow:var(--shadow-sm)}
-.testi-c:hover{transform:translateY(-3px);box-shadow:var(--shadow)}
-.testi-stars{display:flex;gap:3px;margin-bottom:12px}
-.star{width:12px;height:12px;background:var(--amber);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
-.testi-q{font-size:13.5px;color:var(--text-2);line-height:1.75;font-style:italic;margin-bottom:18px;border-left:2px solid var(--border);padding-left:12px}
-.testi-from{display:flex;align-items:center;gap:10px}
-.testi-av{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;flex-shrink:0}
-.testi-name{font-size:13px;font-weight:600;color:var(--text)}
-.testi-org{font-size:11.5px;color:var(--text-3)}
-
-/* CTA — dark */
-.cta-sec{background:var(--bg-dark);text-align:center;position:relative;overflow:hidden}
-.cta-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(234,88,12,.1),transparent 70%);pointer-events:none}
-.cta-sec h2{font-family:'Outfit',sans-serif;font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.035em;margin-bottom:13px;color:#fff;position:relative}
-.cta-sec p{font-size:16px;color:rgba(255,255,255,.5);max-width:420px;margin:0 auto 30px;line-height:1.75;position:relative}
-.cta-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;position:relative}
-.btn-white-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.25)}.btn-white-outline:hover{border-color:rgba(255,255,255,.6);background:rgba(255,255,255,.05)}
+/* NEWSLETTER */
+.newsletter-section{background:var(--dark);padding:64px 0}
+.nl-inner{max-width:600px;margin:0 auto;text-align:center}
+.nl-h{font-size:28px;font-weight:800;letter-spacing:-.03em;color:#fff;margin-bottom:10px}
+.nl-sub{font-size:15px;color:rgba(255,255,255,.5);margin-bottom:28px;line-height:1.7}
+.nl-form{display:flex;gap:10px;max-width:440px;margin:0 auto}
+.nl-input{flex:1;padding:13px 16px;border-radius:var(--r-sm);border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.08);color:#fff;font-size:14px;font-family:'Plus Jakarta Sans',sans-serif;outline:none;transition:border-color var(--t)}
+.nl-input::placeholder{color:rgba(255,255,255,.35)}
+.nl-input:focus{border-color:rgba(255,255,255,.4)}
 
 /* FOOTER */
-footer{background:var(--bg-dark2);border-top:1px solid rgba(255,255,255,.06);padding:52px 0 22px}
-.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:40px;margin-bottom:36px}
-.foot-logo{font-family:'Outfit',sans-serif;font-size:18px;font-weight:800;color:#fff;letter-spacing:-.02em;display:block;margin-bottom:10px}
+footer{background:var(--footer);padding:56px 0 26px}
+.foot-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.foot-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;display:block;margin-bottom:11px}
 .foot-logo em{color:var(--orange);font-style:normal}
-.foot-desc{font-size:13px;color:rgba(255,255,255,.35);line-height:1.75;max-width:220px}
-.foot-col h4{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:12px}
-.foot-col a{display:block;font-size:13px;color:rgba(255,255,255,.4);margin-bottom:7px;transition:color var(--t)}
-.foot-col a:hover{color:rgba(255,255,255,.85)}
-.foot-bottom{border-top:1px solid rgba(255,255,255,.06);padding-top:18px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
-.foot-copy{font-size:12px;color:rgba(255,255,255,.25)}
-.foot-links{display:flex;gap:14px}
-.foot-links a{font-size:12px;color:rgba(255,255,255,.25);transition:color var(--t)}.foot-links a:hover{color:rgba(255,255,255,.7)}
+.foot-desc{font-size:13px;color:rgba(255,255,255,.3);line-height:1.75;max-width:230px}
+.foot-partners{display:flex;align-items:center;gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.05)}
+.foot-partners img{height:18px;opacity:.3;filter:brightness(0) invert(1);object-fit:contain}
+.foot-col h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:14px}
+.foot-col a{display:block;font-size:13px;color:rgba(255,255,255,.4);margin-bottom:8px;transition:color var(--t)}
+.foot-col a:hover{color:var(--orange-2)}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:22px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot-copy{font-size:12.5px;color:rgba(255,255,255,.22)}
+.foot-links{display:flex;gap:18px}
+.foot-links a{font-size:12.5px;color:rgba(255,255,255,.22);transition:color var(--t)}
+.foot-links a:hover{color:rgba(255,255,255,.55)}
 
-/* RESPONSIVE */
-@media(max-width:960px){
-  .hero-body{grid-template-columns:1fr;text-align:center;padding-top:36px}
-  .hero-sub,.hero-h1{margin-left:auto;margin-right:auto}
-  .hero-ctas,.eyebrow{justify-content:center}
-  .hero-right{margin-top:32px}
-  .ai-two{grid-template-columns:1fr;gap:40px}
-  .val-grid{grid-template-columns:1fr 1fr}
-  .val-c:nth-child(2){border-right:none}.val-c:nth-child(1),.val-c:nth-child(2){border-bottom:1px solid var(--border)}
-}
+@media(max-width:960px){.featured-post{grid-template-columns:1fr}.fp-visual{min-height:200px}}
 @media(max-width:768px){
   .nav-links,.nav-ctas{display:none}.nav-burger{display:flex}
-  .hiw-steps{grid-template-columns:1fr 1fr;gap:24px}.hiw-steps::before{display:none}
-  .aud-grid,.testi-grid,.blog-grid{grid-template-columns:1fr}
-  .thing-ct{grid-template-columns:1fr}.thing-ct .thing-vis{display:none}
-  .stats-grid{grid-template-columns:1fr 1fr;gap:24px}
-  .stat-c{padding:14px 0;border-right:none;border-bottom:1px solid rgba(255,255,255,.08)}.stat-c:last-child{border-bottom:none}
-  .foot-grid{grid-template-columns:1fr 1fr;gap:24px}
-  .su{padding-right:18px;margin-right:18px}.slink{display:none}
+  .articles-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .bh-h{font-size:32px}
+  .am-header,.am-body,.am-footer{padding-left:24px;padding-right:24px}
+  .nl-form{flex-direction:column}
 }
-@media(max-width:480px){
-  .hero-h1{font-size:34px}.hero-right{display:none}
-  .hero-ctas,.cta-btns{flex-direction:column;align-items:center}
-  .hero-ctas .btn-lg{width:100%;justify-content:center}
-  .hiw-steps,.foot-grid{grid-template-columns:1fr}
-}
-</style>
-<style>
-.ff-tab{padding:10px 14px;font-size:13px;font-weight:500;cursor:pointer;color:var(--text-2);border-bottom:2px solid transparent;margin-bottom:-1px;transition:all .2s;font-family:'Inter',sans-serif;border:none;background:none;white-space:nowrap}
-.ff-tab:hover{color:var(--text)}.ff-tab.active{color:var(--orange);border-bottom-color:var(--orange)}
-.blog-c{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;cursor:pointer;transition:all .3s;box-shadow:var(--shadow-sm);display:flex;flex-direction:column}
-.blog-c:hover{transform:translateY(-4px);box-shadow:var(--shadow-lg);border-color:transparent}
-.blog-img{height:145px;display:flex;align-items:center;justify-content:center;font-size:34px;transition:transform .4s ease}.blog-c:hover .blog-img{transform:scale(1.04)}
-.blog-body{padding:16px;flex:1;display:flex;flex-direction:column}
-.blog-meta{display:flex;align-items:center;gap:8px;margin-bottom:9px}.blog-date{font-size:11.5px;color:var(--text-3)}
-.blog-c h3{font-family:'Outfit',sans-serif;font-size:15px;font-weight:700;letter-spacing:-.02em;line-height:1.3;margin-bottom:6px;color:var(--text);transition:color .2s}.blog-c:hover h3{color:var(--orange)}
-.blog-exc{font-size:13px;color:var(--text-2);line-height:1.65;margin-bottom:12px;flex:1}
-.blog-more{font-size:12.5px;font-weight:600;color:var(--orange)}
-@media(max-width:768px){#bgrid{grid-template-columns:1fr!important}}
 </style>
 </head>
 <body>
-<nav class="nav"><div class="nav-in">
-  <a class="nav-logo" href="index.html">Empower<em>Bot</em></a>
-  <div class="nav-links"><a href="index.html" class="">Home</a><a href="features.html" class="">Features</a><a href="demo.html" class="">Demo</a><a href="pricing.html" class="">Pricing</a><a href="about.html" class="">About</a><a href="blog.html" class="active">Blog</a></div>
-  <div class="nav-ctas">
-    <a href="pricing.html" class="btn btn-ghost" style="font-size:13px;padding:7px 15px">Plans</a>
-    <a href="demo.html" class="btn btn-orange" style="font-size:13px;padding:7px 15px">Try demo →</a>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">Empower<em>Bot</em></a>
+    <div class="nav-links">
+      <a href="index.html">Home</a><a href="features.html">Features</a><a href="demo.html">Demo</a>
+      <a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="blog.html" class="active">Blog</a>
+    </div>
+    <div class="nav-ctas">
+      <a href="pricing.html" class="btn btn-ghost-light" style="font-size:13px;padding:8px 16px">Plans</a>
+      <a href="demo.html" class="btn btn-primary" style="font-size:13px;padding:8px 16px">Try demo →</a>
+    </div>
+    <button class="nav-burger" id="navBurger" onclick="toggleNav()"><span></span><span></span><span></span></button>
   </div>
-  <button class="nav-burger" id="nb" onclick="toggleNav()"><span></span><span></span><span></span></button>
-</div></nav>
-<div class="m-nav" id="mn">
-  <a href="index.html" onclick="closeNav()">Home</a><a href="features.html" onclick="closeNav()">Features</a><a href="demo.html" onclick="closeNav()">Demo</a><a href="pricing.html" onclick="closeNav()">Pricing</a><a href="about.html" onclick="closeNav()">About</a><a href="blog.html" onclick="closeNav()">Blog</a>
-  <div class="mc">
-    <a href="pricing.html" class="btn btn-ghost btn-lg" style="justify-content:center">View plans</a>
-    <a href="demo.html" class="btn btn-orange btn-lg" style="justify-content:center">Try demo →</a>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="closeNav()">Home</a><a href="features.html" onclick="closeNav()">Features</a>
+  <a href="demo.html" onclick="closeNav()">Demo</a><a href="pricing.html" onclick="closeNav()">Pricing</a>
+  <a href="about.html" onclick="closeNav()">About</a><a href="blog.html" onclick="closeNav()">Blog</a>
+  <div class="mobile-ctas">
+    <a href="pricing.html" class="btn btn-ghost-light btn-lg" style="justify-content:center">View Plans</a>
+    <a href="demo.html" class="btn btn-primary btn-lg" style="justify-content:center">Try Demo →</a>
   </div>
 </div>
 
-<section style="padding:120px 0 56px;border-bottom:1px solid var(--border);background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(234,88,12,.06),transparent 100%)">
-  <div class="wrap">
-    <div style="font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange);margin-bottom:14px;display:flex;align-items:center;gap:8px;animation:fadeIn .5s ease both"><span style="width:16px;height:2px;background:var(--orange);border-radius:2px;display:block"></span>Insights &amp; Research</div>
-    <h1 style="font-family:'Outfit',sans-serif;font-size:clamp(34px,4.5vw,52px);font-weight:800;letter-spacing:-.035em;line-height:1.1;margin-bottom:14px;color:var(--text);animation:fadeUp .6s .05s ease both">Thinking on AI, learning<br>outcomes, and small business.</h1>
-    <p style="font-size:17px;color:var(--text-2);line-height:1.75;max-width:500px;animation:fadeUp .6s .1s ease both">From the EmpowerBot and ELP Foundation team. Field reports, research commentary, and practical guides for programme managers.</p>
+<!-- HERO -->
+<section class="blog-hero">
+  <div class="max-w">
+    <div class="bh-tag">Research &amp; Field Notes</div>
+    <h1 class="bh-h">What we're learning about training small businesses at scale.</h1>
+    <p class="bh-sub">Field observations, honest reflections, and practical insights from running MSME capacity building programmes across Nigeria — and what AI is actually changing.</p>
   </div>
 </section>
 
-<div style="position:sticky;top:60px;z-index:100;background:rgba(250,250,247,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)">
-  <div style="max-width:1120px;margin:0 auto;padding:0 5%;display:flex;gap:0;overflow-x:auto">
-    <button class="ff-tab active" onclick="filterB('all',this)">All posts</button>
-    <button class="ff-tab" onclick="filterB('ai',this)">AI &amp; Learning</button>
-    <button class="ff-tab" onclick="filterB('me',this)">M&amp;E &amp; Funding</button>
-    <button class="ff-tab" onclick="filterB('case',this)">Case Studies</button>
-    <button class="ff-tab" onclick="filterB('prod',this)">Product</button>
+<!-- FILTER -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <button class="filter-btn active" onclick="filterPosts('all',this)">All posts</button>
+    <button class="filter-btn" onclick="filterPosts('field',this)">Field Notes</button>
+    <button class="filter-btn" onclick="filterPosts('ai',this)">AI &amp; Learning</button>
+    <button class="filter-btn" onclick="filterPosts('me',this)">M&amp;E &amp; Evidence</button>
+    <button class="filter-btn" onclick="filterPosts('product',this)">Platform Updates</button>
   </div>
 </div>
 
-<section style="padding:56px 0;border-top:1px solid var(--border)"><div class="wrap">
-  <div style="display:grid;grid-template-columns:1.2fr 1fr;border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;background:var(--surface);cursor:pointer;transition:all .3s;box-shadow:var(--shadow-sm)" class="sr" onmouseover="this.style.boxShadow='var(--shadow-lg)';this.style.transform='translateY(-3px)'" onmouseout="this.style.boxShadow='var(--shadow-sm)';this.style.transform='none'">
-    <div style="min-height:240px;display:flex;align-items:center;justify-content:center;font-size:52px;background:linear-gradient(135deg,var(--orange-l),var(--orange-m));border-right:1px solid var(--border)">🤖</div>
-    <div style="padding:32px">
-      <div style="font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:12px">// featured · AI &amp; Learning</div>
-      <h2 style="font-family:'Outfit',sans-serif;font-size:20px;font-weight:800;letter-spacing:-.02em;margin-bottom:10px;line-height:1.3;color:var(--text)">Why AI-Powered Explanations Outperform Classroom Training for Micro-Entrepreneurs</h2>
-      <p style="font-size:13px;color:var(--text-2);line-height:1.7;margin-bottom:16px">When Amina got a question wrong, EmpowerBot didn't show a definition — it explained using her own shop as the example, in Pidgin, with Naira amounts.</p>
-      <div style="font-size:12px;color:var(--text-3);display:flex;gap:14px"><span>Mar 2026</span><span>6 min read</span></div>
+<!-- FEATURED -->
+<div class="featured-wrap">
+  <div class="max-w">
+    <div class="featured-post reveal" onclick="openArticle('agege')" data-cat="field">
+      <div class="fp-visual">
+        <div class="fp-emoji">📱</div>
+        <div class="fp-category-badge">Field Notes</div>
+      </div>
+      <div class="fp-body">
+        <div class="fp-meta"><span class="tag tag-orange">Featured</span><span class="fp-date">March 2026</span><span class="fp-read-time">8 min read</span></div>
+        <h2 class="fp-h">What happened when 250 traders in Agege tried learning on WhatsApp</h2>
+        <p class="fp-excerpt">We ran five Thursday sessions across Agege LGA. 250 traders registered. Some didn't finish. But more did than any programme we'd run before — and we think we understand why. This is what we observed, what surprised us, and what we'd do differently.</p>
+        <div class="fp-cta">Read the full story <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg></div>
+      </div>
     </div>
   </div>
+</div>
 
-  <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:18px" id="bgrid">
-    <div class="blog-c sr d1" data-cat="me"><div class="blog-img" style="background:linear-gradient(135deg,var(--green-l),#bbf7d0)">📊</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-g">M&amp;E &amp; Funding</span><span class="blog-date">Feb 2026</span></div><h3>From Attendance Sheet to Evidence Base: A Guide for NGO Programme Managers</h3><p class="blog-exc">Your donor doesn't want to know how many people showed up. They want to know what changed.</p><div class="blog-more">Read more →</div></div></div>
-    <div class="blog-c sr d2" data-cat="case"><div class="blog-img" style="background:linear-gradient(135deg,var(--blue-l),#bfdbfe)">📱</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-b">Case Study</span><span class="blog-date">Jan 2026</span></div><h3>1,000 Traders, One WhatsApp Number: What We Learned From Agege</h3><p class="blog-exc">Five Lagos LGAs. 89% completion. What worked, what didn't — the full breakdown.</p><div class="blog-more">Read more →</div></div></div>
-    <div class="blog-c sr d3" data-cat="ai"><div class="blog-img" style="background:linear-gradient(135deg,var(--amber-l),#fde68a)">🧠</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-a">AI &amp; Learning</span><span class="blog-date">Jan 2026</span></div><h3>Pidgin as a Learning Language: How Context-Aware AI Changes Knowledge Retention</h3><p class="blog-exc">When we switched to Pidgin with local examples, wrong-answer revisit rates dropped 34%.</p><div class="blog-more">Read more →</div></div></div>
-    <div class="blog-c sr d1" data-cat="me"><div class="blog-img" style="background:linear-gradient(135deg,var(--orange-l),var(--orange-m))">💰</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-o">M&amp;E &amp; Funding</span><span class="blog-date">Dec 2025</span></div><h3>What USAID, IFC, and Development Funders Actually Want in Your Programme Report</h3><p class="blog-exc">We spoke to M&E officers at three major DFIs. Here's what makes a report stand out.</p><div class="blog-more">Read more →</div></div></div>
-    <div class="blog-c sr d2" data-cat="ai"><div class="blog-img" style="background:linear-gradient(135deg,var(--green-l),#bbf7d0)">🌍</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-g">AI &amp; Learning</span><span class="blog-date">Nov 2025</span></div><h3>WhatsApp as Learning Infrastructure: Building on Existing Behaviour</h3><p class="blog-exc">2.9 billion people open WhatsApp every day. Why do we keep building new platforms?</p><div class="blog-more">Read more →</div></div></div>
-    <div class="blog-c sr d3" data-cat="prod"><div class="blog-img" style="background:linear-gradient(135deg,var(--blue-l),#bfdbfe)">⚡</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-b">Product</span><span class="blog-date">Oct 2025</span></div><h3>Building EmpowerBot: Why We Chose WhatsApp Business API Over a Native App</h3><p class="blog-exc">The honest breakdown of why building on existing infrastructure was the right call.</p><div class="blog-more">Read more →</div></div></div>
-  </div>
+<!-- ARTICLES GRID -->
+<section class="articles-section">
+  <div class="max-w">
+    <div class="articles-grid" id="articlesGrid">
 
-  <div style="background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-xl);padding:28px;text-align:center;margin-top:40px;box-shadow:var(--shadow-sm)" class="sr">
-    <h3 style="font-family:'Outfit',sans-serif;font-size:18px;font-weight:700;margin-bottom:7px;color:var(--text)">Stay up to date</h3>
-    <p style="font-size:13px;color:var(--text-2);margin-bottom:16px">New research, field notes, and product updates. One email per month.</p>
-    <div style="display:flex;gap:8px;max-width:360px;margin:0 auto">
-      <input type="email" placeholder="your@email.com" style="flex:1;padding:8px 12px;border-radius:var(--r);border:1px solid var(--border);background:var(--surface);color:var(--text);font-size:13px;font-family:'Inter',sans-serif;outline:none">
-      <button class="btn btn-orange">Subscribe</button>
+      <div class="article-card reveal stagger-1" onclick="openArticle('pidgin')" data-cat="ai">
+        <div class="ac-img" style="background:linear-gradient(135deg,#FFF4EC,#FED7AA)">🗣️</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">AI &amp; Learning</span><span class="ac-date">Feb 2026</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">Why explaining things in Pidgin actually works better</h3>
+          <p class="ac-excerpt">When we switched the AI explanations from formal English to Pidgin with local examples, something shifted. Participants started asking follow-up questions. Here's what we noticed.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-2" onclick="openArticle('completion')" data-cat="field">
+        <div class="ac-img" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0)">📊</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-green">Field Notes</span><span class="ac-date">Feb 2026</span><span class="ac-read-time">6 min</span></div>
+          <h3 class="ac-h">The leaderboard: a small thing that changed a lot</h3>
+          <p class="ac-excerpt">We didn't plan to put a leaderboard in the programme. It was almost an afterthought. But it turned out to be the feature that participants mentioned most when we asked why they kept going.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-3" onclick="openArticle('evidence')" data-cat="me">
+        <div class="ac-img" style="background:linear-gradient(135deg,#EFF6FF,#BFDBFE)">📋</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-blue">M&amp;E &amp; Evidence</span><span class="ac-date">Jan 2026</span><span class="ac-read-time">7 min</span></div>
+          <h3 class="ac-h">What funders actually want — and what we were giving them instead</h3>
+          <p class="ac-excerpt">We spent a long time producing reports that tracked inputs and activities. It took honest conversations with our funder partners to understand what they were actually trying to see.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-1" onclick="openArticle('dropoff')" data-cat="field">
+        <div class="ac-img" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">🤔</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-amber">Field Notes</span><span class="ac-date">Jan 2026</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">Who dropped out and what we learned from them</h3>
+          <p class="ac-excerpt">89% completion sounds good. But what about the 11% who didn't finish? We went back and looked at the data, and reached out where we could. The reasons were not what we expected.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-2" onclick="openArticle('whatsapp')" data-cat="product">
+        <div class="ac-img" style="background:linear-gradient(135deg,#1C1208,#2E1E0A)">⚙️</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">Platform Updates</span><span class="ac-date">Dec 2025</span><span class="ac-read-time">4 min</span></div>
+          <h3 class="ac-h">Why we built on WhatsApp instead of building our own app</h3>
+          <p class="ac-excerpt">The honest reason isn't technical innovation. It's that we wanted participants to start with something they already knew. That constraint shaped everything else about how EmpowerBot works.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-3" onclick="openArticle('ai-limits')" data-cat="ai">
+        <div class="ac-img" style="background:linear-gradient(135deg,#FFF4EC,#FED7AA)">🤖</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">AI &amp; Learning</span><span class="ac-date">Nov 2025</span><span class="ac-read-time">6 min</span></div>
+          <h3 class="ac-h">What the AI gets wrong — and what we do about it</h3>
+          <p class="ac-excerpt">AI explanations aren't perfect. We've seen the model confidently give wrong examples, miss local context, and occasionally go off on unhelpful tangents. Here's how we handle it.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+
+
+      <div style="grid-column:1/-1;padding:8px 0 8px">
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)">2026</div>
+      </div>
+
+      <div class="article-card reveal stagger-1" onclick="openArticle('ikorodu')" data-cat="field">
+        <div class="ac-img" style="background:linear-gradient(135deg,#D1FAE5,#6EE7B7)">🧵</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-green">Field Notes</span><span class="ac-date">Mar 2026</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">Tailors, traders, and a photographer: who actually joined the Ikorodu cohort</h3>
+          <p class="ac-excerpt">We expected mostly traders. What we got was a wide mix of business types — and that changed how we thought about one-size-fits-all business training.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-2" onclick="openArticle('recordkeeping')" data-cat="ai">
+        <div class="ac-img" style="background:linear-gradient(135deg,#FFF4EC,#FED7AA)">📒</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">AI &amp; Learning</span><span class="ac-date">Mar 2026</span><span class="ac-read-time">4 min</span></div>
+          <h3 class="ac-h">Record keeping was the hardest topic to explain. Here's what worked.</h3>
+          <p class="ac-excerpt">Across every cohort we've run, record keeping questions have the highest failure rate. We tried several different AI explanation approaches before something started clicking.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-3" onclick="openArticle('facilitator')" data-cat="field">
+        <div class="ac-img" style="background:linear-gradient(135deg,#F3F2EB,#E4E0D6)">👩‍💼</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-amber">Field Notes</span><span class="ac-date">Feb 2026</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">The facilitator's role in a WhatsApp-based programme</h3>
+          <p class="ac-excerpt">You might think WhatsApp delivery means the facilitator becomes less important. We found the opposite. What changes is what they do — not whether they matter.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-1" onclick="openArticle('quiz-design')" data-cat="product">
+        <div class="ac-img" style="background:linear-gradient(135deg,#1C1208,#2E1E0A)">✏️</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">Platform Updates</span><span class="ac-date">Feb 2026</span><span class="ac-read-time">6 min</span></div>
+          <h3 class="ac-h">How we write quiz questions — and why we rewrote most of them twice</h3>
+          <p class="ac-excerpt">Writing a good multiple choice question for a market trader in Lagos is harder than it sounds. The first version of our quiz bank had problems we only discovered when real people tried to answer them.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-2" onclick="openArticle('sole-trader')" data-cat="field">
+        <div class="ac-img" style="background:linear-gradient(135deg,#EFF6FF,#BFDBFE)">🏪</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-blue">Field Notes</span><span class="ac-date">Jan 2026</span><span class="ac-read-time">4 min</span></div>
+          <h3 class="ac-h">Amina's score went from 44% to 91%. What happened in between?</h3>
+          <p class="ac-excerpt">One participant came back for the optional retake sessions more than anyone else in her cohort. We asked her about it. Her answer was not what we expected.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-3" onclick="openArticle('cohort-size')" data-cat="me">
+        <div class="ac-img" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">📐</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-blue">M&amp;E &amp; Evidence</span><span class="ac-date">Jan 2026</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">Does cohort size affect learning outcomes? What we've seen so far.</h3>
+          <p class="ac-excerpt">We've run cohorts of 30 and cohorts of 250. The dynamics are different in ways that aren't obvious until you look at the data. Some of what we found was counterintuitive.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+
+      <div style="grid-column:1/-1;padding:24px 0 8px;border-top:2px solid var(--border);margin-top:8px">
+        <div style="font-family:'Syne',sans-serif;font-size:13px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint)">2025</div>
+      </div>
+
+      <div class="article-card reveal stagger-1" onclick="openArticle('building-bot')" data-cat="product">
+        <div class="ac-img" style="background:linear-gradient(135deg,#1C1208,#2E1E0A)">🛠️</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">Platform Updates</span><span class="ac-date">Dec 2025</span><span class="ac-read-time">7 min</span></div>
+          <h3 class="ac-h">Six months of building EmpowerBot: what broke, what we rebuilt, what stayed</h3>
+          <p class="ac-excerpt">A candid look at the development process — the features we scrapped, the assumptions that were wrong, and the things that worked better than expected.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-2" onclick="openArticle('scoring')" data-cat="me">
+        <div class="ac-img" style="background:linear-gradient(135deg,#EFF6FF,#BFDBFE)">🎯</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-blue">M&amp;E &amp; Evidence</span><span class="ac-date">Dec 2025</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">What a quiz score does and doesn't tell you about learning</h3>
+          <p class="ac-excerpt">We've been careful not to treat quiz scores as proof that participants learned something meaningful. Here's how we actually think about what the scores mean — and what questions they leave open.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-3" onclick="openArticle('first-pilot')" data-cat="field">
+        <div class="ac-img" style="background:linear-gradient(135deg,#D1FAE5,#6EE7B7)">🌱</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-green">Field Notes</span><span class="ac-date">Nov 2025</span><span class="ac-read-time">6 min</span></div>
+          <h3 class="ac-h">The first pilot: 30 participants, one LGA, and a lot of things we got wrong</h3>
+          <p class="ac-excerpt">Before Agege, before LSETF, before any of the current features — there was a very rough first attempt. Looking back at it is useful because it shows how much of what works now came directly from what failed then.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-1" onclick="openArticle('pricing-q')" data-cat="ai">
+        <div class="ac-img" style="background:linear-gradient(135deg,#FFF4EC,#FED7AA)">💰</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">AI &amp; Learning</span><span class="ac-date">Oct 2025</span><span class="ac-read-time">4 min</span></div>
+          <h3 class="ac-h">The question almost everyone gets wrong on the pricing quiz</h3>
+          <p class="ac-excerpt">Across multiple cohorts, one question has a 68% failure rate. It's about pricing — and the reason so many people get it wrong reveals something important about how small business owners think about money.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-2" onclick="openArticle('lsetf-partnership')" data-cat="me">
+        <div class="ac-img" style="background:linear-gradient(135deg,#F3F2EB,#E4E0D6)">🤝</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-blue">M&amp;E &amp; Evidence</span><span class="ac-date">Sep 2025</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">Working with LSETF: what a government partnership actually looks like on the ground</h3>
+          <p class="ac-excerpt">Government partnerships are often described in press releases. The day-to-day reality is different — slower, more iterative, more human. Here's what ours has looked like.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-3" onclick="openArticle('retake')" data-cat="product">
+        <div class="ac-img" style="background:linear-gradient(135deg,#1C1208,#2E1E0A)">🔄</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">Platform Updates</span><span class="ac-date">Sep 2025</span><span class="ac-read-time">4 min</span></div>
+          <h3 class="ac-h">We added a retake mode. Here's why it matters more than we expected.</h3>
+          <p class="ac-excerpt">Retake mode was a small feature addition. But looking at who uses it and how their scores change, it seems to be doing something meaningful — more than just giving participants another shot at a higher score.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+
+      <div class="article-card reveal stagger-1" onclick="openArticle('score100')" data-cat="field">
+        <div class="ac-img" style="background:linear-gradient(135deg,#FFF4EC,#FED7AA)">🏆</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">Field Notes</span><span class="ac-date">Apr 2026</span><span class="ac-read-time">4 min</span></div>
+          <h3 class="ac-h">The first participant to score 100% — and what she said about it</h3>
+          <p class="ac-excerpt">Amina Bakare, a provisions trader from Agege, finished all five quizzes with a perfect score. We sat down with her facilitator to understand what happened.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-2" onclick="openArticle('facilitator')" data-cat="field">
+        <div class="ac-img" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0)">👩‍🏫</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-green">Field Notes</span><span class="ac-date">Apr 2026</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">How our facilitator uses the knowledge gap data before each session</h3>
+          <p class="ac-excerpt">Mrs Faith Oyeneye facilitates every programme session. We asked her how she actually uses the dashboard data to decide what to cover. Her answer surprised us.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-3" onclick="openArticle('ramadan')" data-cat="field">
+        <div class="ac-img" style="background:linear-gradient(135deg,#EFF6FF,#BFDBFE)">🌙</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-blue">Field Notes</span><span class="ac-date">Mar 2026</span><span class="ac-read-time">4 min</span></div>
+          <h3 class="ac-h">Running a training programme during Ramadan: timing, pace and what we adjusted</h3>
+          <p class="ac-excerpt">A portion of our Agege cohort was fasting during the programme. Quiz completion patterns shifted noticeably. Here's what we observed and what we changed for future timing.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-1" onclick="openArticle('wrong-answer')" data-cat="ai">
+        <div class="ac-img" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">🔍</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-amber">AI &amp; Learning</span><span class="ac-date">Mar 2026</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">The time a participant corrected the AI — and we were glad they did</h3>
+          <p class="ac-excerpt">A tailor in Ikorodu pushed back on an AI explanation about pricing that felt off to her. She was right. Here's what happened and what we changed in how we handle feedback.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-2" onclick="openArticle('friends')" data-cat="field">
+        <div class="ac-img" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0)">👯</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-green">Field Notes</span><span class="ac-date">Feb 2026</span><span class="ac-read-time">4 min</span></div>
+          <h3 class="ac-h">What happens when two market neighbours join the same programme</h3>
+          <p class="ac-excerpt">We had several pairs of friends and market colleagues join the Agege cohort together. Their completion rates were higher than average. The leaderboard dynamic between them was intense.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-3" onclick="openArticle('questions')" data-cat="ai">
+        <div class="ac-img" style="background:linear-gradient(135deg,#FFF4EC,#FED7AA)">💬</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">AI &amp; Learning</span><span class="ac-date">Feb 2026</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">When participants ask the AI things that aren't on the quiz</h3>
+          <p class="ac-excerpt">Participants regularly ask the bot questions that have nothing to do with the current quiz topic. About taxes they owe, suppliers they're having trouble with, loans they're considering. Here's how we handle it.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-1" onclick="openArticle('kpi')" data-cat="me">
+        <div class="ac-img" style="background:linear-gradient(135deg,#EFF6FF,#BFDBFE)">📐</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-blue">M&amp;E &amp; Evidence</span><span class="ac-date">Jan 2026</span><span class="ac-read-time">6 min</span></div>
+          <h3 class="ac-h">How to set realistic KPIs for a five-week WhatsApp training programme</h3>
+          <p class="ac-excerpt">We've seen programme KPIs that no short training could reasonably deliver — and KPIs so vague they're meaningless. Here's what we think is honest and useful to measure.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-2" onclick="openArticle('dashboard')" data-cat="product">
+        <div class="ac-img" style="background:linear-gradient(135deg,#1C1208,#2E1E0A)">📟</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">Platform Updates</span><span class="ac-date">Dec 2025</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">Building the admin dashboard: what programme managers actually needed</h3>
+          <p class="ac-excerpt">The first version of our admin dashboard had seventeen filters and six chart types. No one used most of them. Here's what we learned about building tools for busy programme managers.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-3" onclick="openArticle('quiz-design')" data-cat="ai">
+        <div class="ac-img" style="background:linear-gradient(135deg,#FEF3C7,#FDE68A)">✏️</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-amber">AI &amp; Learning</span><span class="ac-date">Nov 2025</span><span class="ac-read-time">5 min</span></div>
+          <h3 class="ac-h">Why we use multiple-choice questions — and what we lose by doing so</h3>
+          <p class="ac-excerpt">Multiple-choice is limiting. It tests recognition, not recall. It allows guessing. We know all of this. Here's why we still use it and what tradeoffs we're accepting.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-1" onclick="openArticle('behaviour')" data-cat="me">
+        <div class="ac-img" style="background:linear-gradient(135deg,#D1FAE5,#A7F3D0)">🔄</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-green">M&amp;E &amp; Evidence</span><span class="ac-date">Nov 2025</span><span class="ac-read-time">6 min</span></div>
+          <h3 class="ac-h">The gap between learning something and actually doing it differently</h3>
+          <p class="ac-excerpt">A participant can score 95% on a quiz about record keeping and still not keep proper records. We're honest about this gap and what training programmes can and can't claim to achieve.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
+
+      <div class="article-card reveal stagger-2" onclick="openArticle('registration')" data-cat="product">
+        <div class="ac-img" style="background:linear-gradient(135deg,#1C1208,#2E1E0A)">📝</div>
+        <div class="ac-body">
+          <div class="ac-meta"><span class="tag tag-orange">Platform Updates</span><span class="ac-date">Oct 2025</span><span class="ac-read-time">4 min</span></div>
+          <h3 class="ac-h">How we reduced registration drop-off from 40% to under 10%</h3>
+          <p class="ac-excerpt">Early versions of the registration flow lost nearly half of all new users before they completed sign-up. Five small changes to the conversation script made a significant difference.</p>
+          <div class="ac-cta">Read more →</div>
+        </div>
+      </div>
     </div>
   </div>
-</div></section>
+</section>
 
+<div style="text-align:center;padding:8px 0 56px;border-top:1px solid var(--border)">
+  <p style="font-size:14px;color:var(--ink-faint);margin-bottom:16px">Showing all 18 articles</p>
+</div>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-section">
+  <div class="nl-inner reveal">
+    <h2 class="nl-h">Get new posts by email</h2>
+    <p class="nl-sub">We publish field notes and observations roughly once a month. No marketing, no fluff — just what we're learning.</p>
+    <div class="nl-form">
+      <input type="email" class="nl-input" placeholder="your@email.com" id="nlEmail">
+      <button class="btn btn-primary" onclick="subscribeNl()">Subscribe</button>
+    </div>
+    <div id="nlMsg" style="margin-top:12px;font-size:13px;color:rgba(255,255,255,.5);display:none">Thanks — you're subscribed.</div>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
-  <div class="wrap">
+  <div class="max-w">
     <div class="foot-grid">
-      <div><a class="foot-logo" href="index.html">Empower<em>Bot</em></a><p class="foot-desc">AI-powered training on WhatsApp. Measurable learning outcomes for small businesses. Built by ELP Foundation.</p>
-      <div style="display:flex;align-items:center;gap:14px;margin-top:13px;padding-top:11px;border-top:1px solid rgba(255,255,255,.06)">
-        <img src="/public/lsetf.png" alt="LSETF" style="height:18px;opacity:.35;filter:brightness(0) invert(1)" onerror="this.style.display='none'">
-        <img src="/public/elp.png" alt="ELP" style="height:18px;opacity:.35;filter:brightness(0) invert(1)" onerror="this.style.display='none'">
-      </div></div>
+      <div><a class="foot-logo" href="index.html">Empower<em>Bot</em></a><p class="foot-desc">AI-powered training on WhatsApp. Measurable learning outcomes for small businesses everywhere. Built by ELP Foundation.</p><div class="foot-partners"><img src="/public/lsetf.png" alt="LSETF" onerror="this.style.display='none'"><img src="/public/elp.png" alt="ELP Foundation" onerror="this.style.display='none'"></div></div>
       <div class="foot-col"><h4>Product</h4><a href="features.html">Features</a><a href="demo.html">Demo</a><a href="pricing.html">Pricing</a></div>
       <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a><a href="#">Impact</a></div>
-      <div class="foot-col"><h4>Support</h4><a href="#">Help centre</a><a href="#">Contact</a><a href="#">Status</a></div>
+      <div class="foot-col"><h4>Support</h4><a href="#">Help centre</a><a href="#">Contact</a></div>
     </div>
-    <div class="foot-bottom"><span class="foot-copy">© 2026 EmpowerBot · Built by ELP Foundation · Partnered with LSETF</span><div class="foot-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div>
+    <div class="foot-bottom"><span class="foot-copy">© 2026 EmpowerBot · Built by ELP Foundation · Partnered with LSETF</span><div class="foot-links"><a href="#">Privacy</a><a href="#">Terms</a></div></div>
   </div>
 </footer>
+
+<!-- ARTICLE MODAL -->
+<div class="article-overlay" id="overlay" onclick="handleOverlayClick(event)">
+  <div class="article-modal" id="modal">
+    <div class="am-header">
+      <div class="am-close" onclick="closeArticle()"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6L6 18M6 6l12 12"/></svg></div>
+      <div class="am-tag-row" id="am-tag-row"></div>
+      <h2 class="am-h" id="am-h"></h2>
+      <p class="am-lede" id="am-lede"></p>
+    </div>
+    <div class="am-body" id="am-body"></div>
+    <div class="am-footer">
+      <div class="am-author" id="am-author"></div>
+      <div class="am-share" onclick="copyLink()">Copy link ↗</div>
+    </div>
+  </div>
+</div>
+
 <script>
-function toggleNav(){document.getElementById('mn').classList.toggle('open');document.getElementById('nb').classList.toggle('open');document.body.style.overflow=document.getElementById('mn').classList.contains('open')?'hidden':'';}
-function closeNav(){document.getElementById('mn').classList.remove('open');document.getElementById('nb').classList.remove('open');document.body.style.overflow='';}
-const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('on');obs.unobserve(x.target);}});},{threshold:.09,rootMargin:'0px 0px -20px 0px'});
-document.querySelectorAll('.sr,.sl,.sr2').forEach(el=>obs.observe(el));
+// NAV
+window.addEventListener('scroll',()=>{document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>30);},{passive:true});
+document.getElementById('mainNav').classList.add('scrolled');
+function toggleNav(){document.getElementById('mobileNav').classList.toggle('open');document.getElementById('navBurger').classList.toggle('open');document.body.style.overflow=document.getElementById('mobileNav').classList.contains('open')?'hidden':'';}
+function closeNav(){document.getElementById('mobileNav').classList.remove('open');document.getElementById('navBurger').classList.remove('open');document.body.style.overflow='';}
+
+// REVEAL
+const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// FILTER
+function filterPosts(cat,btn){
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.article-card,[data-cat]').forEach(card=>{
+    if(cat==='all'||card.dataset.cat===cat){card.style.display='';} else{card.style.display='none';}
+  });
+}
+
+// NEWSLETTER
+function subscribeNl(){
+  const v=document.getElementById('nlEmail').value;
+  if(v&&v.includes('@')){document.getElementById('nlMsg').style.display='block';document.getElementById('nlEmail').value='';}
+}
+
+// ARTICLES DATA
+const articles={
+  agege:{
+    tag:'<span class="tag tag-orange">Field Notes</span>',
+    date:'March 2026',readTime:'8 min read',
+    h:'What happened when 250 traders in Agege tried learning on WhatsApp',
+    lede:'We ran five Thursday sessions across Agege LGA. 250 traders registered. Some didn't finish. But more did than any programme we'd run before — and we think we understand why.',
+    body:`
+<h3>How the programme worked</h3>
+<p>Every Thursday for five weeks, participants received a new quiz via WhatsApp. There were no mandatory session times, no physical location to show up to. Participants could do the quiz whenever they had a few minutes — on the bus, at the market, during a lunch break.</p>
+<p>Registration happened entirely through WhatsApp. A short conversation: name, business type, location, main challenge. That was it. Most participants finished registration in under two minutes.</p>
+<p>The quiz questions were about practical business topics — record keeping, pricing, business registration, understanding profit margins. Each question had three answer options presented as buttons. No typing required.</p>
+
+<h3>What we expected</h3>
+<p>Honestly? We expected completion rates in the 40–50% range. That's roughly where similar programmes land. People are busy. Life gets in the way. Traders especially have unpredictable days.</p>
+<p>We thought the WhatsApp format would help with convenience, but we weren't sure it would matter that much.</p>
+
+<div class="pullquote">The thing that surprised us most wasn't the completion rate. It was that participants were messaging the bot between quizzes, asking questions that had nothing to do with the week's topic.</div>
+
+<h3>What actually happened</h3>
+<p>Final completion rate across the five sessions was 89%. We define completion as finishing at least four of the five quizzes with a passing score.</p>
+<p>A few things seemed to drive this. First, the leaderboard. We expected participants to glance at it once and forget about it. Instead, many participants checked their ranking multiple times between quizzes. Several mentioned specific people they were trying to stay ahead of. Competition, even informal competition, kept people engaged.</p>
+<p>Second, the AI explanations on wrong answers. When a participant got a question wrong, the bot gave a contextual explanation — not a textbook definition, but something tied to their specific business type. A provisions trader got a different explanation than a fashion designer. This seemed to make the feedback feel relevant rather than generic.</p>
+
+<h3>What didn't work</h3>
+<p>Not everything was smooth. Some participants found the button-based interface confusing at first. A few tried typing their answers instead of tapping the buttons, which the bot didn't handle gracefully in early sessions — we fixed this, but it was a friction point.</p>
+<p>A small number of participants had connectivity issues that interrupted their quiz mid-session. WhatsApp's reliability is generally good, but it isn't perfect. We added a "resume quiz" feature after the second session.</p>
+<p>We also noticed that quiz scores were generally higher in later sessions. This could mean participants were learning — or it could mean the early questions were harder, or that participants who found the quizzes easy were more likely to keep going. Probably all three.</p>
+
+<h3>What we'd do differently</h3>
+<p>We'd build in a short orientation before the first quiz. Some participants didn't know what to expect and dropped off early simply because the format was unfamiliar. A two-minute welcome walkthrough at registration would have helped.</p>
+<p>We'd also build a facilitator dashboard update for mid-programme. Our facilitator was flying partially blind between sessions — we could see completion data, but didn't have an easy way to flag participants who were falling behind early so she could follow up.</p>
+
+<div class="callout"><strong>The honest summary</strong>A 89% completion rate is genuinely encouraging, but we're cautious about reading too much into it. This was one programme, one LGA, five sessions. The conditions — a well-organised facilitator, an engaged participant group, a tight topic area — were good. We're running more programmes to see whether the numbers hold.</div>
+
+<p>What we feel more confident about is the qualitative feedback. Participants consistently said the format fit into their lives in a way that classroom sessions hadn't. Several said they'd recommended the programme to friends. That feels like the more meaningful signal.</p>
+    `,
+    author:'ELP Foundation team · Agege, Lagos · March 2026'
+  },
+
+  pidgin:{
+    tag:'<span class="tag tag-orange">AI &amp; Learning</span>',
+    date:'February 2026',readTime:'5 min read',
+    h:'Why explaining things in Pidgin actually works better',
+    lede:'When we switched the AI explanations from formal English to Pidgin with local examples, something shifted. Participants started asking follow-up questions they hadn't asked before.',
+    body:`
+<h3>The original setup</h3>
+<p>When we first built the AI explanation feature, the output was in formal English. Correct. Clear. Technically accurate. And, based on the feedback we were getting, not particularly useful to the people reading it.</p>
+<p>Participants would get a question wrong, receive an explanation, and move on. Very few asked follow-up questions. We assumed this meant they'd understood. It turned out that for many, it meant the explanation hadn't landed at all.</p>
+
+<h3>What changed when we switched to Pidgin</h3>
+<p>We adjusted the AI prompt to respond in Nigerian Pidgin when the participant's profile indicated they were in Nigeria, and to use locally relevant examples — Naira amounts, specific market types, familiar business scenarios.</p>
+<p>The difference in engagement was noticeable fairly quickly. Participants started replying to the explanations. Not just clicking through to the next question, but actually responding — asking things like "but what if I no get the money?" or "so for my type of shop, which one better?"</p>
+
+<div class="pullquote">"Make I explain am" hit differently than "Let me explain." It's the same instruction, but one of them sounds like a friend talking, and one sounds like a manual.</div>
+
+<h3>Why this probably matters</h3>
+<p>We're careful not to overclaim here. We didn't run a controlled experiment comparing Pidgin and English groups with all other variables held constant. The switch to Pidgin happened alongside other changes, so we can't isolate the effect precisely.</p>
+<p>But the follow-up question rate — which we track as an indicator of engagement — roughly doubled after the switch. That's a meaningful enough signal to take seriously.</p>
+<p>The underlying reason probably has to do with cognitive load. When you're processing information in a language that isn't your most fluent one, more mental effort goes into parsing the words and less remains for actually thinking about the content. Pidgin reduces that friction.</p>
+
+<h3>What the AI still gets wrong</h3>
+<p>The AI's Pidgin isn't perfect. It occasionally uses phrases that feel slightly off, or defaults to more formal constructions when the topic gets complex. We're working on this, but it's worth being honest that "AI in Pidgin" is an approximation, not a native speaker.</p>
+<p>We've also found that the model sometimes uses Naira examples that feel slightly generic — the amounts or scenarios don't always match the specific business type the participant registered. We're improving the context-passing to make examples more specific.</p>
+
+<h3>What we're doing next</h3>
+<p>We're building Yoruba support, currently in testing. Hausa is planned. Each language requires careful work on the examples and cultural context, not just translation. We're moving deliberately rather than quickly on this.</p>
+    `,
+    author:'EmpowerBot team · February 2026'
+  },
+
+  completion:{
+    tag:'<span class="tag tag-green">Field Notes</span>',
+    date:'February 2026',readTime:'6 min read',
+    h:'The leaderboard: a small thing that changed a lot',
+    lede:'We didn't plan to put a leaderboard in the programme. It was almost an afterthought. But it turned out to be the feature that participants mentioned most.',
+    body:`
+<h3>How it started</h3>
+<p>The leaderboard wasn't in the original programme design. It came up during a team conversation about how to add a social dimension to something that was otherwise a fairly solitary experience — a person alone with their phone, doing quizzes.</p>
+<p>The idea was simple: after each quiz, participants could check their ranking within their cohort. Score, position, the names of the people above and below them. Nothing sophisticated.</p>
+
+<h3>What we noticed</h3>
+<p>Within the second session, participants were messaging the bot to check the leaderboard between quizzes — something it wasn't explicitly designed for. They'd send a message asking where they stood, and the bot would respond with their current ranking.</p>
+<p>In post-programme conversations, the leaderboard came up unprompted more than any other feature. Several participants mentioned specific people they were competing with. One participant who finished in the top three said she had stayed up late to finish the fourth quiz because she'd seen that someone else was close to her score.</p>
+
+<div class="pullquote">Traders are competitive by nature. They negotiate prices every day. When we gave them something to compete on, they didn't need much encouragement to engage with it.</div>
+
+<h3>The honest caveat</h3>
+<p>We don't know with certainty that the leaderboard caused higher completion rates. It's plausible that the people who engaged with the leaderboard were already more motivated — that we're seeing a correlation rather than a cause. We haven't run a version of the programme without a leaderboard to compare.</p>
+<p>What we do feel confident about is that the leaderboard made the programme feel more social and more alive. That's something the feedback consistently reflected.</p>
+
+<h3>What we'd think about before adding this elsewhere</h3>
+<p>A public leaderboard adds a social dimension that not everyone is comfortable with. In a more sensitive programme context — for example, one focused on financial difficulties or business challenges — publicly ranking participants could create discomfort or shame. The feature isn't universally appropriate; it depends on what you're running and who you're running it for.</p>
+<p>For a general business skills programme like ours, it worked well. But we'd encourage programme managers to think carefully about context before enabling it.</p>
+    `,
+    author:'EmpowerBot team · February 2026'
+  },
+
+  evidence:{
+    tag:'<span class="tag tag-blue">M&amp;E &amp; Evidence</span>',
+    date:'January 2026',readTime:'7 min read',
+    h:'What funders actually want — and what we were giving them instead',
+    lede:'We spent a long time producing reports that tracked inputs and activities. It took honest conversations with our funder partners to understand what they were actually trying to see.',
+    body:`
+<h3>What we were reporting</h3>
+<p>Like a lot of capacity building programmes, our early reporting focused heavily on process indicators. Number of training sessions held. Number of participants registered. Hours of training delivered. Attendance rates.</p>
+<p>These numbers were easy to capture and felt meaningful. But when we started having more candid conversations with funder contacts, a pattern emerged: they were politely acknowledging the numbers while clearly wanting something different.</p>
+
+<h3>What they were actually asking</h3>
+<p>The underlying question — the one that matters for continued investment — is simpler and harder at the same time: did the participants actually learn anything? And if they did, did it change how they operate their business?</p>
+<p>Knowledge change is measurable, at least partially, through pre- and post-assessments. Behaviour change is much harder to measure and typically requires longer follow-up. We focused on what we could actually evidence: whether participants' quiz performance improved over the course of the programme.</p>
+
+<div class="pullquote">One programme officer told us, very directly, that attendance figures were essentially table stakes — the minimum required to show the programme ran. What mattered was whether anything changed for participants as a result.</div>
+
+<h3>What EmpowerBot changed</h3>
+<p>Because every quiz response is captured automatically, we can generate outcome data that would previously have required significant manual effort. We can show score distributions at individual and cohort level. We can show which concepts participants struggled with and whether re-attempts improved scores. We can show participation patterns over time.</p>
+<p>This isn't the same as proving business behaviour change — we want to be clear about that. A higher score on a quiz about record keeping doesn't tell us that a trader is now actually keeping better records. But it tells us something meaningful: that participants engaged with the material and demonstrated understanding in a structured way.</p>
+
+<h3>What we tell programme managers</h3>
+<p>The data EmpowerBot generates is most useful when it's triangulated with other sources — facilitator observations, participant feedback, and ideally some form of follow-up after the programme ends. It's a piece of the evidence puzzle, not the whole thing.</p>
+<p>What it does well is make the data collection largely automatic and the reporting relatively quick to produce. That matters for smaller NGOs where staff time is limited and M&E often competes with programme delivery for attention.</p>
+    `,
+    author:'EmpowerBot team · January 2026'
+  },
+
+  dropoff:{
+    tag:'<span class="tag tag-amber">Field Notes</span>',
+    date:'January 2026',readTime:'5 min read',
+    h:'Who dropped out and what we learned from them',
+    lede:'89% completion sounds good. But what about the 11% who didn't finish? We went back and looked at the data. The reasons were not what we expected.',
+    body:`
+<h3>Our first assumption was wrong</h3>
+<p>We assumed most drop-offs were about motivation — that participants who didn't complete the programme just weren't sufficiently interested. This framing put the problem on the participant side rather than the programme side, which in hindsight was a convenient assumption.</p>
+<p>When we looked more carefully at the data and followed up where we could, the picture was more varied.</p>
+
+<h3>What the data showed</h3>
+<p>About a third of the non-completers dropped off after the first session, before the second quiz was released. These early drop-offs were most likely to be linked to the registration experience — something about the initial interaction that didn't click, or expectations that didn't match the reality of the programme.</p>
+<p>The second-largest group dropped off between sessions three and four. This is notable because by that point, participants had already invested time and shown some engagement. Looking at their quiz timing, several of this group had completed quizzes quite late in the session window — suggesting they were already stretched for time.</p>
+<p>A smaller group completed most sessions but missed the final quiz. For at least some of these, the drop wasn't a lack of interest but a specific circumstance: travel, a family event, a particularly busy week at the market.</p>
+
+<div class="pullquote">One participant who didn't finish messaged the facilitator weeks later to ask if they could still complete the last quiz. They hadn't dropped out by choice — they'd just had a difficult month.</div>
+
+<h3>What this changed for us</h3>
+<p>We made two practical changes as a result. First, we extended the session window — giving participants more days to complete each quiz before the next one opens. This reduced the time pressure for participants with unpredictable schedules.</p>
+<p>Second, we built a catch-up option for participants who miss a session. Rather than being locked out, they can complete missed quizzes in a separate window before the programme ends. This acknowledges that life gets in the way, and that missing one week shouldn't mean losing access to the rest of the programme.</p>
+<p>We're still measuring whether these changes affect completion rates meaningfully. The honest answer is we don't know yet.</p>
+    `,
+    author:'EmpowerBot team · January 2026'
+  },
+
+  whatsapp:{
+    tag:'<span class="tag tag-orange">Platform Updates</span>',
+    date:'December 2025',readTime:'4 min read',
+    h:'Why we built on WhatsApp instead of building our own app',
+    lede:'The honest reason isn't technical innovation. It's that we wanted participants to start with something they already knew.',
+    body:`
+<h3>The obvious alternative</h3>
+<p>The obvious alternative to WhatsApp was a dedicated app. An app would give us more control over the interface, more flexibility in what we could build, and a cleaner design. Several people we talked to early in the project suggested this route.</p>
+<p>We decided against it for one straightforward reason: an app requires a download step, and that download step is a significant barrier for the population we were trying to reach.</p>
+
+<h3>The download problem</h3>
+<p>It sounds small. It isn't. For a trader in a Lagos market, downloading an unfamiliar app involves a series of decisions: Does this app cost money? Will it use too much storage? Is it safe? Do I need WiFi or will data work? These are real questions that create real friction, especially for people who are cautious about unfamiliar technology.</p>
+<p>WhatsApp removes almost all of that friction. The vast majority of our target participants already have it installed, already know how to use it, and already trust it. The first interaction with EmpowerBot requires no new skills and no new trust.</p>
+
+<div class="pullquote">We wanted participants' first experience to be the training, not the setup. WhatsApp makes that possible.</div>
+
+<h3>What we gave up</h3>
+<p>Building on WhatsApp means we work within WhatsApp's constraints. We can't do certain things — rich media, complex interactive elements, certain kinds of personalisation — as easily as we could in a native app. Some of the design choices that would make the experience more intuitive aren't available to us.</p>
+<p>We also depend on the WhatsApp Business API, which has its own pricing structure, rate limits, and terms of service that we have no control over. That's a real dependency risk.</p>
+
+<h3>Why we still think it was the right call</h3>
+<p>Adoption is the hardest problem in any training programme. If participants don't show up, nothing else matters. By starting with a platform participants already use, we reduced the adoption barrier to near zero. That tradeoff — less design control in exchange for lower friction — felt right for the context we were building for.</p>
+<p>If the constraints of WhatsApp become too limiting as the platform grows, we'll revisit this. For now, it's working.</p>
+    `,
+    author:'EmpowerBot team · December 2025'
+  },
+
+
+  ikorodu:{
+    tag:'<span class="tag tag-green">Field Notes</span>',date:'March 2026',readTime:'5 min read',
+    h:'Tailors, traders, and a photographer: who actually joined the Ikorodu cohort',
+    lede:'We expected mostly market traders. What we got was a wide mix of business types — and that changed how we thought about one-size-fits-all business training.',
+    body:`
+<h3>What the registration data showed</h3>
+<p>When we opened registration for the Ikorodu cohort, we assumed the participant profile would look like Agege: predominantly market traders, food vendors, and provisions sellers. These are the businesses most visible in Lagos LGA contexts, and they tend to be the target group most programme designs are built around.</p>
+<p>The actual mix was more varied. We had tailors, hairdressers, two phone repair technicians, a small-scale caterer, a freelance photographer, and several people who described their business as "buying and selling" without further specifics. About 40% were what you'd call traditional traders; the rest were spread across a genuinely diverse range of livelihoods.</p>
+
+<h3>Why this matters for the programme</h3>
+<p>Business training content tends to be written with one type of business in mind. When the AI gives an example about pricing, it defaults to market goods — "if you buy tomatoes for ₦500 and sell for ₦700." That example works for a trader. It works less well for a photographer calculating a day rate or a tailor thinking about labour costs.</p>
+<p>We found that participants whose business type was further from the default examples engaged less with the AI explanations and asked fewer follow-up questions. This wasn't a dramatic difference, but it was consistent enough to notice.</p>
+<div class="pullquote">The photographer came first in the cohort leaderboard. He completed every quiz, scored above 90% throughout, and left a voice note for the facilitator at the end. He said it was the first training programme he'd joined that didn't feel like it was designed for someone else.</div>
+
+<h3>What we changed as a result</h3>
+<p>We expanded the business type categories in the registration flow to capture more specificity. And we've been working on improving the AI's ability to use that specificity when generating examples — so a photographer gets explanations involving day rates and client deposits, not market goods.</p>
+<p>This is a work in progress. The AI's contextual personalisation works better for some business types than others, and we're honest with participants that it's an approximation rather than a guarantee of perfect relevance.</p>
+    `,
+    author:'EmpowerBot team · Ikorodu, Lagos · March 2026'
+  },
+
+  recordkeeping:{
+    tag:'<span class="tag tag-orange">AI &amp; Learning</span>',date:'March 2026',readTime:'4 min read',
+    h:'Record keeping was the hardest topic to explain. Here's what worked.',
+    lede:'Across every cohort we've run, record keeping questions have the highest failure rate. We tried several different AI explanation approaches before something started clicking.',
+    body:`
+<h3>Why record keeping is hard to teach through a quiz</h3>
+<p>Record keeping fails in a particular way. Unlike, say, business registration — where the answer is largely factual and stable — record keeping is a habit. Knowing the correct answer to "how often should you reconcile your cash?" doesn't automatically change whether someone actually does it every evening.</p>
+<p>This creates a challenge for quiz-based learning: you can test knowledge, but you can't directly test behaviour through a quiz. The best we can do is make the knowledge land in a way that feels relevant enough to influence behaviour. That's harder than it sounds.</p>
+
+<h3>What didn't work</h3>
+<p>The first version of our record keeping explanations was accurate and dull. It explained double-entry principles and the difference between cash accounting and accrual accounting. Several of these explanations were technically correct and practically useless for someone running a market stall.</p>
+<p>The problem wasn't the content — it was the frame. Formal accounting concepts don't translate easily to informal business contexts, and trying to explain them in those terms created more confusion than clarity.</p>
+
+<div class="pullquote">"I know I should write things down," one participant told our facilitator after the second session. "What I don't know is what to write, where, and when." That was the actual question we weren't answering.</div>
+
+<h3>What worked better</h3>
+<p>We rebuilt the record keeping explanations around a single concrete scenario: imagine you close your market stall at the end of the day. You have cash in your hand. The AI explanation now walks through exactly what to do with that cash — count it, compare it to what you sold, note the difference, understand what the difference might mean.</p>
+<p>Practical, sequential, specific. Failure rates on record keeping questions dropped by around 20 percentage points after we made this change. We're cautious about attributing that entirely to the explanation change — other things changed in the same period — but the pattern has held across subsequent cohorts.</p>
+    `,
+    author:'EmpowerBot team · March 2026'
+  },
+
+  facilitator:{
+    tag:'<span class="tag tag-amber">Field Notes</span>',date:'February 2026',readTime:'5 min read',
+    h:'The facilitator's role in a WhatsApp-based programme',
+    lede:'You might think WhatsApp delivery means the facilitator becomes less important. We found the opposite. What changes is what they do — not whether they matter.',
+    body:`
+<h3>What we assumed going in</h3>
+<p>One of the appealing ideas behind EmpowerBot is that it reduces the logistics burden of training delivery. No venue to book. No attendance register to maintain. No session plan to run. The WhatsApp infrastructure handles the delivery.</p>
+<p>This led us, early on, to underinvest in the facilitator role. For one cohort, we provided minimal facilitator briefing and relied heavily on the platform to do the work. That cohort had our lowest completion rate and the weakest feedback from participants.</p>
+
+<h3>What facilitators actually do in this model</h3>
+<p>A facilitator in a WhatsApp-based programme isn't running sessions. They're doing something closer to community management and motivation. They're the human presence that makes the programme feel less like a chatbot and more like something someone cares about.</p>
+<p>Practically, this means: welcoming new participants when they join, following up with people who haven't started after the first day, celebrating participants who do well on the leaderboard, being available for questions that the bot handles poorly, and generally maintaining the feeling that someone is paying attention.</p>
+<div class="callout"><strong>What good facilitation looks like</strong>For the Agege cohort, our facilitator sent a brief group message at the start of each quiz week — not instructional, just warm. Something like "Quiz 3 is open — remember, the leaderboard resets weekly so this is everyone's chance." Completion on those weeks was consistently higher than weeks where no message was sent.</div>
+
+<h3>How much time this takes</h3>
+<p>Honest answer: more than we initially planned for, less than running an in-person programme. A committed facilitator working with a cohort of 100–250 participants should plan for roughly three to five hours per week — monitoring the dashboard, following up, responding to messages. Less than a classroom, but not nothing.</p>
+<p>We now provide facilitators with a brief weekly checklist and a dashboard view that highlights participants who need attention. This structures the role and makes it easier to do well without it becoming a full-time job.</p>
+    `,
+    author:'EmpowerBot team · February 2026'
+  },
+
+  'quiz-design':{
+    tag:'<span class="tag tag-orange">Platform Updates</span>',date:'February 2026',readTime:'6 min read',
+    h:'How we write quiz questions — and why we rewrote most of them twice',
+    lede:'Writing a good multiple choice question for a market trader in Lagos is harder than it sounds. The first version of our quiz bank had problems we only discovered when real people tried to answer them.',
+    body:`
+<h3>What makes a question bad</h3>
+<p>The most common flaw in our first quiz bank wasn't factual inaccuracy. It was ambiguity. Questions that seemed unambiguous to whoever wrote them turned out to have multiple defensible answers once a real person read them with real-world experience in mind.</p>
+<p>One early question asked: "What is the best way to price your product?" with options that included cost-plus pricing, competitor-based pricing, and value-based pricing. All three can be correct depending on context. Participants who chose an answer that wasn't the "correct" one weren't wrong — they were thinking about their specific situation. Our question wasn't asking what we thought it was asking.</p>
+
+<h3>The ambiguity problem with informal businesses</h3>
+<p>Formal business education tends to teach principles that apply to businesses with clear cost structures, stable customer bases, and predictable cash flows. Many informal businesses don't have these. A market trader dealing with daily cash fluctuations and irregular supply chains operates in a fundamentally different context than the textbook assumes.</p>
+<p>This meant we had to rethink questions not just for clarity, but for relevance. We removed several questions entirely because there was no version of them that was both accurate and meaningful for the participant group we were working with.</p>
+<div class="pullquote">The best question test we found: read it to someone who runs a small business and watch their face. If they pause and look uncertain, the question probably isn't clear enough, even if you could answer it confidently yourself.</div>
+
+<h3>What we do now</h3>
+<p>Every new question goes through a three-stage review: internal check for factual accuracy, read-aloud test with someone unfamiliar with the topic, and pilot with a small group before adding it to an active cohort.</p>
+<p>We've also moved to a policy of including a brief context note with each question — a sentence that frames what we're asking about. "This question is about cash flow management in a small retail business." Not all participants need this, but it helps those who would otherwise read the question in an unintended way.</p>
+    `,
+    author:'EmpowerBot team · February 2026'
+  },
+
+  'sole-trader':{
+    tag:'<span class="tag tag-blue">Field Notes</span>',date:'January 2026',readTime:'4 min read',
+    h:"Amina's score went from 44% to 91%. What happened in between?",
+    lede:"One participant came back for the optional retake sessions more than anyone else in her cohort. We asked her about it. Her answer was not what we expected.",
+    body:`
+<h3>Who Amina is</h3>
+<p>Amina runs a provisions stall in the Agege market. She's been trading for about six years. She joined the programme in its second week — late registration — and her first quiz score was 44%, below the cohort average of around 60%.</p>
+<p>By the final session, she was scoring 91% and sitting at the top of the leaderboard. In the post-programme check-in, she was one of four participants who said they'd already applied something they'd learned to their business.</p>
+
+<h3>What she said about the AI explanations</h3>
+<p>We asked Amina what had helped most. She mentioned the AI explanations for wrong answers, but not in the way we expected. She said she deliberately chose an answer she wasn't sure about sometimes, to see what the AI would say. She used the wrong-answer explanations as a way to explore topics rather than just confirm what she already knew.</p>
+<p>We hadn't designed for this. The system was built on the assumption that participants would try to get questions right. Amina found a different way to use it — and her engagement pattern, in hindsight, is what drove her scores up so quickly.</p>
+<div class="pullquote">"If I pick the one I think is right, I just move on. If I pick the one I'm not sure about, the bot explains the whole thing. I learn more when I get it wrong on purpose."</div>
+
+<h3>What this tells us</h3>
+<p>We don't know how many other participants did the same thing. We haven't looked at this systematically. But Amina's approach suggests that the value of the AI explanation feature might be broader than we assumed — not just a recovery mechanism for genuine errors, but a tool that curious learners can use actively.</p>
+<p>We're thinking about whether to build this in more explicitly — a "tell me more" option alongside each question that opens the explanation without requiring a wrong answer first.</p>
+    `,
+    author:'EmpowerBot team · January 2026'
+  },
+
+  'cohort-size':{
+    tag:'<span class="tag tag-blue">M&amp;E &amp; Evidence</span>',date:'January 2026',readTime:'5 min read',
+    h:"Does cohort size affect learning outcomes? What we've seen so far.",
+    lede:"We've run cohorts of 30 and cohorts of 250. The dynamics are different in ways that aren't obvious until you look at the data.",
+    body:`
+<h3>What we expected</h3>
+<p>Common sense suggests smaller cohorts would produce better outcomes — more attention per participant, a tighter community, a more personal experience. This assumption shapes a lot of training programme design, including face-to-face workshops where cohort size is usually kept deliberately small.</p>
+
+<h3>What we found</h3>
+<p>Completion rates were actually slightly higher in our larger cohorts — a difference of about 8 percentage points on average. This surprised us enough that we checked the data multiple times before concluding it was real.</p>
+<p>Our current hypothesis is that leaderboard dynamics change with cohort size. In a cohort of 30, participants often know each other personally, the social stakes feel higher, and a few dominant performers can make others feel the gap is too large to close. In a cohort of 250, the leaderboard is more anonymous, rankings shift more regularly, and the competitive field feels more open. This is speculative — we don't have clean evidence for it — but it fits what we observed.</p>
+<div class="callout"><strong>One important caveat</strong>Our larger cohorts have generally been run by more experienced facilitators. It's possible the facilitator quality, not the cohort size, is the actual variable. We haven't been able to hold this constant. We'd need a more carefully designed study to untangle the two effects.</div>
+
+<h3>What we recommend for now</h3>
+<p>Based on what we've seen, we don't recommend limiting cohorts to keep them small. There's no evidence in our data that smaller is better for completion or learning outcomes, and there's some evidence it might be worse for the leaderboard dynamics that seem to motivate engagement. That said, larger cohorts require more facilitator attention — the absolute number of participants who need follow-up grows proportionally.</p>
+    `,
+    author:'EmpowerBot team · January 2026'
+  },
+
+  'building-bot':{
+    tag:'<span class="tag tag-orange">Platform Updates</span>',date:'December 2025',readTime:'7 min read',
+    h:'Six months of building EmpowerBot: what broke, what we rebuilt, what stayed',
+    lede:'A candid look at the development process — the features we scrapped, the assumptions that were wrong, and the things that worked better than expected.',
+    body:`
+<h3>What we got wrong early</h3>
+<p>The earliest version of EmpowerBot required participants to type their answers. This seemed fine in testing. In practice, with participants whose primary interaction with text is WhatsApp voice notes, it created friction that stopped some people before they finished the first question.</p>
+<p>Moving to button-based answers was the single most impactful change we made to the participant experience. It sounds small. The effect on completion was not small.</p>
+<p>We also built a fairly elaborate onboarding flow early on — multiple steps, demographic questions, consent screens. It felt thorough. Participants found it exhausting. We stripped it back to five questions and saw registration drop-off fall significantly.</p>
+
+<h3>What we scrapped</h3>
+<p>We built a peer-to-peer messaging feature that allowed participants to message each other through the bot. The intention was to create a community dimension. In practice, it was used almost entirely for off-topic conversation and added moderation complexity we hadn't planned for. We removed it after the second pilot.</p>
+<p>We also built a video explanation option — short clips that explained concepts visually. The data costs made this impractical for our target population. We kept the idea and rebuilt it as text-based illustrated explanations instead.</p>
+
+<div class="pullquote">The version of the platform that participants use today looks almost nothing like what we originally designed. Most of what changed was driven by watching real people use it — not by sitting at a desk imagining how they would.</div>
+
+<h3>What stayed from the beginning</h3>
+<p>The core structure — quiz, wrong answer, AI explanation, leaderboard — was present from the very first prototype and survived every round of changes. The format felt right early, and the data has continued to support it.</p>
+<p>The decision to build on WhatsApp rather than a dedicated app also stayed. There were moments when native app development seemed tempting — more design control, more features possible. But every time we revisited it, the adoption argument won: starting with something participants already use removes a barrier that matters more than the design improvements we'd gain.</p>
+    `,
+    author:'EmpowerBot team · December 2025'
+  },
+
+  scoring:{
+    tag:'<span class="tag tag-blue">M&amp;E &amp; Evidence</span>',date:'December 2025',readTime:'5 min read',
+    h:"What a quiz score does and doesn't tell you about learning",
+    lede:"We've been careful not to treat quiz scores as proof that participants learned something meaningful. Here's how we actually think about what the scores mean.",
+    body:`
+<h3>What scores measure directly</h3>
+<p>A quiz score tells you that a participant selected the correct answer to a set of questions at a particular moment in time. That's a real thing, but it's a narrower claim than "this person has learned business skills" or "this programme improved their business outcomes."</p>
+<p>People can score well on quizzes by guessing strategically, by remembering answers from previous attempts, or by correctly identifying which option sounds most "textbook correct" without actually understanding why. None of these are learning in any meaningful sense.</p>
+
+<h3>Why scores are still useful</h3>
+<p>Despite those limitations, scores are worth tracking — not as the primary evidence of learning, but as one signal among several. A participant who scores consistently above 80% across five quiz sessions, and whose score improves from session one to session five, has demonstrated something. Not everything we'd want to claim, but something real.</p>
+<p>The more useful version of score data, in our view, is the question-level breakdown — which specific concepts participants struggle with across the cohort. This tells the facilitator something actionable: here are the topics to revisit in the next session, here are the explanations that aren't landing.</p>
+<div class="callout"><strong>How we present score data to funders</strong>We present quiz scores as indicators of engagement and comprehension, not as outcomes in themselves. We're explicit that scores don't tell us whether participants changed their business behaviour. For that, we recommend follow-up surveys 60–90 days after programme completion — something we're still building the capacity to do consistently.</div>
+
+<h3>The honest limitation</h3>
+<p>We don't currently have systematic data on what happens to participants' businesses after they complete the programme. Whether they keep better records, price more carefully, or understand their business structure better in ways that affect day-to-day decisions — we can't yet show that. This is the gap between what EmpowerBot currently measures and what actually matters. Closing it is something we're working toward.</p>
+    `,
+    author:'EmpowerBot team · December 2025'
+  },
+
+  'first-pilot':{
+    tag:'<span class="tag tag-green">Field Notes</span>',date:'November 2025',readTime:'6 min read',
+    h:'The first pilot: 30 participants, one LGA, and a lot of things we got wrong',
+    lede:'Before Agege, before LSETF, before any of the current features — there was a very rough first attempt. Looking back at it is useful because it shows how much of what works now came from what failed then.',
+    body:`
+<h3>What the first pilot looked like</h3>
+<p>Thirty participants, one LGA, three quiz topics. No leaderboard. No AI explanations for wrong answers — just the answer and whether you'd got it right. Registration was done by the facilitator manually adding phone numbers. The quiz questions were written in a day by one person.</p>
+<p>Completion rate: 52%. Not catastrophic, but not good. More importantly, the feedback from participants was that the experience felt impersonal and mechanical. Several said they'd participated because the facilitator had asked them to, not because they found the programme engaging.</p>
+
+<h3>What we learned immediately</h3>
+<p>The feedback made clear that "did you get it right or wrong?" wasn't sufficient. Participants wanted to know why. Several asked the facilitator directly to explain answers they'd got wrong — not because they wanted to score better on a retake, but because they were genuinely curious. We built the AI explanation feature in direct response to this.</p>
+<p>We also learned that manual registration was a bottleneck. The facilitator spent two hours before the pilot adding phone numbers one by one. We built self-registration within the WhatsApp conversation as a direct result.</p>
+
+<div class="pullquote">The first pilot was embarrassingly rough. But the questions it forced us to answer — why did people drop off, what did they want more of, what made the experience feel worthwhile — shaped almost everything that came after it.</div>
+
+<h3>What we're still working on from lessons learned then</h3>
+<p>One thing we got feedback on in the first pilot that we still haven't fully solved: the difficulty of reaching participants who have quiet periods of inactivity. In the first pilot, several participants simply drifted away without the facilitator noticing until it was too late to re-engage. Our dashboard has improved significantly, but proactive drop-off alerts are still in development.</p>
+    `,
+    author:'ELP Foundation team · November 2025'
+  },
+
+  'pricing-q':{
+    tag:'<span class="tag tag-orange">AI &amp; Learning</span>',date:'October 2025',readTime:'4 min read',
+    h:'The question almost everyone gets wrong on the pricing quiz',
+    lede:'Across multiple cohorts, one question has a 68% failure rate. It's about pricing — and the reason so many people get it wrong reveals something about how small business owners think about money.',
+    body:`
+<h3>The question</h3>
+<p>The question asks participants to calculate the profit on a product when given cost price, selling price, and overhead allocation. The arithmetic isn't difficult. But 68% of participants across our cohorts get it wrong on the first attempt.</p>
+<p>When we looked at which wrong answers people chose, something interesting emerged. The most common wrong answer wasn't a calculation error — it was a conceptually different answer that treated revenue as profit. Participants were selecting the total amount received from the sale, not the amount remaining after costs.</p>
+
+<h3>Why this matters</h3>
+<p>Confusing revenue with profit is not a sign of being bad at maths. It's a sign that the mental model underlying the calculation is different. If your daily experience is "I sell goods and money comes in," the intuitive answer to "how much did you make?" is the total that came in — not a net figure after subtracting costs you've already spent.</p>
+<p>This is actually a more important insight than whether someone gets a quiz question right. It tells us something about how business decisions get made: if a trader mentally treats revenue as profit, they'll consistently overestimate how well they're doing and underinvest in restocking.</p>
+<div class="pullquote">One participant who initially got this question wrong came back in the next session to tell the facilitator she'd checked her numbers from the previous month after seeing the explanation. "I thought I was making more than I was. The money was going somewhere and I didn't know where."</div>
+
+<h3>How we explain it now</h3>
+<p>The AI explanation for this question now uses a highly specific scenario: at the end of the day, you made ₦3,000 from sales. You spent ₦2,000 on the goods you sold and ₦300 on transport. Your profit is ₦700 — not ₦3,000. The ₦3,000 came through your hands, but it was never really yours. The AI walks through this step by step. Failure rate on retakes has dropped to around 25%.</p>
+    `,
+    author:'EmpowerBot team · October 2025'
+  },
+
+  'lsetf-partnership':{
+    tag:'<span class="tag tag-blue">M&amp;E &amp; Evidence</span>',date:'September 2025',readTime:'5 min read',
+    h:'Working with LSETF: what a government partnership actually looks like on the ground',
+    lede:'Government partnerships are often described in press releases. The day-to-day reality is different — slower, more iterative, more human.',
+    body:`
+<h3>What the partnership involves</h3>
+<p>The Lagos State Employment Trust Fund (LSETF) provides participant pipeline, co-branded credibility, and access to existing MSME networks across Lagos LGAs. ELP Foundation provides the platform, curriculum, AI infrastructure, and programme coordination. The M&E data is shared with LSETF for their reporting purposes.</p>
+<p>On paper, this is a clean division. In practice, the boundaries blur in useful ways. LSETF staff have pushed us on curriculum topics we'd underweighted. We've influenced how they think about what "training outcomes" should mean in their own reporting frameworks. Neither party entered the partnership knowing exactly what the collaboration would look like in practice.</p>
+
+<h3>What's been slower than expected</h3>
+<p>Decision-making cycles in government institutions are longer than in small NGOs. This isn't criticism — it reflects accountability requirements that are real and appropriate. But it means that changes to programme design that we could implement internally in a week sometimes take four to six weeks to go through the necessary review processes on the LSETF side.</p>
+<p>We've learned to front-load alignment conversations — agreeing on programme parameters before implementation begins rather than assuming flexibility during execution. This has reduced friction significantly.</p>
+
+<div class="pullquote">The partnership works because both sides are trying to answer the same question: what actually helps small business owners, and how do we know? That shared purpose covers a lot of practical differences in how each organisation operates.</div>
+
+<h3>What's worked better than expected</h3>
+<p>LSETF's network reach is genuinely broad. For the Agege cohort, participant recruitment that we estimated would take three weeks took one. The trust that comes from a government partner co-signing the programme matters in ways we hadn't fully anticipated — several participants said they joined specifically because of the LSETF association, which gave the programme legitimacy in their eyes.</p>
+<p>We've also found that LSETF's reporting requirements have made our own data practices more rigorous. Being accountable to an external partner for the quality and completeness of outcome data is a useful discipline.</p>
+    `,
+    author:'ELP Foundation team · September 2025'
+  },
+
+  retake:{
+    tag:'<span class="tag tag-orange">Platform Updates</span>',date:'September 2025',readTime:'4 min read',
+    h:"We added a retake mode. Here's why it matters more than we expected.",
+    lede:"Retake mode was a small feature addition. But looking at who uses it and how their scores change, it seems to be doing something meaningful.",
+    body:`
+<h3>What retake mode does</h3>
+<p>After completing a quiz, participants can choose to enter retake mode. In retake mode, the bot presents only the questions they got wrong the first time — in a shuffled order, with fresh AI explanations if they get them wrong again. There's no penalty for low scores in retake mode, and results are kept separately from the main quiz score.</p>
+<p>We added this primarily because some participants were asking to redo quizzes — not to boost their score, but because they wanted to understand something they'd got wrong. We wanted to give them a structured way to do that.</p>
+
+<h3>What we've observed</h3>
+<p>About 35% of participants who complete a quiz use retake mode at least once. That's higher than we expected — we'd guessed it would be a minority feature used by the most academically inclined participants.</p>
+<p>What's more interesting is the score trajectory for retake users. Across subsequent quizzes, participants who regularly used retake mode consistently scored about 12 percentage points higher on average than those who didn't. We can't claim causality — it's possible that more motivated participants both use retake mode and score better for unrelated reasons — but the pattern is consistent enough to be worth noting.</p>
+<div class="pullquote">Retake mode users also ask more follow-up questions to the AI. Whatever's driving the higher scores, it seems connected to a disposition toward engaging with the explanations rather than moving past them.</div>
+
+<h3>What we're considering next</h3>
+<p>We're looking at whether to make retake mode the default end-of-quiz experience rather than an opt-in. The concern is that making it mandatory might feel punitive — "you have to redo the ones you got wrong" — when we want it to feel like an opportunity. We're testing different framings to see how participants respond.</p>
+    `,
+    author:'EmpowerBot team · September 2025'
+  }
+
+
+  'ai-limits':{
+    tag:'<span class="tag tag-orange">AI &amp; Learning</span>',
+    date:'November 2025',readTime:'6 min read',
+    h:'What the AI gets wrong — and what we do about it',
+    lede:'AI explanations aren't perfect. We've seen the model confidently give wrong examples, miss local context, and occasionally go on unhelpful tangents. Here's how we handle it.',
+    body:`
+<h3>Why we're writing this</h3>
+<p>There's a tendency in product writing to describe AI capabilities in the most favourable light and mention limitations briefly if at all. We want to do the opposite here, partly because it's more honest, and partly because understanding the failure modes is genuinely useful for anyone thinking about deploying AI in a training context.</p>
+
+<h3>The most common problem: confident wrongness</h3>
+<p>Large language models can state incorrect information with the same confident tone they use for correct information. In a business training context, this is a real concern. If the AI confidently explains that a sole proprietorship involves no personal liability — which is backwards — a participant who trusts the explanation has been actively misled.</p>
+<p>We address this in two ways. First, the quiz questions and correct answers are fixed — the AI isn't generating the questions, only the explanations for wrong answers, which gives us more control over the factual core. Second, we've constrained the AI's scope: it's prompted to explain within a defined framework rather than freely generating business advice. This doesn't eliminate errors, but it reduces the scope for them.</p>
+
+<div class="pullquote">We review a sample of AI explanations each week. This catches patterns we wouldn't otherwise see — topics where the model consistently struggles, or types of questions where the explanations go off track.</div>
+
+<h3>Context that doesn't quite fit</h3>
+<p>The AI uses participant profile information — business type, location — to personalise explanations. This works well when the categories are broad enough that the model has seen relevant training data. It works less well for very specific or unusual business types.</p>
+<p>A participant who runs a small logistics operation across three states gets less useful personalisation than a provisions shop owner, because the former is less common in the model's training data. We're honest with participants that the AI is doing its best with the information it has, not that it has specific expertise in their exact situation.</p>
+
+<h3>When participants ask things we shouldn't answer</h3>
+<p>The bot sometimes receives questions that are outside the programme scope — detailed legal questions, specific tax calculations, business decisions with significant financial stakes. For these, we've built in a redirect that acknowledges the question, declines to give specific advice, and points the participant toward appropriate professional resources.</p>
+<p>This is a guardrail that sometimes frustrates participants who want a direct answer. We think it's the right call: giving a confident but potentially wrong answer to a high-stakes question is worse than not answering.</p>
+
+<h3>What we're improving</h3>
+<p>We're building a feedback mechanism so participants can flag AI explanations that felt unhelpful or wrong. We don't currently have a good systematic way to surface these, which means we're probably missing failure modes we can't see. Fixing that is a priority.</p>
+<p>We're also building evaluations that test the AI against a set of known-correct explanations for common wrong answers. This gives us a more structured way to track quality over time.</p>
+    `,
+    author:'EmpowerBot team · November 2025'
+  }
+
+  score100:{
+    tag:'<span class="tag tag-orange">Field Notes</span>',
+    date:'April 2026',readTime:'4 min read',
+    h:'The first participant to score 100% — and what she said about it',
+    lede:'Amina Bakare, a provisions trader from Agege, finished all five quizzes with a perfect score. We sat down with her facilitator to understand what happened.',
+    body:`
+<h3>A clean sweep</h3>
+<p>Amina registered on the first day the programme opened. Her business — a provisions shop she's run for six years — meant she already had practical exposure to most of the topics the quizzes covered. But practical experience and quiz performance don't always track together. She got every question right.</p>
+<p>What was notable wasn't just the score. It was that she also finished each quiz within the first few hours of it being released. She was consistently the first in the cohort to complete each session.</p>
+
+<h3>What her facilitator observed</h3>
+<p>Mrs Faith Oyeneye, the programme facilitator, had noticed Amina early. "She was the one encouraging others in the WhatsApp group," she said. "When someone said a question was too hard, Amina would say — just try it, the bot will explain."</p>
+<p>Amina used the AI explanations even on questions she got right — going back to check the reasoning behind correct answers, not just wrong ones. This is unusual behaviour that we hadn't anticipated the platform being used for.</p>
+
+<div class="pullquote">"I already knew some of these things from running my shop. But now I know why they're true — not just that they work."</div>
+
+<h3>What this tells us (and what it doesn't)</h3>
+<p>Amina's result is genuinely encouraging. But it's one data point. She came in with more prior business knowledge than many participants, and she was clearly motivated in a way that not everyone is. A 100% score doesn't tell us what she'll do differently in her business. It tells us she engaged seriously with the material — which is a meaningful start.</p>
+<p>We hope to follow up with participants like Amina a few months after the programme to understand whether anything actually changed in how they operate. That's the harder and more important question.</p>
+    `,
+    author:'EmpowerBot team · April 2026'
+  },
+
+  facilitator:{
+    tag:'<span class="tag tag-green">Field Notes</span>',
+    date:'April 2026',readTime:'5 min read',
+    h:'How our facilitator uses the knowledge gap data before each session',
+    lede:'Mrs Faith Oyeneye facilitates every ELP programme session. We asked how she actually uses the dashboard data. Her answer surprised us.',
+    body:`
+<h3>What we expected her to say</h3>
+<p>We expected the knowledge gap report to be useful primarily as a retrospective tool — a way to understand what happened after the programme ended. What we found was that our facilitator was using it as live preparation material before each session.</p>
+
+<h3>How she actually uses it</h3>
+<p>"Before I come in on Thursday, I open the dashboard and look at which questions most people got wrong that week," Mrs Oyeneye told us. "Then I know what to spend time on at the start of the session before we do the next quiz."</p>
+<p>This wasn't a workflow we'd designed for. The dashboard was built to help programme managers report outcomes, not to help facilitators plan in-room sessions. But the data turned out to be useful for both.</p>
+
+<div class="pullquote">"I don't need to guess what people are confused about. The data shows me directly. That changes how I prepare."</div>
+
+<h3>A specific example</h3>
+<p>After session two, the knowledge gap report showed that 68% of participants had got a question about the difference between profit and revenue wrong. Mrs Oyeneye opened session three with a fifteen-minute exercise using market examples — not a lecture, but a worked calculation using the kinds of numbers her participants actually dealt with daily.</p>
+<p>The same question appeared in session four's quiz. The failure rate dropped to 22%. We can't attribute all of that improvement to the facilitator's session — participants also have the AI explanations available between sessions — but the timing is suggestive.</p>
+
+<h3>What this changes about how we think about the platform</h3>
+<p>We've started designing the dashboard with the facilitator use case more explicitly in mind. The knowledge gap report now surfaces the top five failing questions in a format that's easy to scan quickly, rather than requiring someone to dig through tables. Small change, meaningful difference for someone preparing the night before a session.</p>
+    `,
+    author:'EmpowerBot team · April 2026'
+  },
+
+  ramadan:{
+    tag:'<span class="tag tag-blue">Field Notes</span>',
+    date:'March 2026',readTime:'4 min read',
+    h:'Running a training programme during Ramadan: timing, pace and what we adjusted',
+    lede:'A portion of our Agege cohort was fasting during the programme. Quiz completion patterns shifted noticeably. Here's what we observed and what we changed.',
+    body:`
+<h3>What we noticed in the data</h3>
+<p>About a third of our Agege cohort observed Ramadan. Looking at quiz completion times, a clear pattern emerged: this group was significantly less likely to complete quizzes during typical daytime market hours, and significantly more likely to complete them in the evening — particularly between 9pm and midnight.</p>
+<p>Completion rates for this group stayed high, but the timing was different. The flexible, on-your-own-schedule format of the WhatsApp quiz turned out to be a genuine advantage here.</p>
+
+<h3>Where it created friction</h3>
+<p>The one area where timing caused a real problem was the live facilitation session on Thursday mornings. Participants who were fasting and managing a market stall from dawn were sometimes too tired by mid-morning to engage fully. Attendance at the physical component dipped for this group mid-programme.</p>
+<p>We should have anticipated this and offered an alternative session time or a recording. We didn't, and that was a gap in our planning.</p>
+
+<div class="pullquote">The WhatsApp quizzes were self-paced and worked well. The in-person component didn't account for the reality of participants' schedules during a religious observance. We need to fix that.</div>
+
+<h3>What we're changing for future programmes</h3>
+<p>We now flag potential religious observance periods during programme planning and adjust facilitation session timing where possible. We're also building a lightweight recording option for the live facilitation component so participants who can't attend in person can still access it.</p>
+<p>More broadly, this reinforced something we already believed: the more flexible the participation format, the more people you include. Any constraint on when and how participants can engage is a potential drop-off point.</p>
+    `,
+    author:'EmpowerBot team · March 2026'
+  },
+
+  'wrong-answer':{
+    tag:'<span class="tag tag-amber">AI &amp; Learning</span>',
+    date:'March 2026',readTime:'5 min read',
+    h:'The time a participant corrected the AI — and we were glad they did',
+    lede:'A tailor in Ikorodu pushed back on an AI explanation about pricing that felt wrong to her. She was right. Here's what happened next.',
+    body:`
+<h3>What the participant said</h3>
+<p>Fatimah, a tailor running a small shop in Ikorodu, got a question about pricing strategy wrong. The AI gave her an explanation about cost-plus pricing that included an example using fabric costs.</p>
+<p>She messaged back: "The example no make sense for my type of work. I charge by the job, not by how much fabric I use."</p>
+<p>She was correct. The AI had given a reasonable general explanation, but the example didn't fit her specific context — custom tailoring, where labour and skill are the primary cost, not materials.</p>
+
+<h3>How we handled it</h3>
+<p>The bot, at that point, had no way to gracefully acknowledge being wrong. It offered a generic follow-up explanation that also missed the point. Fatimah stopped engaging with that question and moved on.</p>
+<p>We only learned about this because her facilitator mentioned it in the weekly debrief. That was a problem — if a participant corrects the AI and gets a non-answer, they're likely to lose confidence in the explanations generally.</p>
+
+<div class="pullquote">Fatimah's feedback was one of the most useful things we received from the entire programme. We just weren't set up to capture it properly.</div>
+
+<h3>What changed</h3>
+<p>We built a simple feedback mechanism: after any AI explanation, participants can respond with a thumbs down emoji. The bot acknowledges the feedback, offers an alternative explanation, and flags the exchange for manual review.</p>
+<p>We also updated the pricing module to include service business examples alongside the product-based examples. This is an ongoing process — there will always be business types and contexts the AI handles less well. The goal is to catch these quickly when participants tell us.</p>
+
+<h3>The broader point</h3>
+<p>Participants often know things the AI doesn't. That's not a flaw to hide — it's information worth capturing. Treating participant pushback as useful feedback rather than a support problem is a design choice that takes deliberate effort to maintain.</p>
+    `,
+    author:'EmpowerBot team · March 2026'
+  },
+
+  friends:{
+    tag:'<span class="tag tag-green">Field Notes</span>',
+    date:'February 2026',readTime:'4 min read',
+    h:'What happens when two market neighbours join the same programme',
+    lede:'Several pairs of friends joined the Agege cohort together. Their completion rates were higher than average. The leaderboard dynamic between them was notable.',
+    body:`
+<h3>The pattern we noticed</h3>
+<p>We identified eight pairs or small groups of participants who knew each other before the programme — market neighbours, friends from church or mosque, women who belonged to the same cooperative. Across all eight groups, completion rates were higher than the cohort average.</p>
+<p>We're cautious about reading too much into this. People who sign up for things with friends may already be more motivated. The causal direction isn't clear.</p>
+
+<h3>How the leaderboard changed things</h3>
+<p>What was clearer was the leaderboard dynamic within these pairs. Several of them were tracking each other's scores and explicitly competing. One pair — neighbours who sold produce from adjacent stalls — each scored above 95% in the final two sessions. Their facilitator told us they'd been texting each other about the quizzes between sessions.</p>
+
+<div class="pullquote">"She beat me in week three. I made sure to finish week four first." — participant who scored second in the cohort overall</div>
+
+<h3>What this suggests for programme design</h3>
+<p>Encouraging group sign-ups — not mandating them, but making it easy for friends to join together — might improve engagement. The social accountability layer that comes from doing something alongside someone you know seems to add motivation beyond what the leaderboard alone provides.</p>
+<p>We're experimenting with a "refer a colleague" prompt during registration for the next programme. We'll see whether it changes anything.</p>
+
+<h3>The honest caveat</h3>
+<p>This is a small observation from one programme. We have eight pairs of data points, not a controlled trial. We're treating it as an interesting signal worth paying attention to, not a proven finding.</p>
+    `,
+    author:'EmpowerBot team · February 2026'
+  },
+
+  questions:{
+    tag:'<span class="tag tag-orange">AI &amp; Learning</span>',
+    date:'February 2026',readTime:'5 min read',
+    h:'When participants ask the AI things that aren't on the quiz',
+    lede:'Participants regularly ask the bot questions about taxes, suppliers, loans, and other business problems. Here's how we handle it and where we draw the line.',
+    body:`
+<h3>What participants actually ask</h3>
+<p>The most common off-topic questions fall into a few categories: tax obligations ("do I need to register for VAT?"), loan and credit questions ("is it better to borrow from a cooperative or a bank?"), supplier disputes ("my supplier sent me the wrong goods, what can I do?"), and regulatory questions ("what licence do I need for my business type?").</p>
+<p>These are real business problems that matter to the participants asking them. They're also questions where a confident wrong answer could cause real harm.</p>
+
+<h3>What the bot does</h3>
+<p>The bot is designed to acknowledge the question, give general orientation where it can — explaining concepts rather than giving specific advice — and point participants toward appropriate resources. For legal and regulatory questions, it refers to CAC or SMEDAN. For tax questions, FIRS. For financial decisions, it encourages participants to talk to someone who knows their specific situation.</p>
+<p>This is less satisfying than a direct answer. Participants sometimes push back on it, which we understand.</p>
+
+<div class="pullquote">One participant asked: "Why can't you just tell me the answer?" It's a fair question. The honest response is: because we don't know your specific situation, and getting it wrong matters.</div>
+
+<h3>Where we do engage</h3>
+<p>For questions that are closely related to quiz content — essentially, "can you explain more about what we just covered" — the bot engages fully. If someone asks a deeper question about sole proprietorships after a quiz on business registration, the bot walks through it in detail.</p>
+<p>The line we're drawing is between education (explaining concepts and principles) and advice (recommending specific actions in specific situations). The former is something we can do reasonably well. The latter requires knowing things about a participant's situation that we don't know.</p>
+
+<h3>What we're still figuring out</h3>
+<p>The most interesting category is questions that sit right on the line. "Which is better, a cooperative loan or a bank loan?" isn't purely conceptual — it depends on the person's situation, their existing debt, their repayment capacity. But it's also a question where some general framing is genuinely useful.</p>
+<p>We don't have a clean answer to where the line is. We're continuing to review the conversation logs to understand where we're getting this right and where we're not.</p>
+    `,
+    author:'EmpowerBot team · February 2026'
+  },
+
+  kpi:{
+    tag:'<span class="tag tag-blue">M&amp;E &amp; Evidence</span>',
+    date:'January 2026',readTime:'6 min read',
+    h:'How to set realistic KPIs for a five-week WhatsApp training programme',
+    lede:'We've seen KPIs that no short training could reasonably deliver. We've also seen KPIs so vague they're meaningless. Here's what we think is honest and useful.',
+    body:`
+<h3>The problem with outcome KPIs for short programmes</h3>
+<p>A five-week training programme cannot credibly claim to improve business revenues, increase employment, or reduce business failure rates. These outcomes are shaped by dozens of factors — economic conditions, market access, capital availability, family circumstances — that a training programme doesn't control. Committing to them as KPIs is setting up to report misleading results.</p>
+<p>This is uncomfortable to say out loud, especially to funders. But we think being honest about it upfront is better than producing outcome reports that look strong on paper but don't reflect reality.</p>
+
+<h3>What we think short programmes can reasonably measure</h3>
+<p>Knowledge change is measurable. If you assess participants before and after a training programme, you can show whether their understanding of the topics covered improved. This is meaningful — it tells you whether the training achieved its immediate educational objective.</p>
+<p>Engagement is measurable. Completion rates, quiz participation rates, and follow-up question rates all tell you something about how participants engaged with the programme. A programme that no one finishes hasn't achieved much regardless of what the content covered.</p>
+<p>Satisfaction is measurable. Participant feedback — whether they found the programme useful, whether they'd recommend it, whether they feel more confident about specific topics — provides qualitative data that context-sets the quantitative results.</p>
+
+<div class="pullquote">The most honest KPI for a short training programme is probably: did participants learn what we intended them to learn? Everything else is a bigger claim that requires longer evidence.</div>
+
+<h3>A KPI framework we use</h3>
+<p>For a typical five-week programme, we'd suggest: completion rate target (ours is 75%+, we typically exceed this), average post-programme quiz score (shows knowledge), score improvement from session one to session five (shows learning progression), and participant satisfaction rating (collected at programme close).</p>
+<p>We'd resist adding revenue or employment KPIs unless the programme includes long-term follow-up and a methodology for attributing change to the training rather than other factors. Most short programmes can't do this credibly.</p>
+
+<h3>How to have this conversation with funders</h3>
+<p>Most funders, in our experience, understand and appreciate honest framing. The conversation tends to go better when you lead with what the programme can reliably deliver, acknowledge what it can't, and propose a follow-up mechanism for longer-term outcome tracking if that's genuinely feasible. What lands badly is promising outcomes and then not delivering them.</p>
+    `,
+    author:'EmpowerBot team · January 2026'
+  },
+
+  dashboard:{
+    tag:'<span class="tag tag-orange">Platform Updates</span>',
+    date:'December 2025',readTime:'5 min read',
+    h:'Building the admin dashboard: what programme managers actually needed',
+    lede:'The first version of our admin dashboard had seventeen filters and six chart types. No one used most of them. Here's what we learned.',
+    body:`
+<h3>Version one was built for the wrong user</h3>
+<p>Our first admin dashboard was built by people who like data. It had participant-level drilldowns, cohort comparison charts, score distribution histograms, and export options in three formats. It was genuinely impressive if you were the kind of person who wanted to spend an hour exploring programme data.</p>
+<p>Most programme managers are not that person. They have programmes to run, reports to write, facilitators to manage, and participants to support. They open the dashboard to answer two or three specific questions and then close it.</p>
+
+<h3>What the actual questions were</h3>
+<p>After watching several programme managers use the dashboard and asking them what they were actually trying to find out, three questions kept coming up:</p>
+<p>How many people have completed this week's quiz? Who hasn't finished yet — so I can follow up? What did people struggle with, so I know what to address next session?</p>
+<p>Everything else was noise. Not wrong, just not what they needed in the moment.</p>
+
+<div class="pullquote">"I don't need six chart types. I need to know who's behind and what they're stuck on. That's it."</div>
+
+<h3>What we rebuilt</h3>
+<p>We rebuilt the dashboard around those three questions. The default view now shows a simple completion tracker, a list of participants who haven't finished the current session (with a one-tap WhatsApp message button), and the top three questions by failure rate.</p>
+<p>Everything else — detailed analytics, export options, cohort comparisons — is still there. It's just not on the front page.</p>
+
+<h3>What this taught us</h3>
+<p>The lesson wasn't that programme managers don't want data. It's that the data needs to be immediately actionable. A completion rate is useful. A list of names to follow up with is more useful. A pre-written WhatsApp message template ready to send is most useful of all.</p>
+<p>We're continuing to build toward that principle — every piece of data in the dashboard should have a clear "so what" attached to it.</p>
+    `,
+    author:'EmpowerBot team · December 2025'
+  },
+
+  'quiz-design':{
+    tag:'<span class="tag tag-amber">AI &amp; Learning</span>',
+    date:'November 2025',readTime:'5 min read',
+    h:'Why we use multiple-choice questions — and what we lose by doing so',
+    lede:'Multiple-choice tests recognition, not recall. It allows guessing. We know all of this. Here's why we still use it and what tradeoffs we're accepting.',
+    body:`
+<h3>The case against multiple-choice</h3>
+<p>Multiple-choice questions are a fairly blunt instrument for assessing understanding. A participant who selects the correct answer from three options hasn't necessarily demonstrated that they can apply the concept in their own work. They've demonstrated that they can recognise the correct answer when they see it — which is a different and weaker test.</p>
+<p>With three options, the expected score for someone answering randomly is 33%. Scoring 50% on our quizzes could reflect minimal real learning. We're aware of this.</p>
+<p>Open-ended questions would test more deeply. Asking someone to explain, in their own words, what a limited liability company is would tell you far more about their understanding than asking them to select the correct definition from three options.</p>
+
+<h3>Why we use multiple-choice anyway</h3>
+<p>Three reasons: accessibility, scale, and consistency.</p>
+<p>Open-ended answers require reading, evaluating, and responding to each participant's individual response. At the scale we're operating — 250 participants, five sessions each — that's not feasible without a team of evaluators or a much more sophisticated AI assessment system than we currently have.</p>
+<p>WhatsApp's button-based interface also makes multiple-choice feel natural. The interaction requires no typing, which is a significant accessibility benefit for participants with limited literacy or who find typing on a small keyboard slow and effortful.</p>
+<p>And multiple-choice allows consistent scoring. Everyone who selects the correct answer gets the correct mark. There's no inter-rater variability, no assessment inconsistency across different evaluators.</p>
+
+<div class="pullquote">We're not claiming multiple-choice is the best way to assess understanding. We're saying it's the most practical way to assess it at scale, in a WhatsApp context, right now.</div>
+
+<h3>What we do to partially compensate</h3>
+<p>We ask participants to explain their reasoning in follow-up conversations when they get questions wrong. The AI explanation isn't just telling them the right answer — it's prompting them to think through why the right answer is right. This is a partial substitute for asking them to explain themselves from scratch.</p>
+<p>We also look at patterns across questions rather than treating each question in isolation. A participant who consistently gets similar types of questions wrong is telling us something different from a participant who makes scattered errors. The pattern is more informative than any individual question result.</p>
+    `,
+    author:'EmpowerBot team · November 2025'
+  },
+
+  behaviour:{
+    tag:'<span class="tag tag-green">M&amp;E &amp; Evidence</span>',
+    date:'November 2025',readTime:'6 min read',
+    h:'The gap between learning something and actually doing it differently',
+    lede:'A participant can score 95% on record keeping and still not keep proper records. We're honest about this gap and what training can and can't claim to achieve.',
+    body:`
+<h3>What training can and can't do</h3>
+<p>Training changes knowledge. Whether it changes behaviour is a different question, with a more uncertain answer.</p>
+<p>The gap between knowing something and doing it is well-documented. People know they should exercise more. They know they should check their tyres. They know record keeping matters for their business. Knowing isn't the hard part. Changing habits in a context where life constantly competes for attention is the hard part.</p>
+<p>A five-week training programme, however good, operates at the knowledge end of this chain. We can reliably improve what participants understand about business topics. We cannot reliably change their daily practices — at least not from training alone.</p>
+
+<h3>Why we're saying this out loud</h3>
+<p>Because the alternative — implying that training leads to behaviour change without being clear about the evidence — does the sector a disservice. Programmes get funded on the assumption that they produce outcomes they often can't demonstrate. When the outcomes don't appear, it generates scepticism about training programmes generally, including well-designed ones.</p>
+<p>We'd rather be clear about what we're actually delivering and let funders and partners decide whether that's valuable enough to support.</p>
+
+<div class="pullquote">What we deliver is documented knowledge change in a structured setting. Whether that translates to different business behaviour is a question that requires longer follow-up than most programmes conduct.</div>
+
+<h3>What would actually help</h3>
+<p>The research on behaviour change suggests a few things consistently improve the odds that knowledge leads to action: making the new behaviour as easy as possible, building in reminders and follow-ups, connecting the behaviour to things the person already cares about, and providing social support from people around them.</p>
+<p>EmpowerBot can partially address some of these — the WhatsApp format means we can send reminder messages, we can build follow-up check-ins after the programme ends, and the cohort leaderboard provides some social context. But we're realistic that these are modest supports, not guaranteed behaviour-change mechanisms.</p>
+
+<h3>What we're trying to do about it</h3>
+<p>We're building a lightweight follow-up module — three brief check-ins over the three months after programme completion, asking participants about specific practices the training covered. Not a full evaluation, but enough to get some signal on whether the knowledge is being applied. We'll share what we find.</p>
+    `,
+    author:'EmpowerBot team · November 2025'
+  },
+
+  registration:{
+    tag:'<span class="tag tag-orange">Platform Updates</span>',
+    date:'October 2025',readTime:'4 min read',
+    h:'How we reduced registration drop-off from 40% to under 10%',
+    lede:'Early versions of the registration flow lost nearly half of all new users before they completed sign-up. Five small changes to the conversation script made a significant difference.',
+    body:`
+<h3>The original registration problem</h3>
+<p>Our first registration flow asked nine questions in sequence: name, phone number (redundant — we already had it), business name, business type, location, years in operation, main challenge, how they heard about the programme, and consent to data processing.</p>
+<p>This took most participants between four and eight minutes. Drop-off was heaviest after question four. People were starting the process, getting halfway through, and leaving.</p>
+
+<h3>What we changed</h3>
+<p>We cut the question count from nine to five: name, business type, location, main challenge, and consent. We removed business name (not useful for our purposes), phone number (we had it), years in operation (interesting but not essential), and attribution (useful but dispensable).</p>
+<p>We also changed the tone of the questions. "What is your primary business category?" became "What kind of business do you run?" The information captured is the same. The experience of answering is different.</p>
+<p>We added a progress indicator — a simple "Question 2 of 5" at each step. This sounds small. Drop-off data suggested it wasn't.</p>
+<p>We added a brief welcome message explaining what the programme is before asking any questions. Previously, the first message was immediately a question. Participants had no context for why they were being asked.</p>
+<p>Finally, we made the final confirmation message more specific — instead of "You're registered!" we sent "You're registered, Amina. Your first quiz opens on Thursday. You'll get a reminder on Wednesday evening."</p>
+
+<div class="pullquote">Every unnecessary question is a potential drop-off point. Every unclear question is a friction point. We had both.</div>
+
+<h3>The result</h3>
+<p>Drop-off from registration start to completion fell from approximately 40% to under 10%. We don't attribute all of this to any single change — it was the combination. But the question reduction was probably the most significant single factor.</p>
+
+<h3>What we're still figuring out</h3>
+<p>We lost some data we'd like to have by removing certain questions. Knowing how long someone has been running their business would help us personalise the AI explanations better. We're exploring whether we can collect this later — perhaps after session two, when participants have already committed to the programme — rather than upfront at registration.</p>
+    `,
+    author:'EmpowerBot team · October 2025'
+  }
+
+};
+
+function openArticle(id){
+  const a=articles[id];if(!a)return;
+  document.getElementById('am-tag-row').innerHTML=`${a.tag}<span class="ac-date">${a.date}</span><span class="ac-read-time">${a.readTime}</span>`;
+  document.getElementById('am-h').textContent=a.h;
+  document.getElementById('am-lede').textContent=a.lede;
+  document.getElementById('am-body').innerHTML=a.body;
+  document.getElementById('am-author').textContent=a.author;
+  document.getElementById('overlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  document.getElementById('modal').scrollTop=0;
+}
+function closeArticle(){
+  document.getElementById('overlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function handleOverlayClick(e){if(e.target===document.getElementById('overlay'))closeArticle();}
+function copyLink(){navigator.clipboard&&navigator.clipboard.writeText(window.location.href);}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeArticle();});
 </script>
-<script>function filterB(cat,btn){document.querySelectorAll('.ff-tab').forEach(b=>b.classList.remove('active'));btn.classList.add('active');document.querySelectorAll('#bgrid .blog-c').forEach(c=>{c.style.display=(cat==='all'||c.dataset.cat===cat)?'flex':'none';});}</script>
 </body>
 </html>
