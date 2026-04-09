@@ -2,9 +2,9 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>EmpowerBot — AI Learning Outcomes for Small Businesses — EmpowerBot</title>
+<title>EmpowerBot — AI Learning Outcomes for Small Businesses</title>
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=DM+Sans:wght@300;400;500;600&family=Syne:wght@600;700;800&display=swap');
 :root{
   --ink:#0D0907;--ink-soft:#3D3730;--ink-muted:#7A7068;--ink-faint:#B5ADA4;
   --bg:#FAFAF5;--bg2:#F3F2EB;--bg3:#ECEAE0;--surface:#FFFFFF;
@@ -20,10 +20,18 @@
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{font-family:'Plus Jakarta Sans',sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+body{font-family:'DM Sans',sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
 h1,h2,h3{font-family:'Syne',sans-serif}
 a{color:inherit;text-decoration:none}
 img{max-width:100%;display:block}
+
+/* === GRAIN OVERLAY === */
+body::before{
+  content:'';position:fixed;inset:0;z-index:9999;pointer-events:none;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity:.4;mix-blend-mode:overlay;
+}
+
 @keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -32,6 +40,13 @@ img{max-width:100%;display:block}
 @keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
 @keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 @keyframes gradBlob{0%,100%{border-radius:60% 40% 70% 30%/50% 60% 40% 50%}33%{border-radius:40% 60% 30% 70%/60% 30% 70% 40%}66%{border-radius:70% 30% 40% 60%/30% 70% 60% 40%}}
+@keyframes floatBubble{0%{transform:translateY(0) rotate(var(--br)) scale(1);opacity:0}8%{opacity:1}85%{opacity:.7}100%{transform:translateY(-110vh) rotate(calc(var(--br) + 15deg)) scale(.85);opacity:0}}
+@keyframes drawCircle{from{stroke-dashoffset:900}to{stroke-dashoffset:0}}
+@keyframes drawUnderline{from{stroke-dashoffset:400}to{stroke-dashoffset:0}}
+@keyframes slideInTag{from{opacity:0;transform:translateX(-16px)}to{opacity:1;transform:none}}
+@keyframes glowPulse{0%,100%{box-shadow:0 0 0 0 rgba(234,88,12,0)}50%{box-shadow:0 0 60px 20px rgba(234,88,12,.18)}}
+@keyframes marqueeShift{0%{transform:translateX(0)}100%{transform:translateX(-8px)}}
+
 .reveal{opacity:0;transform:translateY(24px);transition:opacity .6s ease,transform .6s ease}
 .reveal.visible{opacity:1;transform:none}
 .reveal-left{opacity:0;transform:translateX(-24px);transition:opacity .6s ease,transform .6s ease}
@@ -40,23 +55,25 @@ img{max-width:100%;display:block}
 .reveal-right.visible{opacity:1;transform:none}
 .stagger-1{transition-delay:.1s}.stagger-2{transition-delay:.2s}.stagger-3{transition-delay:.3s}.stagger-4{transition-delay:.4s}
 .max-w{max-width:1160px;margin:0 auto;padding:0 5%}
-.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--r-sm);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--t);border:none;font-family:'Plus Jakarta Sans',sans-serif;white-space:nowrap;text-decoration:none}
-.btn-primary{background:var(--orange);color:#fff}.btn-primary:hover{background:#C2410C;transform:translateY(-2px);box-shadow:0 6px 20px rgba(234,88,12,.35)}
+.btn{display:inline-flex;align-items:center;gap:8px;padding:10px 22px;border-radius:var(--r-sm);font-size:14px;font-weight:600;cursor:pointer;transition:all var(--t);border:none;font-family:'DM Sans',sans-serif;white-space:nowrap;text-decoration:none}
+.btn-primary{background:var(--orange);color:#fff}.btn-primary:hover{background:#C2410C;transform:translateY(-2px);box-shadow:0 6px 20px rgba(234,88,12,.4)}
 .btn-ghost{background:transparent;color:var(--ink-soft);border:1.5px solid var(--border)}.btn-ghost:hover{border-color:var(--orange);color:var(--orange)}
-.btn-ghost-light{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.25)}.btn-ghost-light:hover{background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5)}
+.btn-ghost-light{background:rgba(255,255,255,.1);color:#fff;border:1.5px solid rgba(255,255,255,.2)}.btn-ghost-light:hover{background:rgba(255,255,255,.18);border-color:rgba(255,255,255,.45)}
 .btn-dark{background:var(--dark);color:#fff}.btn-dark:hover{background:var(--dark-2);transform:translateY(-2px)}
 .btn-white{background:#fff;color:var(--ink)}.btn-white:hover{background:var(--bg2);transform:translateY(-2px)}
 .btn-lg{padding:14px 30px;font-size:15px;border-radius:var(--r)}
 .tag{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;padding:4px 12px;border-radius:30px}
 .tag-orange{background:var(--orange-4);color:var(--orange)}.tag-green{background:var(--green-2);color:var(--green)}
 .tag-blue{background:var(--blue-2);color:var(--blue)}.tag-amber{background:var(--amber-2);color:var(--amber)}
+
+/* === NAV === */
 .nav{position:fixed;top:0;left:0;right:0;z-index:200;height:62px;transition:background var(--t),box-shadow var(--t)}
-.nav.scrolled{background:rgba(28,18,8,.93);backdrop-filter:blur(16px);box-shadow:0 1px 0 rgba(255,255,255,.06)}
+.nav.scrolled{background:rgba(28,18,8,.94);backdrop-filter:blur(20px);box-shadow:0 1px 0 rgba(255,255,255,.05)}
 .nav-inner{max-width:1160px;margin:0 auto;padding:0 5%;height:100%;display:flex;align-items:center;justify-content:space-between;gap:24px}
-.nav-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em}
+.nav-logo{font-family:'Anton',sans-serif;font-size:22px;font-weight:400;color:#fff;letter-spacing:.04em}
 .nav-logo em{color:var(--orange);font-style:normal}
 .nav-links{display:flex;align-items:center;gap:28px}
-.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,.65);transition:color var(--t)}
+.nav-links a{font-size:14px;font-weight:500;color:rgba(255,255,255,.6);transition:color var(--t)}
 .nav-links a:hover,.nav-links a.active{color:#fff}
 .nav-ctas{display:flex;gap:8px}
 .nav-burger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:6px;border:none;background:none}
@@ -69,64 +86,150 @@ img{max-width:100%;display:block}
 .mobile-nav a{font-size:22px;font-weight:700;font-family:'Syne',sans-serif;color:rgba(255,255,255,.7);padding:14px 0;border-bottom:1px solid rgba(255,255,255,.06);transition:color var(--t)}
 .mobile-nav a:hover{color:#fff}
 .mobile-nav .mobile-ctas{margin-top:24px;display:flex;flex-direction:column;gap:10px}
-.section{padding:88px 0}
-.section-tag{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
-.section-tag::before{content:'';width:20px;height:2px;background:var(--orange);border-radius:2px;flex-shrink:0}
-.section h2{font-size:42px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin-bottom:14px}
-.section-sub{font-size:16px;color:var(--ink-muted);line-height:1.8;max-width:560px}
-footer{background:var(--footer);padding:56px 0 26px}
-.foot-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
-.foot-logo{font-family:'Syne',sans-serif;font-size:20px;font-weight:800;color:#fff;letter-spacing:-.02em;display:block;margin-bottom:11px}
-.foot-logo em{color:var(--orange);font-style:normal}
-.foot-desc{font-size:13px;color:rgba(255,255,255,.3);line-height:1.75;max-width:230px}
-.foot-partners{display:flex;align-items:center;gap:14px;margin-top:16px;padding-top:14px;border-top:1px solid rgba(255,255,255,.05)}
-.foot-partners img{height:18px;opacity:.3;filter:brightness(0) invert(1);object-fit:contain}
-.foot-col h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:14px}
-.foot-col a{display:block;font-size:13px;color:rgba(255,255,255,.4);margin-bottom:8px;transition:color var(--t)}
-.foot-col a:hover{color:var(--orange-2)}
-.foot-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:22px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
-.foot-copy{font-size:12.5px;color:rgba(255,255,255,.22)}
-.foot-links{display:flex;gap:18px}
-.foot-links a{font-size:12.5px;color:rgba(255,255,255,.22);transition:color var(--t)}
-.foot-links a:hover{color:rgba(255,255,255,.55)}
-@media(max-width:768px){
-  .nav-links,.nav-ctas{display:none}.nav-burger{display:flex}
-  .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
-  .section h2{font-size:28px}
-}
 
-@keyframes pulseDot{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.5);opacity:.5}}
-@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
-@keyframes gradBlob{0%,100%{border-radius:60% 40% 70% 30%/50% 60% 40% 50%}33%{border-radius:40% 60% 30% 70%/60% 30% 70% 40%}66%{border-radius:70% 30% 40% 60%/30% 70% 60% 40%}}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-@keyframes msgIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-@keyframes typing{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+/* === HERO === */
 .hero{position:relative;min-height:100vh;display:flex;align-items:center;background:#1C1208;overflow:hidden;padding-top:62px}
 .hero-bg{position:absolute;inset:0;overflow:hidden}
 .hero-blob{position:absolute;border-radius:60% 40% 70% 30%/50% 60% 40% 50%;filter:blur(80px);animation:gradBlob 20s ease-in-out infinite;opacity:.35}
-.blob-1{width:600px;height:600px;background:radial-gradient(circle,rgba(234,88,12,.6) 0%,transparent 70%);top:-100px;right:-100px}
-.blob-2{width:500px;height:500px;background:radial-gradient(circle,rgba(180,120,40,.4) 0%,transparent 70%);bottom:-50px;left:-100px;animation-delay:-7s}
-.blob-3{width:400px;height:400px;background:radial-gradient(circle,rgba(5,150,105,.25) 0%,transparent 70%);top:30%;right:30%;animation-delay:-14s}
-.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%)}
+.blob-1{width:600px;height:600px;background:radial-gradient(circle,rgba(234,88,12,.65) 0%,transparent 70%);top:-100px;right:-100px}
+.blob-2{width:500px;height:500px;background:radial-gradient(circle,rgba(180,120,40,.45) 0%,transparent 70%);bottom:-50px;left:-100px;animation-delay:-7s}
+.blob-3{width:400px;height:400px;background:radial-gradient(circle,rgba(5,150,105,.3) 0%,transparent 70%);top:30%;right:30%;animation-delay:-14s}
+.hero-grid{position:absolute;inset:0;background-image:linear-gradient(rgba(255,255,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.025) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 0%,transparent 100%)}
+
+/* Floating quiz bubbles */
+.float-bubble{
+  position:absolute;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  padding:9px 13px;
+  font-family:'DM Sans',sans-serif;
+  font-size:11.5px;
+  color:rgba(255,255,255,.5);
+  backdrop-filter:blur(4px);
+  animation:floatBubble linear infinite;
+  pointer-events:none;
+  white-space:nowrap;
+  z-index:2;
+}
+.float-bubble strong{color:rgba(251,146,60,.85);font-weight:600}
+
 .hero-inner{position:relative;z-index:10;display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:center;padding:80px 5% 60px;max-width:1160px;margin:0 auto;width:100%}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--orange-2);margin-bottom:24px;animation:fadeIn .8s ease both}
-.hero-eyebrow-dot{width:6px;height:6px;border-radius:50%;background:var(--orange-2);animation:pulseDot 2.5s ease-in-out infinite}
-.hero-h1{font-size:58px;line-height:1.05;font-weight:800;letter-spacing:-.04em;color:#fff;margin-bottom:22px;animation:fadeUp .8s .1s ease both}
-.hero-h1 em{color:var(--orange-2);font-style:normal;position:relative}
-.hero-h1 em::after{content:'';position:absolute;bottom:-4px;left:0;right:0;height:2px;background:var(--orange-2);border-radius:2px}
-.hero-sub{font-size:17px;color:rgba(255,255,255,.55);line-height:1.8;margin-bottom:36px;max-width:480px;animation:fadeUp .8s .2s ease both}
-.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:44px;animation:fadeUp .8s .3s ease both}
-.hero-metrics{display:flex;gap:0;animation:fadeUp .8s .4s ease both}
-.hm-item{display:flex;flex-direction:column;padding:0 28px 0 0;margin-right:28px;border-right:1px solid rgba(255,255,255,.1)}
+
+/* Eyebrow tag */
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+  color:rgba(255,255,255,.55);margin-bottom:28px;
+  animation:slideInTag .8s ease both;
+}
+.hero-eyebrow-chip{
+  display:inline-flex;align-items:center;gap:6px;
+  background:rgba(234,88,12,.18);border:1px solid rgba(234,88,12,.3);
+  color:var(--orange-2);border-radius:20px;padding:3px 10px;font-size:11px;font-weight:700;
+}
+.hero-eyebrow-dot{width:5px;height:5px;border-radius:50%;background:var(--orange-2);animation:pulseDot 2.5s ease-in-out infinite}
+
+/* === HEADLINE === */
+.hero-h1{
+  font-family:'Anton',sans-serif;
+  font-size:76px;
+  line-height:.98;
+  font-weight:400;
+  letter-spacing:.01em;
+  text-transform:uppercase;
+  color:#fff;
+  margin-bottom:28px;
+  animation:fadeUp .8s .1s ease both;
+}
+/* Word box: "training" */
+.hero-word-box{
+  display:inline-block;
+  position:relative;
+  padding:2px 14px 2px 10px;
+  color:var(--orange-2);
+}
+.hero-word-box::before{
+  content:'';
+  position:absolute;inset:0;
+  border:2px solid rgba(251,146,60,.35);
+  border-radius:8px;
+  background:rgba(234,88,12,.08);
+}
+/* Phone icon inside the box */
+.hero-word-icon{
+  display:inline-block;
+  width:18px;height:18px;
+  background:var(--orange);border-radius:4px;
+  margin-right:6px;vertical-align:middle;
+  position:relative;top:-2px;
+  flex-shrink:0;
+}
+.hero-word-icon::before{
+  content:'';
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-50%);
+  width:8px;height:10px;
+  border:1.5px solid rgba(255,255,255,.9);
+  border-radius:1px;
+}
+.hero-word-icon::after{
+  content:'';
+  position:absolute;
+  bottom:2px;left:50%;
+  transform:translateX(-50%);
+  width:3px;height:1.5px;
+  background:rgba(255,255,255,.8);
+  border-radius:2px;
+}
+
+/* Evidence with circle */
+.hero-evidence-wrap{
+  position:relative;
+  display:inline-block;
+}
+.hero-evidence-wrap em{
+  color:var(--orange-2);font-style:normal;
+  position:relative;z-index:1;
+}
+.hero-circle-svg{
+  position:absolute;
+  top:-14px;left:-12px;
+  width:calc(100% + 24px);
+  height:calc(100% + 24px);
+  pointer-events:none;
+  overflow:visible;
+}
+.hero-circle-path{
+  stroke:var(--orange-2);stroke-width:3;fill:none;
+  stroke-dasharray:900;stroke-dashoffset:900;
+  animation:drawCircle 1.4s 1.2s cubic-bezier(.4,0,.2,1) forwards;
+  stroke-linecap:round;
+}
+
+.hero-sub{font-size:16.5px;color:rgba(255,255,255,.52);line-height:1.85;margin-bottom:36px;max-width:460px;animation:fadeUp .8s .25s ease both}
+.hero-ctas{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-bottom:48px;animation:fadeUp .8s .35s ease both}
+
+.hero-metrics{display:flex;gap:0;animation:fadeUp .8s .45s ease both}
+.hm-item{display:flex;flex-direction:column;padding:0 28px 0 0;margin-right:28px;border-right:1px solid rgba(255,255,255,.08)}
 .hm-item:last-child{border-right:none;margin-right:0;padding-right:0}
-.hm-num{font-family:'Syne',sans-serif;font-size:32px;font-weight:800;color:#fff;letter-spacing:-.04em;line-height:1}
-.hm-label{font-size:12px;color:rgba(255,255,255,.4);margin-top:4px}
-.hero-phone-wrap{display:flex;justify-content:center;position:relative;animation:floatY 8s ease-in-out infinite}
-.phone{width:260px;background:#241808;border-radius:36px;border:1.5px solid rgba(255,255,255,.07);padding:14px;box-shadow:0 40px 100px rgba(0,0,0,.5),inset 0 1px 0 rgba(255,255,255,.05)}
-.phone-notch{width:70px;height:18px;background:#1C1208;border-radius:0 0 12px 12px;margin:0 auto 12px}
-.phone-screen{background:#E5DDD5;border-radius:22px;overflow:hidden;min-height:380px}
+.hm-num{font-family:'Anton',sans-serif;font-size:36px;font-weight:400;color:#fff;letter-spacing:.02em;line-height:1}
+.hm-label{font-size:11.5px;color:rgba(255,255,255,.38);margin-top:5px;letter-spacing:.01em}
+
+/* Phone mockup */
+.hero-visual{display:flex;justify-content:center;position:relative;animation:floatY 8s ease-in-out infinite}
+.hero-visual-glow{
+  position:absolute;inset:-40px;
+  background:radial-gradient(ellipse 70% 60% at 50% 60%,rgba(234,88,12,.22) 0%,transparent 70%);
+  animation:glowPulse 4s ease-in-out infinite;
+  pointer-events:none;
+}
+.phone{width:264px;background:#1a1005;border-radius:40px;border:1.5px solid rgba(255,255,255,.08);padding:14px;box-shadow:0 48px 96px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.05)}
+.phone-notch{width:70px;height:18px;background:#0d0702;border-radius:0 0 12px 12px;margin:0 auto 12px}
+.phone-screen{background:#E5DDD5;border-radius:24px;overflow:hidden;min-height:380px}
 .wa-head{background:#075E54;padding:10px 14px;display:flex;align-items:center;gap:9px}
-.wa-av{width:30px;height:30px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff}
+.wa-av{width:32px;height:32px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700;color:#fff;font-family:'Anton',sans-serif}
 .wa-name{font-size:13px;font-weight:600;color:#fff}
 .wa-status{font-size:10px;color:rgba(255,255,255,.75)}
 .wa-body{padding:10px;display:flex;flex-direction:column;gap:7px;min-height:320px}
@@ -135,25 +238,36 @@ footer{background:var(--footer);padding:56px 0 26px}
 .msg-user{background:#D9FDD3;border-radius:10px 2px 10px 10px;max-width:80%;margin-left:auto;animation:msgIn .4s ease both}
 .msg-time{font-size:9.5px;color:#9E9E9E;text-align:right;margin-top:2px}
 .msg-btns{display:flex;gap:5px;flex-wrap:wrap;margin-top:6px}
-.msg-btn{font-size:10.5px;color:#00A884;border:1px solid #00A884;background:transparent;border-radius:18px;padding:3px 9px;cursor:pointer;font-family:'Plus Jakarta Sans',sans-serif;transition:all .15s}
+.msg-btn{font-size:10.5px;color:#00A884;border:1px solid #00A884;background:transparent;border-radius:18px;padding:3px 9px;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .15s}
 .msg-btn:hover{background:#E8F5E9}
 .typing-ind{display:flex;gap:3px;align-items:center;padding:6px 10px;background:#fff;border-radius:10px;width:fit-content}
 .typing-ind span{width:5px;height:5px;border-radius:50%;background:#9E9E9E;animation:typing 1.2s ease infinite}
 .typing-ind span:nth-child(2){animation-delay:.2s}
 .typing-ind span:nth-child(3){animation-delay:.4s}
+
+/* === TICKER === */
 .ticker{background:var(--orange);padding:11px 0;overflow:hidden;white-space:nowrap}
 .ticker-track{display:inline-flex;animation:ticker 28s linear infinite}
 .ticker-item{font-size:13px;font-weight:600;color:rgba(255,255,255,.9);padding:0 28px}
 .ticker-item::after{content:"·";margin-left:28px;opacity:.4}
-.section-tag2{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
-.section-tag2::before{content:'';width:20px;height:2px;background:var(--orange);border-radius:2px;flex-shrink:0}
+
+/* === VALUE STRIP === */
 .value-strip{background:#1C1208;padding:60px 0}
-.value-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.06);border-radius:var(--r-lg);overflow:hidden}
+.value-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:rgba(255,255,255,.05);border-radius:var(--r-lg);overflow:hidden}
 .value-item{background:#1C1208;padding:36px 28px;transition:background var(--t)}
 .value-item:hover{background:#241808}
 .v-icon{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;margin-bottom:18px}
 .v-head{font-family:'Syne',sans-serif;font-size:16px;font-weight:700;color:#fff;margin-bottom:8px}
-.v-sub{font-size:13px;color:rgba(255,255,255,.4);line-height:1.65}
+.v-sub{font-size:13px;color:rgba(255,255,255,.38);line-height:1.65}
+
+/* === WHO IT'S FOR === */
+.section{padding:88px 0}
+.section-tag{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+.section-tag::before{content:'';width:20px;height:2px;background:var(--orange);border-radius:2px;flex-shrink:0}
+.section-sub{font-size:16px;color:var(--ink-muted);line-height:1.8;max-width:560px}
+.section-tag2{display:inline-flex;align-items:center;gap:8px;font-size:11.5px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--orange);margin-bottom:16px}
+.section-tag2::before{content:'';width:20px;height:2px;background:var(--orange);border-radius:2px;flex-shrink:0}
+
 .aud-card{background:var(--surface);border:1.5px solid var(--border);border-radius:var(--r-xl);padding:44px;transition:all var(--t);position:relative;overflow:hidden}
 .aud-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;opacity:0;transition:opacity var(--t)}
 .aud-card.orange::before{background:linear-gradient(90deg,var(--orange),var(--amber))}
@@ -167,6 +281,8 @@ footer{background:var(--footer);padding:56px 0 26px}
 .aud-bullets{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:28px}
 .aud-bullets li{font-size:14px;color:var(--ink-soft);display:flex;gap:11px;align-items:flex-start;line-height:1.5}
 .aud-check{width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:.5px}
+
+/* === AI SECTION === */
 .ai-section{background:linear-gradient(160deg,#1C1208 0%,#2E1E0A 100%);padding:96px 0;position:relative;overflow:hidden}
 .ai-section::before{content:'';position:absolute;top:-200px;right:-200px;width:700px;height:700px;background:radial-gradient(circle,rgba(234,88,12,.1) 0%,transparent 60%);pointer-events:none}
 .ai-inner{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:center}
@@ -188,14 +304,18 @@ footer{background:var(--footer);padding:56px 0 26px}
 .ai-msg.user{background:rgba(234,88,12,.2);border:1px solid rgba(234,88,12,.15);color:rgba(255,255,255,.9);border-radius:12px 2px 12px 12px;max-width:80%;align-self:flex-end}
 .ai-msg.think{background:rgba(255,255,255,.03);color:rgba(255,255,255,.35);font-style:italic;font-size:12px;display:flex;align-items:center;gap:8px}
 .ai-highlight{color:var(--orange-2);font-weight:600}
+
+/* === HOW IT WORKS === */
 .hiw-section{background:var(--bg2);padding:88px 0}
 .hiw-steps{display:grid;grid-template-columns:repeat(4,1fr);margin-top:52px;position:relative}
 .hiw-steps::before{content:'';position:absolute;top:28px;left:12%;right:12%;height:1.5px;background:linear-gradient(90deg,transparent,var(--border),var(--border),transparent)}
 .hiw-step{text-align:center;padding:0 16px}
-.hiw-step-num{width:56px;height:56px;border-radius:50%;background:var(--orange);color:#fff;font-family:'Syne',sans-serif;font-size:20px;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;position:relative;z-index:1;box-shadow:0 0 0 8px rgba(234,88,12,.1);transition:all var(--t)}
+.hiw-step-num{width:56px;height:56px;border-radius:50%;background:var(--orange);color:#fff;font-family:'Anton',sans-serif;font-size:22px;font-weight:400;display:flex;align-items:center;justify-content:center;margin:0 auto 20px;position:relative;z-index:1;box-shadow:0 0 0 8px rgba(234,88,12,.1);transition:all var(--t)}
 .hiw-step:hover .hiw-step-num{transform:scale(1.1);box-shadow:0 0 0 12px rgba(234,88,12,.1)}
 .hiw-step h3{font-family:'Syne',sans-serif;font-size:15px;font-weight:700;margin-bottom:8px}
 .hiw-step p{font-size:13px;color:var(--ink-muted);line-height:1.65}
+
+/* === THINGS === */
 .things-section{padding:88px 0}
 .things-grid{margin-top:52px;display:flex;flex-direction:column;gap:0}
 .thing-item{border-top:1px solid var(--border);cursor:pointer;transition:all var(--t)}
@@ -203,7 +323,7 @@ footer{background:var(--footer);padding:56px 0 26px}
 .thing-head{display:grid;grid-template-columns:56px 1fr auto;gap:20px;align-items:center;padding:24px 0}
 .thing-item:hover .thing-head{padding-left:8px;padding-right:8px}
 .thing-item.active .thing-head{padding-left:8px;padding-right:8px;background:var(--bg2);border-radius:var(--r-sm)}
-.thing-n{font-family:'Syne',sans-serif;font-size:13px;font-weight:800;color:var(--ink-faint);letter-spacing:.04em}
+.thing-n{font-family:'Anton',sans-serif;font-size:14px;font-weight:400;color:var(--ink-faint);letter-spacing:.04em}
 .thing-h{font-family:'Syne',sans-serif;font-size:18px;font-weight:700;letter-spacing:-.02em;transition:color var(--t)}
 .thing-item:hover .thing-h,.thing-item.active .thing-h{color:var(--orange)}
 .thing-arrow{width:32px;height:32px;border-radius:50%;border:1.5px solid var(--border);display:flex;align-items:center;justify-content:center;color:var(--ink-faint);transition:all var(--t);flex-shrink:0}
@@ -217,14 +337,18 @@ footer{background:var(--footer);padding:56px 0 26px}
 .thing-desc{font-size:15px;color:var(--ink-soft);line-height:1.8;margin-bottom:16px}
 .thing-tags{display:flex;gap:6px;flex-wrap:wrap}
 .thing-visual{background:var(--bg2);border:1px solid var(--border);border-radius:var(--r-lg);padding:20px;font-size:13px}
+
+/* === STATS === */
 .stats-section{background:#1C1208;padding:64px 0}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr)}
 .stat-item{padding:0 36px;border-right:1px solid rgba(255,255,255,.07)}
 .stat-item:first-child{padding-left:0}
 .stat-item:last-child{border-right:none}
-.stat-n{font-family:'Syne',sans-serif;font-size:52px;font-weight:800;letter-spacing:-.05em;line-height:1;color:var(--orange-2)}
-.stat-suf{font-size:28px}
-.stat-l{font-size:13px;color:rgba(255,255,255,.4);margin-top:8px;line-height:1.5}
+.stat-n{font-family:'Anton',sans-serif;font-size:54px;font-weight:400;letter-spacing:.02em;line-height:1;color:var(--orange-2)}
+.stat-suf{font-size:30px}
+.stat-l{font-size:13px;color:rgba(255,255,255,.38);margin-top:8px;line-height:1.5}
+
+/* === BLOG === */
 .blog-section{padding:88px 0}
 .blog-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:48px}
 .blog-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden;transition:all var(--t);cursor:pointer}
@@ -238,6 +362,8 @@ footer{background:var(--footer);padding:56px 0 26px}
 .blog-card:hover h3{color:var(--orange)}
 .blog-excerpt{font-size:13px;color:var(--ink-muted);line-height:1.65;margin-bottom:16px}
 .blog-read{font-size:12.5px;font-weight:600;color:var(--orange)}
+
+/* === TESTIMONIALS === */
 .testi-section{background:var(--bg2);padding:88px 0}
 .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:48px}
 .testi-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:28px;transition:all var(--t)}
@@ -246,57 +372,151 @@ footer{background:var(--footer);padding:56px 0 26px}
 .star{width:13px;height:13px;background:var(--amber);clip-path:polygon(50% 0%,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
 .testi-q{font-size:14px;color:var(--ink-soft);line-height:1.75;font-style:italic;margin-bottom:20px}
 .testi-from{display:flex;align-items:center;gap:12px}
-.testi-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0}
+.testi-av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:700;color:#fff;flex-shrink:0;font-family:'Anton',sans-serif}
 .testi-name{font-size:13.5px;font-weight:600}
 .testi-org{font-size:12px;color:var(--ink-muted)}
+
+/* === CTA === */
 .cta-section{background:#1C1208;padding:96px 0;position:relative;overflow:hidden;text-align:center}
 .cta-section::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 50% 50%,rgba(234,88,12,.1) 0%,transparent 70%);pointer-events:none}
 .cta-section h2{font-size:50px;font-weight:800;letter-spacing:-.04em;color:#fff;margin-bottom:16px;position:relative}
 .cta-section p{font-size:17px;color:rgba(255,255,255,.5);max-width:500px;margin:0 auto 40px;position:relative;line-height:1.8}
 .cta-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;position:relative}
-@media(max-width:1024px){.hero-inner,.ai-inner{gap:44px}.hero-h1{font-size:46px}.value-grid{grid-template-columns:1fr 1fr}.stats-grid{grid-template-columns:1fr 1fr;gap:32px}.blog-grid{grid-template-columns:1fr 1fr}}
-@media(max-width:768px){.hero-inner{grid-template-columns:1fr;gap:40px;padding:60px 5% 40px}.hero-h1{font-size:38px}.hero-visual{display:none}.hero-metrics{flex-wrap:wrap;gap:20px}.hm-item{border-right:none}.ai-inner{grid-template-columns:1fr}.hiw-steps{grid-template-columns:1fr 1fr;gap:32px}.hiw-steps::before{display:none}.thing-content{grid-template-columns:1fr}.thing-content .thing-visual{display:none}.stats-grid{grid-template-columns:1fr 1fr;gap:32px}.testi-grid,.blog-grid{grid-template-columns:1fr}.cta-section h2{font-size:34px}.audience-split{grid-template-columns:1fr}}
-@media(max-width:480px){.hero-h1{font-size:30px}.hero-ctas{flex-direction:column}.cta-btns{flex-direction:column;align-items:center}}
+
+/* === FOOTER === */
+footer{background:var(--footer);padding:56px 0 26px}
+.foot-grid{display:grid;grid-template-columns:2.2fr 1fr 1fr 1fr;gap:48px;margin-bottom:40px}
+.foot-logo{font-family:'Anton',sans-serif;font-size:22px;font-weight:400;color:#fff;letter-spacing:.04em;display:block;margin-bottom:11px}
+.foot-logo em{color:var(--orange);font-style:normal}
+.foot-desc{font-size:13px;color:rgba(255,255,255,.3);line-height:1.75;max-width:230px}
+.foot-col h4{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-bottom:14px}
+.foot-col a{display:block;font-size:13px;color:rgba(255,255,255,.4);margin-bottom:8px;transition:color var(--t)}
+.foot-col a:hover{color:var(--orange-2)}
+.foot-bottom{border-top:1px solid rgba(255,255,255,.05);padding-top:22px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap}
+.foot-copy{font-size:12.5px;color:rgba(255,255,255,.22)}
+.foot-links{display:flex;gap:18px}
+.foot-links a{font-size:12.5px;color:rgba(255,255,255,.22);transition:color var(--t)}
+.foot-links a:hover{color:rgba(255,255,255,.55)}
+
+@media(max-width:1024px){
+  .hero-inner,.ai-inner{gap:44px}
+  .hero-h1{font-size:58px}
+  .value-grid{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .blog-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:768px){
+  .nav-links,.nav-ctas{display:none}.nav-burger{display:flex}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:28px}
+  .hero-inner{grid-template-columns:1fr;gap:40px;padding:60px 5% 40px}
+  .hero-h1{font-size:48px}
+  .hero-visual{display:none}
+  .hero-metrics{flex-wrap:wrap;gap:20px}
+  .hm-item{border-right:none}
+  .ai-inner{grid-template-columns:1fr}
+  .hiw-steps{grid-template-columns:1fr 1fr;gap:32px}
+  .hiw-steps::before{display:none}
+  .thing-content{grid-template-columns:1fr}
+  .thing-content .thing-visual{display:none}
+  .testi-grid,.blog-grid{grid-template-columns:1fr}
+  .cta-section h2{font-size:34px}
+  .audience-split{grid-template-columns:1fr}
+}
+@media(max-width:480px){
+  .hero-h1{font-size:36px}
+  .hero-ctas{flex-direction:column}
+  .cta-btns{flex-direction:column;align-items:center}
+}
 </style>
 </head>
 <body>
-<nav class="nav" id="mainNav"><div class="nav-inner"><a class="nav-logo" href="index.html">Empower<em>Bot</em></a><div class="nav-links"><a href="index.html" class=active>Home</a><a href="features.html" >Features</a><a href="demo.html" >Demo</a><a href="pricing.html" >Pricing</a><a href="about.html" >About</a><a href="blog.html" >Blog</a></div><div class="nav-ctas"><a href="pricing.html" class="btn btn-ghost-light" style="font-size:13px;padding:8px 16px;">Plans</a><a href="demo.html" class="btn btn-primary" style="font-size:13px;padding:8px 16px;">Try demo →</a></div><button class="nav-burger" id="navBurger" onclick="toggleMobileNav()"><span></span><span></span><span></span></button></div></nav><div class="mobile-nav" id="mobileNav"><a href="index.html" onclick="closeMobileNav()">Home</a><a href="features.html" onclick="closeMobileNav()">Features</a><a href="demo.html" onclick="closeMobileNav()">Demo</a><a href="pricing.html" onclick="closeMobileNav()">Pricing</a><a href="about.html" onclick="closeMobileNav()">About</a><a href="blog.html" onclick="closeMobileNav()">Blog</a><div class="mobile-ctas"><a href="pricing.html" class="btn btn-ghost-light btn-lg" style="justify-content:center">View Plans</a><a href="demo.html" class="btn btn-primary btn-lg" style="justify-content:center">Try Demo →</a></div></div>
+
+<nav class="nav" id="mainNav">
+  <div class="nav-inner">
+    <a class="nav-logo" href="index.html">EMPOWER<em>BOT</em></a>
+    <div class="nav-links"><a href="index.html" class="active">Home</a><a href="features.html">Features</a><a href="demo.html">Demo</a><a href="pricing.html">Pricing</a><a href="about.html">About</a><a href="blog.html">Blog</a></div>
+    <div class="nav-ctas"><a href="pricing.html" class="btn btn-ghost-light" style="font-size:13px;padding:8px 16px;">Plans</a><a href="demo.html" class="btn btn-primary" style="font-size:13px;padding:8px 16px;">Try demo →</a></div>
+    <button class="nav-burger" id="navBurger" onclick="toggleMobileNav()"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+<div class="mobile-nav" id="mobileNav">
+  <a href="index.html" onclick="closeMobileNav()">Home</a><a href="features.html" onclick="closeMobileNav()">Features</a><a href="demo.html" onclick="closeMobileNav()">Demo</a><a href="pricing.html" onclick="closeMobileNav()">Pricing</a><a href="about.html" onclick="closeMobileNav()">About</a><a href="blog.html" onclick="closeMobileNav()">Blog</a>
+  <div class="mobile-ctas"><a href="pricing.html" class="btn btn-ghost-light btn-lg" style="justify-content:center">View Plans</a><a href="demo.html" class="btn btn-primary btn-lg" style="justify-content:center">Try Demo →</a></div>
+</div>
 
 <section class="hero">
   <div class="hero-bg">
-    <div class="hero-blob blob-1" style="width:600px;height:600px;background:radial-gradient(circle,rgba(234,88,12,.6) 0%,transparent 70%);top:-100px;right:-100px"></div>
-    <div class="hero-blob blob-2" style="width:500px;height:500px;background:radial-gradient(circle,rgba(180,120,40,.4) 0%,transparent 70%);bottom:-50px;left:-100px;animation-delay:-7s"></div>
-    <div class="hero-blob blob-3" style="width:400px;height:400px;background:radial-gradient(circle,rgba(5,150,105,.25) 0%,transparent 70%);top:30%;right:30%;animation-delay:-14s"></div>
+    <div class="hero-blob blob-1"></div>
+    <div class="hero-blob blob-2"></div>
+    <div class="hero-blob blob-3"></div>
     <div class="hero-grid"></div>
+
+    <!-- Floating quiz bubbles -->
+    <div class="float-bubble" style="left:8%;bottom:-60px;--br:-6deg;animation-duration:14s;animation-delay:0s">
+      <strong>Q3 of 5</strong> &nbsp;·&nbsp; How do you price your goods?
+    </div>
+    <div class="float-bubble" style="left:20%;bottom:-60px;--br:4deg;animation-duration:18s;animation-delay:4s">
+      <strong>Score: 92%</strong> &nbsp;·&nbsp; Ikorodu cohort
+    </div>
+    <div class="float-bubble" style="right:14%;bottom:-60px;--br:-3deg;animation-duration:16s;animation-delay:2s">
+      <strong>✅ Correct!</strong> &nbsp;+10 pts
+    </div>
+    <div class="float-bubble" style="right:30%;bottom:-60px;--br:7deg;animation-duration:20s;animation-delay:8s">
+      <strong>89%</strong> completion rate &nbsp;·&nbsp; Agege LGA
+    </div>
+    <div class="float-bubble" style="left:42%;bottom:-60px;--br:-5deg;animation-duration:22s;animation-delay:6s">
+      EmpowerBot &nbsp;·&nbsp; <strong>● Online</strong>
+    </div>
+    <div class="float-bubble" style="left:58%;bottom:-60px;--br:3deg;animation-duration:17s;animation-delay:11s">
+      <strong>1,000+</strong> traders trained in Lagos
+    </div>
   </div>
+
   <div class="hero-inner max-w">
     <div class="hero-left">
-      <div class="hero-eyebrow"><div class="hero-eyebrow-dot"></div>AI · WhatsApp · Learning Outcomes</div>
-      <h1 class="hero-h1">Where small business<br>training becomes <em>evidence.</em></h1>
-      <p class="hero-sub"> AI-powered WhatsApp quizzes that train small business owners, measure knowledge outcomes, and generate the evidence data funders need.</p>
+      <div class="hero-eyebrow">
+        <span class="hero-eyebrow-chip"><span class="hero-eyebrow-dot"></span>&nbsp; Live on WhatsApp</span>
+        &nbsp; AI · Learning Outcomes · Lagos
+      </div>
+
+      <h1 class="hero-h1" id="heroH1">
+        WHERE SMALL<br>
+        BIZ <span class="hero-word-box"><span class="hero-word-icon"></span>TRAINING</span><br>
+        BECOMES<br>
+        <span class="hero-evidence-wrap">
+          <em>EVIDENCE.</em>
+          <svg class="hero-circle-svg" viewBox="0 0 300 100" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path class="hero-circle-path" d="M 28 52 C 26 28 68 10 150 8 C 220 6 278 22 282 50 C 286 75 240 90 154 92 C 78 94 26 80 26 58 C 26 50 30 44 40 40"/>
+          </svg>
+        </span>
+      </h1>
+
+      <p class="hero-sub">AI-powered WhatsApp quizzes that train small business owners, measure knowledge outcomes, and generate the evidence data funders need.</p>
+
       <div class="hero-ctas">
         <a href="demo.html" class="btn btn-primary btn-lg">See the platform <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
         <a href="pricing.html" class="btn btn-ghost-light btn-lg">Free for nonprofits</a>
       </div>
+
       <div class="hero-metrics">
         <div class="hm-item"><div class="hm-num" id="hmCount">1,000+</div><div class="hm-label">LSETF beneficiaries trained</div></div>
-        <div class="hm-item"><div class="hm-num">89<span style="font-size:18px">%</span></div><div class="hm-label">Completion rate</div></div>
+        <div class="hm-item"><div class="hm-num">89<span style="font-size:20px">%</span></div><div class="hm-label">Completion rate</div></div>
         <div class="hm-item"><div class="hm-num">5+</div><div class="hm-label">LGAs across Lagos</div></div>
         <div class="hm-item"><div class="hm-num">0</div><div class="hm-label">App downloads needed</div></div>
       </div>
     </div>
+
     <div class="hero-visual">
-      <div class="hero-phone-wrap">
-        <div class="phone">
-          <div class="phone-notch"></div>
-          <div class="phone-screen">
-            <div class="wa-head"><div class="wa-av">EB</div><div><div class="wa-name">EmpowerBot</div><div class="wa-status">● Online</div></div></div>
-            <div class="wa-body" id="heroChat">
-              <div class="msg msg-bot" style="animation-delay:.2s">Welcome Amina! 👋 Ready for Quiz 3?<div class="msg-btns"><button class="msg-btn">Start Quiz</button><button class="msg-btn">My scores</button></div><div class="msg-time">10:14 AM ✓✓</div></div>
-              <div class="msg msg-user" style="animation-delay:.5s">Start Quiz<div class="msg-time">10:14 AM ✓</div></div>
-              <div class="msg msg-bot" style="animation-delay:.8s"><strong>Q2 of 5 — Financial Records</strong><br><br>How often should you reconcile your cash?<div class="msg-btns"><button class="msg-btn">A) Once a year</button><button class="msg-btn" onclick="showHeroFb()">B) Every day</button><button class="msg-btn">C) Only problems</button></div><div class="msg-time">10:15 AM ✓✓</div></div>
-              <div id="heroFb" class="msg msg-bot" style="display:none">✅ <strong>Correct!</strong> Daily reconciliation means comparing your cash to records every evening — before errors compound. +10 pts!<div class="msg-time">10:15 AM ✓✓</div></div>
-            </div>
+      <div class="hero-visual-glow"></div>
+      <div class="phone">
+        <div class="phone-notch"></div>
+        <div class="phone-screen">
+          <div class="wa-head"><div class="wa-av">EB</div><div><div class="wa-name">EmpowerBot</div><div class="wa-status">● Online</div></div></div>
+          <div class="wa-body" id="heroChat">
+            <div class="msg msg-bot" style="animation-delay:.2s">Welcome Amina! 👋 Ready for Quiz 3?<div class="msg-btns"><button class="msg-btn">Start Quiz</button><button class="msg-btn">My scores</button></div><div class="msg-time">10:14 AM ✓✓</div></div>
+            <div class="msg msg-user" style="animation-delay:.5s">Start Quiz<div class="msg-time">10:14 AM ✓</div></div>
+            <div class="msg msg-bot" style="animation-delay:.8s"><strong>Q2 of 5 — Financial Records</strong><br><br>How often should you reconcile your cash?<div class="msg-btns"><button class="msg-btn">A) Once a year</button><button class="msg-btn" onclick="showHeroFb()">B) Every day</button><button class="msg-btn">C) Only problems</button></div><div class="msg-time">10:15 AM ✓✓</div></div>
+            <div id="heroFb" class="msg msg-bot" style="display:none">✅ <strong>Correct!</strong> Daily reconciliation means comparing your cash to records every evening — before errors compound. +10 pts!<div class="msg-time">10:15 AM ✓✓</div></div>
           </div>
         </div>
       </div>
@@ -304,7 +524,11 @@ footer{background:var(--footer);padding:56px 0 26px}
   </div>
 </section>
 
-<div class="ticker"><div class="ticker-track"><span class="ticker-item">AI explanations in Pidgin English</span><span class="ticker-item">Real-time admin dashboard</span><span class="ticker-item">No app download</span><span class="ticker-item">1-click M&amp;E export</span><span class="ticker-item">Live leaderboard</span><span class="ticker-item">Works on any phone</span><span class="ticker-item">Self-registration in 2 minutes</span><span class="ticker-item">Wrong answer review mode</span><span class="ticker-item">Knowledge gap analytics</span><span class="ticker-item">Funder-ready outcome data</span><span class="ticker-item">AI explanations in Pidgin English</span><span class="ticker-item">Real-time admin dashboard</span><span class="ticker-item">No app download</span><span class="ticker-item">1-click M&amp;E export</span><span class="ticker-item">Live leaderboard</span><span class="ticker-item">Works on any phone</span><span class="ticker-item">Self-registration in 2 minutes</span><span class="ticker-item">Wrong answer review mode</span><span class="ticker-item">Knowledge gap analytics</span><span class="ticker-item">Funder-ready outcome data</span></div></div>
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="ticker-item">AI explanations in Pidgin English</span><span class="ticker-item">Real-time admin dashboard</span><span class="ticker-item">No app download</span><span class="ticker-item">1-click M&amp;E export</span><span class="ticker-item">Live leaderboard</span><span class="ticker-item">Works on any phone</span><span class="ticker-item">Self-registration in 2 minutes</span><span class="ticker-item">Wrong answer review mode</span><span class="ticker-item">Knowledge gap analytics</span><span class="ticker-item">Funder-ready outcome data</span><span class="ticker-item">AI explanations in Pidgin English</span><span class="ticker-item">Real-time admin dashboard</span><span class="ticker-item">No app download</span><span class="ticker-item">1-click M&amp;E export</span><span class="ticker-item">Live leaderboard</span><span class="ticker-item">Works on any phone</span><span class="ticker-item">Self-registration in 2 minutes</span><span class="ticker-item">Wrong answer review mode</span><span class="ticker-item">Knowledge gap analytics</span><span class="ticker-item">Funder-ready outcome data</span>
+  </div>
+</div>
 
 <!-- PARTNER STRIP -->
 <div style="background:var(--surface);border-bottom:1px solid var(--border);padding:28px 0">
@@ -313,19 +537,13 @@ footer{background:var(--footer);padding:56px 0 26px}
       <div style="font-size:11.5px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;color:var(--ink-faint);flex-shrink:0">Built by ELP Foundation &nbsp;·&nbsp; First programme partner</div>
       <div style="display:flex;align-items:center;gap:28px;flex-wrap:wrap;flex:1">
         <div style="display:flex;align-items:center;gap:10px">
-          <img src="/public/lsetf.png" alt="LSETF" style="height:28px;object-fit:contain" onerror="this.src='/assets/lsetf.png';this.onerror=()=>{this.style.display='none';document.getElementById('lsetf-text').style.display='flex'}">
-          <div id="lsetf-text" style="display:none;flex-direction:column">
-            <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--ink);letter-spacing:-.01em">LSETF</div>
-            <div style="font-size:11px;color:var(--ink-muted)">Lagos State Employment Trust Fund</div>
-          </div>
+          <img src="/public/lsetf.png" alt="LSETF" style="height:28px;object-fit:contain" onerror="this.style.display='none';document.getElementById('lsetf-text').style.display='flex'">
+          <div id="lsetf-text" style="display:none;flex-direction:column"><div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--ink)">LSETF</div><div style="font-size:11px;color:var(--ink-muted)">Lagos State Employment Trust Fund</div></div>
         </div>
         <div style="width:1px;height:28px;background:var(--border);flex-shrink:0"></div>
         <div style="display:flex;align-items:center;gap:10px">
-          <img src="/public/empowerlogo.png" alt="ELP Foundation" style="height:28px;object-fit:contain" onerror="this.src='/public/empowerlogo.png';this.onerror=()=>{this.style.display='none';document.getElementById('elp-text').style.display='flex'}">
-          <div id="elp-text" style="display:none;flex-direction:column">
-            <div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--ink);letter-spacing:-.01em">ELP Foundation</div>
-            <div style="font-size:11px;color:var(--ink-muted)">Empowerment for Local People Foundation</div>
-          </div>
+          <img src="/public/empowerlogo.png" alt="ELP Foundation" style="height:28px;object-fit:contain" onerror="this.style.display='none';document.getElementById('elp-text').style.display='flex'">
+          <div id="elp-text" style="display:none;flex-direction:column"><div style="font-family:'Syne',sans-serif;font-size:14px;font-weight:800;color:var(--ink)">ELP Foundation</div><div style="font-size:11px;color:var(--ink-muted)">Empowerment for Local People Foundation</div></div>
         </div>
       </div>
       <div style="font-size:13px;color:var(--ink-muted);max-width:340px;line-height:1.6;border-left:2px solid var(--orange-3);padding-left:16px">EmpowerBot is built by ELP Foundation. LSETF is our first programme partner — over 1,000 of their beneficiaries have been trained across Lagos LGAs.</div>
@@ -333,13 +551,16 @@ footer{background:var(--footer);padding:56px 0 26px}
   </div>
 </div>
 
-
-<div class="value-strip"><div class="max-w"><div class="value-grid reveal">
-  <div class="value-item stagger-1"><div class="v-icon" style="background:rgba(234,88,12,.15)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FB923C" stroke-width="1.7"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/><circle cx="5" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/><line x1="12" y1="10" x2="6.5" y2="5.5"/><line x1="12" y1="10" x2="17.5" y2="5.5"/><line x1="12" y1="14" x2="6.5" y2="18.5"/><line x1="12" y1="14" x2="17.5" y2="18.5"/></svg></div><div class="v-head">AI at the core</div><div class="v-sub">Gemini-powered explanations in local context — Pidgin, Naira, their exact business type.</div></div>
-  <div class="value-item stagger-2"><div class="v-icon" style="background:rgba(5,150,105,.15)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div><div class="v-head">Measurable outcomes</div><div class="v-sub">Every quiz session generates structured outcome data your funders and M&amp;E teams can act on.</div></div>
-  <div class="value-item stagger-3"><div class="v-icon" style="background:rgba(37,99,235,.12)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.7"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><div class="v-head">Zero friction delivery</div><div class="v-sub">No app, no login, no smartphone required. Training lives inside the WhatsApp they already use.</div></div>
-  <div class="value-item stagger-4"><div class="v-icon" style="background:rgba(217,119,6,.12)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="1.7"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg></div><div class="v-head">Donor-ready reports</div><div class="v-sub">One export generates the evidence base your programme needs for impact reporting and grant renewal.</div></div>
-</div></div></div>
+<div class="value-strip">
+  <div class="max-w">
+    <div class="value-grid reveal">
+      <div class="value-item stagger-1"><div class="v-icon" style="background:rgba(234,88,12,.15)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FB923C" stroke-width="1.7"><circle cx="12" cy="12" r="2"/><circle cx="5" cy="5" r="1.5"/><circle cx="19" cy="5" r="1.5"/><circle cx="5" cy="19" r="1.5"/><circle cx="19" cy="19" r="1.5"/><line x1="12" y1="10" x2="6.5" y2="5.5"/><line x1="12" y1="10" x2="17.5" y2="5.5"/><line x1="12" y1="14" x2="6.5" y2="18.5"/><line x1="12" y1="14" x2="17.5" y2="18.5"/></svg></div><div class="v-head">AI at the core</div><div class="v-sub">Gemini-powered explanations in local context — Pidgin, Naira, their exact business type.</div></div>
+      <div class="value-item stagger-2"><div class="v-icon" style="background:rgba(5,150,105,.15)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#34D399" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div><div class="v-head">Measurable outcomes</div><div class="v-sub">Every quiz session generates structured outcome data your funders and M&amp;E teams can act on.</div></div>
+      <div class="value-item stagger-3"><div class="v-icon" style="background:rgba(37,99,235,.12)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#60A5FA" stroke-width="1.7"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg></div><div class="v-head">Zero friction delivery</div><div class="v-sub">No app, no login, no smartphone required. Training lives inside the WhatsApp they already use.</div></div>
+      <div class="value-item stagger-4"><div class="v-icon" style="background:rgba(217,119,6,.12)"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#FCD34D" stroke-width="1.7"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M9 15l2 2 4-4"/></svg></div><div class="v-head">Donor-ready reports</div><div class="v-sub">One export generates the evidence base your programme needs for impact reporting and grant renewal.</div></div>
+    </div>
+  </div>
+</div>
 
 <section class="section" style="background:var(--bg)"><div class="max-w">
   <div class="section-tag2 reveal">Who it's for</div>
@@ -419,7 +640,7 @@ footer{background:var(--footer);padding:56px 0 26px}
     <div class="thing-item" onclick="toggleThing(this)"><div class="thing-head"><div class="thing-n">01</div><div class="thing-h">AI that uses their business as the example</div><div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></div><div class="thing-body"><div class="thing-body-inner"><div class="thing-content"><div><p class="thing-desc">Wrong answer. Instant AI explanation — but not a textbook definition. The AI builds the response around the participant's business type, city, and real Naira amounts.</p><div class="thing-tags"><span class="tag tag-orange">Gemini-powered</span><span class="tag tag-green">Business-specific</span><span class="tag tag-blue">Local currency</span></div></div><div class="thing-visual"><div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">AI explanation preview</div><div style="background:#F0FDF4;border-radius:8px;padding:12px;font-size:12.5px;line-height:1.65;color:var(--ink-soft)">"Make I explain am: When you be sole proprietor, your ₦50,000 stock and your personal savings na the same thing for law..."</div></div></div></div></div></div>
     <div class="thing-item" onclick="toggleThing(this)"><div class="thing-head"><div class="thing-n">02</div><div class="thing-h">Knowledge gaps visible before the next session</div><div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></div><div class="thing-body"><div class="thing-body-inner"><div class="thing-content"><div><p class="thing-desc">The admin dashboard shows a ranked list of questions that failed most across the entire cohort. You see the exact concepts your participants haven't grasped — before you run the next facilitation session.</p><div class="thing-tags"><span class="tag tag-orange">Per-question analytics</span><span class="tag tag-amber">Cohort-wide view</span></div></div><div class="thing-visual"><div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Top failing questions</div><div style="display:flex;flex-direction:column;gap:8px"><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden"><div style="width:72%;height:100%;background:#EF4444;border-radius:4px"></div></div><span style="font-size:11px;color:var(--ink-muted)">72% failed · Q4</span></div><div style="display:flex;align-items:center;gap:10px"><div style="flex:1;background:var(--bg3);border-radius:4px;height:6px;overflow:hidden"><div style="width:54%;height:100%;background:var(--amber);border-radius:4px"></div></div><span style="font-size:11px;color:var(--ink-muted)">54% failed · Q2</span></div></div></div></div></div></div></div>
     <div class="thing-item" onclick="toggleThing(this)"><div class="thing-head"><div class="thing-n">03</div><div class="thing-h">M&amp;E data that writes itself</div><div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></div><div class="thing-body"><div class="thing-body-inner"><div class="thing-content"><div><p class="thing-desc">EmpowerBot captures every data point your M&amp;E framework needs: demographics, business type, location, pre/post scores, attendance, and outcomes. One button exports a CSV pre-formatted for donor reporting.</p><div class="thing-tags"><span class="tag tag-green">CSV export</span><span class="tag tag-orange">Pre-formatted</span><span class="tag tag-blue">Donor-ready</span></div></div><div class="thing-visual"><div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Export fields</div><div style="display:flex;flex-wrap:wrap;gap:5px"><span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px">participant_id</span><span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px">business_type</span><span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px">avg_score</span><span style="font-size:10.5px;background:var(--bg2);border:1px solid var(--border);padding:2px 8px;border-radius:4px">completion_rate</span></div></div></div></div></div></div>
-    <div class="thing-item" onclick="toggleThing(this)"><div class="thing-head"><div class="thing-n">04</div><div class="thing-h">The leaderboard makes people competitive</div><div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></div><div class="thing-body"><div class="thing-body-inner"><div class="thing-content"><div><p class="thing-desc">A live leaderboard, visible to all cohort members via WhatsApp, turns training into something social. Traders who would have quit keep going because they want to stay ranked above a neighbour. This single feature explains most of the 89% completion rate.</p><div class="thing-tags"><span class="tag tag-amber">Social motivation</span><span class="tag tag-green">Live rankings</span><span class="tag tag-orange">Cohort-wide</span></div></div><div class="thing-visual" style="background:var(--ink)"><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">🏆 Leaderboard — Quiz 3</div><div style="display:flex;flex-direction:column;gap:7px"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px">🥇</span><span style="font-size:12px;color:#fff;flex:1">Amina</span><span style="font-size:12px;color:var(--orange-2);font-weight:700">99%</span></div><div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px">🥈</span><span style="font-size:12px;color:#fff;flex:1">Fatimah</span><span style="font-size:12px;color:var(--orange-2);font-weight:700">94%</span></div><div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px">🥉</span><span style="font-size:12px;color:#fff;flex:1">Chidi</span><span style="font-size:12px;color:var(--orange-2);font-weight:700">88%</span></div></div></div></div></div></div></div>
+    <div class="thing-item" onclick="toggleThing(this)"><div class="thing-head"><div class="thing-n">04</div><div class="thing-h">The leaderboard makes people competitive</div><div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></div><div class="thing-body"><div class="thing-body-inner"><div class="thing-content"><div><p class="thing-desc">A live leaderboard, visible to all cohort members via WhatsApp, turns training into something social. Traders who would have quit keep going because they want to stay ranked above a neighbour.</p><div class="thing-tags"><span class="tag tag-amber">Social motivation</span><span class="tag tag-green">Live rankings</span><span class="tag tag-orange">Cohort-wide</span></div></div><div class="thing-visual" style="background:var(--ink)"><div style="font-size:11px;font-weight:600;color:rgba(255,255,255,.4);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">🏆 Leaderboard — Quiz 3</div><div style="display:flex;flex-direction:column;gap:7px"><div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px">🥇</span><span style="font-size:12px;color:#fff;flex:1">Amina</span><span style="font-size:12px;color:var(--orange-2);font-weight:700">99%</span></div><div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px">🥈</span><span style="font-size:12px;color:#fff;flex:1">Fatimah</span><span style="font-size:12px;color:var(--orange-2);font-weight:700">94%</span></div><div style="display:flex;align-items:center;gap:10px"><span style="font-size:14px">🥉</span><span style="font-size:12px;color:#fff;flex:1">Chidi</span><span style="font-size:12px;color:var(--orange-2);font-weight:700">88%</span></div></div></div></div></div></div></div>
     <div class="thing-item" onclick="toggleThing(this)"><div class="thing-head"><div class="thing-n">05</div><div class="thing-h">Zero friction — any phone, any network</div><div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></div><div class="thing-body"><div class="thing-body-inner"><div class="thing-content"><div><p class="thing-desc">No app download. No Google account. No smartphone required. Participants use the WhatsApp they already have on a basic Android. Self-registration takes under 2 minutes — just a conversation.</p><div class="thing-tags"><span class="tag tag-green">Any device</span><span class="tag tag-blue">Low bandwidth</span><span class="tag tag-orange">No downloads</span></div></div><div class="thing-visual"><div style="display:flex;gap:12px;align-items:center;margin-bottom:10px"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--green)" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg><span style="font-size:13px;font-weight:600">Works on a ₦10,000 phone</span></div><div style="font-size:12px;color:var(--ink-muted);line-height:1.6">Uses WhatsApp's built-in interactive button messages — no typing, no app, minimal data.</div></div></div></div></div></div>
     <div class="thing-item" onclick="toggleThing(this)"><div class="thing-head"><div class="thing-n">06</div><div class="thing-h">Every wrong answer gets revisited until it sticks</div><div class="thing-arrow"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M12 5v14M5 12h14"/></svg></div></div><div class="thing-body"><div class="thing-body-inner"><div class="thing-content"><div><p class="thing-desc">After completing any quiz, participants can enter AI-powered review mode. The bot walks through every missed question with a fresh explanation tailored to their business context. Retakes surface the hard questions first.</p><div class="thing-tags"><span class="tag tag-orange">Post-quiz AI review</span><span class="tag tag-green">Spaced repetition</span><span class="tag tag-blue">Context memory</span></div></div><div class="thing-visual"><div style="font-size:11px;font-weight:600;color:var(--ink-muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px">Retake mode</div><div style="font-size:13px;color:var(--ink-soft);line-height:1.7">Retakes present <strong>only the questions previously failed</strong>, with fresh AI explanations.</div></div></div></div></div></div>
   </div>
@@ -438,9 +659,9 @@ footer{background:var(--footer);padding:56px 0 26px}
   <h2 class="reveal" style="font-family:'Syne',sans-serif;font-size:42px;font-weight:800;letter-spacing:-.035em;line-height:1.1;margin-bottom:14px">Research. Insights. Updates.</h2>
   <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:0;flex-wrap:wrap;gap:12px"><p style="font-size:16px;color:var(--ink-muted);line-height:1.8;max-width:560px;margin-bottom:0" class="reveal">Thinking on AI, learning outcomes, and small business development.</p><a href="blog.html" class="btn btn-ghost reveal" style="flex-shrink:0">All posts →</a></div>
   <div class="blog-grid">
-    <div class="blog-card reveal stagger-1" onclick="window.location='blog.html'"><div class="blog-img" style="background:linear-gradient(135deg,#0D0907 0%,#2D1A08 100%)">🤖</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-orange">AI &amp; Learning</span><span class="blog-date">Mar 2026</span></div><h3>Why AI-Powered Explanations Outperform Classroom Training for Micro-Entrepreneurs</h3><p class="blog-excerpt">When Amina got a question wrong, EmpowerBot didn't show a definition. It explained using her own shop as the example.</p><div class="blog-read">Read more →</div></div></div>
-    <div class="blog-card reveal stagger-2" onclick="window.location='blog.html'"><div class="blog-img" style="background:linear-gradient(135deg,#064E3B 0%,#065F46 100%)">📊</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-green">M&amp;E &amp; Funding</span><span class="blog-date">Feb 2026</span></div><h3>From Attendance Sheet to Evidence Base: A Practical Guide for NGO Programme Managers</h3><p class="blog-excerpt">Your donor doesn't want to know how many people showed up. They want to know what changed.</p><div class="blog-read">Read more →</div></div></div>
-    <div class="blog-card reveal stagger-3" onclick="window.location='blog.html'"><div class="blog-img" style="background:linear-gradient(135deg,#1E3A5F 0%,#1E40AF 100%)">📱</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-blue">Case Study</span><span class="blog-date">Jan 2026</span></div><h3>1,000 Traders, One WhatsApp Number: What We Learned From the Agege Experiment</h3><p class="blog-excerpt">Running MSME training across five Lagos LGAs in 2025. Completion rates. What worked. What didn't.</p><div class="blog-read">Read more →</div></div></div>
+    <div class="blog-card reveal stagger-1" onclick="window.location='blog.html'"><div class="blog-img" style="background:linear-gradient(135deg,#0D0907 0%,#2D1A08 100%);font-size:40px">🤖</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-orange">AI &amp; Learning</span><span class="blog-date">Mar 2026</span></div><h3>Why AI-Powered Explanations Outperform Classroom Training for Micro-Entrepreneurs</h3><p class="blog-excerpt">When Amina got a question wrong, EmpowerBot didn't show a definition. It explained using her own shop as the example.</p><div class="blog-read">Read more →</div></div></div>
+    <div class="blog-card reveal stagger-2" onclick="window.location='blog.html'"><div class="blog-img" style="background:linear-gradient(135deg,#064E3B 0%,#065F46 100%);font-size:40px">📊</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-green">M&amp;E &amp; Funding</span><span class="blog-date">Feb 2026</span></div><h3>From Attendance Sheet to Evidence Base: A Practical Guide for NGO Programme Managers</h3><p class="blog-excerpt">Your donor doesn't want to know how many people showed up. They want to know what changed.</p><div class="blog-read">Read more →</div></div></div>
+    <div class="blog-card reveal stagger-3" onclick="window.location='blog.html'"><div class="blog-img" style="background:linear-gradient(135deg,#1E3A5F 0%,#1E40AF 100%);font-size:40px">📱</div><div class="blog-body"><div class="blog-meta"><span class="tag tag-blue">Case Study</span><span class="blog-date">Jan 2026</span></div><h3>1,000 Traders, One WhatsApp Number: What We Learned From the Agege Experiment</h3><p class="blog-excerpt">Running MSME training across five Lagos LGAs in 2025. Completion rates. What worked. What didn't.</p><div class="blog-read">Read more →</div></div></div>
   </div>
 </div></section>
 
@@ -459,25 +680,106 @@ footer{background:var(--footer);padding:56px 0 26px}
   <p class="reveal">Free forever for verified nonprofits. 14-day trial for everyone else. No credit card.</p>
   <div class="cta-btns reveal"><a href="pricing.html" class="btn btn-white btn-lg">See all plans</a><a href="demo.html" class="btn btn-ghost-light btn-lg">Explore demo →</a></div>
 </div></section>
-<footer><div class="max-w"><div class="foot-grid"><div><a class="foot-logo" href="index.html">Empower<em>Bot</em></a><p class="foot-desc">AI-powered training on WhatsApp. Measurable learning outcomes for small businesses everywhere. Built by ELP Foundation.</p><div class="foot-partners">
-        <img src="/public/lsetf.png" alt="LSETF" onerror="this.style.display='none'">
-        <img src="/public/empowerlogo.png" alt="ELP Foundation" onerror="this.src='/public/empowerlogo.png';this.onerror=()=>this.style.display='none'">
-      </div></div><div class="foot-col"><h4>Product</h4><a href="features.html">Features</a><a href="demo.html">Demo</a><a href="pricing.html">Pricing</a></div><div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a><a href="#">Impact</a></div><div class="foot-col"><h4>Support</h4><a href="#">Help centre</a><a href="#">Contact</a></div></div><div class="foot-bottom"><span class="foot-copy">© © 2026 EmpowerBot · Built by ELP Foundation · First partner: LSETF</span><div class="foot-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div></div></footer>
+
+<footer><div class="max-w">
+  <div class="foot-grid">
+    <div><a class="foot-logo" href="index.html">EMPOWER<em>BOT</em></a><p class="foot-desc">AI-powered training on WhatsApp. Measurable learning outcomes for small businesses everywhere. Built by ELP Foundation.</p></div>
+    <div class="foot-col"><h4>Product</h4><a href="features.html">Features</a><a href="demo.html">Demo</a><a href="pricing.html">Pricing</a></div>
+    <div class="foot-col"><h4>Company</h4><a href="about.html">About</a><a href="blog.html">Blog</a><a href="#">Impact</a></div>
+    <div class="foot-col"><h4>Support</h4><a href="#">Help centre</a><a href="#">Contact</a></div>
+  </div>
+  <div class="foot-bottom"><span class="foot-copy">© 2026 EmpowerBot · Built by ELP Foundation · First partner: LSETF</span><div class="foot-links"><a href="#">Privacy</a><a href="#">Terms</a><a href="#">Cookies</a></div></div>
+</div></footer>
+
 <script>
+/* Nav */
 window.addEventListener('scroll',()=>{document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>30);},{passive:true});
 document.getElementById('mainNav').classList.add('scrolled');
 function toggleMobileNav(){document.getElementById('mobileNav').classList.toggle('open');document.getElementById('navBurger').classList.toggle('open');document.body.style.overflow=document.getElementById('mobileNav').classList.contains('open')?'hidden':'';}
 function closeMobileNav(){document.getElementById('mobileNav').classList.remove('open');document.getElementById('navBurger').classList.remove('open');document.body.style.overflow='';}
+
+/* Scroll reveals */
 const revObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');revObs.unobserve(e.target);}});},{threshold:.08,rootMargin:'0px 0px -20px 0px'});
 document.querySelectorAll('.reveal,.reveal-left,.reveal-right').forEach(el=>revObs.observe(el));
-</script>
-<script>
-function showHeroFb(){document.getElementById('heroFb').style.display='block';document.getElementById('heroFb').style.animation='msgIn .4s ease both';}
-setTimeout(()=>{const r=document.getElementById('aiReply');if(r){r.style.display='block';r.style.animation='msgIn .5s ease both';}},2800);
-function toggleThing(el){const o=el.classList.contains('active');document.querySelectorAll('.thing-item.active').forEach(i=>i.classList.remove('active'));if(!o)el.classList.add('active');}
-function animateCount(el,target,dur=1200){const s=performance.now();(function step(n){const p=Math.min((n-s)/dur,1),e=1-Math.pow(1-p,3);el.textContent=Math.floor(e*target).toLocaleString();if(p<1)requestAnimationFrame(step);else el.textContent=target.toLocaleString();})(s);}
-const cObs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.querySelectorAll('.count-up').forEach(el=>animateCount(el,+el.dataset.target));cObs.unobserve(e.target);}});},{threshold:.3});
+
+/* === TEXT SCRAMBLE EFFECT on headline === */
+const CHARS='ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#';
+function scramble(el,finalText,duration=900,delay=0){
+  const orig=finalText;
+  let frame=0;
+  const total=Math.floor(duration/30);
+  setTimeout(()=>{
+    const iv=setInterval(()=>{
+      frame++;
+      const prog=frame/total;
+      el.textContent=orig.split('').map((c,i)=>{
+        if(c===' ')return ' ';
+        if(i/orig.length<prog*1.3)return c;
+        return CHARS[Math.floor(Math.random()*CHARS.length)];
+      }).join('');
+      if(frame>=total){clearInterval(iv);el.textContent=orig;}
+    },30);
+  },delay);
+}
+
+/* Run scramble on hero headline words */
+window.addEventListener('load',()=>{
+  /* We just animate the first line text node, leaves the spans intact */
+  setTimeout(()=>{
+    /* pulse the evidence circle colour */
+    const path=document.querySelector('.hero-circle-path');
+    if(path){
+      let bright=false;
+      setInterval(()=>{
+        bright=!bright;
+        path.style.stroke=bright?'#FB923C':'#EA580C';
+      },3200);
+    }
+  },2500);
+});
+
+/* Hero WhatsApp interaction */
+function showHeroFb(){
+  const fb=document.getElementById('heroFb');
+  fb.style.display='block';
+  fb.style.animation='msgIn .4s ease both';
+}
+setTimeout(()=>{
+  const r=document.getElementById('aiReply');
+  if(r){r.style.display='block';r.style.animation='msgIn .5s ease both';}
+},2800);
+
+/* Things accordion */
+function toggleThing(el){
+  const o=el.classList.contains('active');
+  document.querySelectorAll('.thing-item.active').forEach(i=>i.classList.remove('active'));
+  if(!o)el.classList.add('active');
+}
+
+/* Count-up animation */
+function animateCount(el,target,dur=1400){
+  const s=performance.now();
+  (function step(n){
+    const p=Math.min((n-s)/dur,1),e=1-Math.pow(1-p,3);
+    el.textContent=Math.floor(e*target).toLocaleString();
+    if(p<1)requestAnimationFrame(step);
+    else el.textContent=target.toLocaleString();
+  })(s);
+}
+const cObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.count-up').forEach(el=>animateCount(el,+el.dataset.target));
+      cObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
 document.querySelectorAll('.stats-section').forEach(el=>cObs.observe(el));
+
+/* Stagger the floating bubbles for variety */
+document.querySelectorAll('.float-bubble').forEach((b,i)=>{
+  b.style.animationDelay=(i*3.2)+'s';
+});
 </script>
 </body>
 </html>
